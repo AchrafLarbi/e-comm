@@ -245,7 +245,7 @@ else:
     print('######################\nth environment is',myenv," ",os.getcwd())
     DEBUG = True
     
-     ALLOWED_HOSTS = ['django-shopping.vercel.app','https://e-comm-django-99al.onrender.com']
+    ALLOWED_HOSTS = ['django-shopping.vercel.app','https://e-comm-django-99al.onrender.com']
     CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000", 
     "http://127.0.0.1:8000", 
