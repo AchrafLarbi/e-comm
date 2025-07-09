@@ -229,7 +229,7 @@ myenv=os.environ.get('ENV')
 
 if myenv == 'PRODUCTION':
     print(f'############# {myenv} #########\n the current directory is',os.getcwd())
-    DEBUG = False
+    DEBUG = True
     ALLOWED_HOSTS = ['e-comm-django-99al.onrender.com','127.0.0.1','localhost']
     # to prevent any one from acces our server
     CORS_ALLOWED_ORIGINS = [
