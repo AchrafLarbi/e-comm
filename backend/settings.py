@@ -230,11 +230,10 @@ myenv=os.environ.get('ENV')
 if myenv == 'PRODUCTION':
     print(f'############# {myenv} #########\n the current directory is',os.getcwd())
     DEBUG = False
-    ALLOWED_HOSTS = ['django-shopping.vercel.app','https://e-comm-django-99al.onrender.com']
+    ALLOWED_HOSTS = ['e-comm-django-99al.onrender.com']
     # to prevent any one from acces our server
     CORS_ALLOWED_ORIGINS = [
    
-    "https://django-shopping.vercel.app",
     "https://e-comm-django-99al.onrender.com"
     # "http://localhost:3000", 
     # "http://127.0.0.1:8000", 
@@ -246,7 +245,7 @@ else:
     print('######################\nth environment is',myenv," ",os.getcwd())
     DEBUG = True
     
-    ALLOWED_HOSTS = ['django-shopping.vercel.app','https://e-comm-django-99al.onrender.com']
+    ALLOWED_HOSTS = ['django-shopping.vercel.app','https://e-comm-django-99al.onrender.com','127.0.0.1']
     CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000", 
     "http://127.0.0.1:8000", 
