@@ -226,6 +226,7 @@ CLOUDINARY_STORAGE = {
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
   
 myenv=os.environ.get('ENV')
+
 if myenv == 'PRODUCTION':
     print(f'############# {myenv} #########\n the current directory is',os.getcwd())
     DEBUG = False
