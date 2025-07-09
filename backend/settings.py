@@ -234,7 +234,7 @@ if myenv == 'PRODUCTION':
     # to prevent any one from acces our server
     CORS_ALLOWED_ORIGINS = [
    
-    "https://e-comm-django-99al.onrender.com"
+    "e-comm-django-99al.onrender.com"
     # "http://localhost:3000", 
     # "http://127.0.0.1:8000", 
     
