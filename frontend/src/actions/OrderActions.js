@@ -147,17 +147,36 @@ export const allOrdersAction = () => async (dispatch, getState) => {
   }
 }
 // update order to delivered
-export const deliverOrderAction = (id) => async (dispatch, getState) => {
+export const deliverOrderAction = (id, formData = null) => async (dispatch, getState) => {
   try {
     dispatch({ type: ORDER_DELIVER_REQUEST });
     const { userLogin: {userInfo} } = getState();
     const url = process.env.REACT_APP_API_URL + `/api/orders/${id}/deliver/`;
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-    const { data } = await axios.put(url, {}, config);
+    
+    let config;
+    let requestData;
+    
+    if (formData) {
+      // If formData is provided (image upload)
+      config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      };
+      requestData = formData;
+    } else {
+      // Regular delivery without image
+      config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+          'Content-Type': 'application/json',
+        },
+      };
+      requestData = {};
+    }
+    
+    const { data } = await axios.put(url, requestData, config);
     dispatch({ type: ORDER_DELIVER_SUCCESS, playload: data });
   } catch (error) {
     dispatch({

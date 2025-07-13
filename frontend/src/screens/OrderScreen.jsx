@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Button, Card, Col, ListGroup, Row } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Button, Card, Col, ListGroup, Row, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Loader from "../components/Loader";
@@ -17,6 +17,9 @@ import {
 function OrderScreen() {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const [deliveryImage, setDeliveryImage] = useState(null);
+  const [showImageUpload, setShowImageUpload] = useState(false);
+  
   // user login state
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -50,7 +53,27 @@ function OrderScreen() {
   };
 
   const deliverHandler = () => {
-    dispatch(deliverOrderAction(id));
+    if (deliveryImage) {
+      // If image is selected, upload it first then mark as delivered
+      const formData = new FormData();
+      formData.append('deliveryImage', deliveryImage);
+      formData.append('orderId', id);
+      
+      // You can extend this to send the image to your backend
+      dispatch(deliverOrderAction(id, formData));
+    } else {
+      // Mark as delivered without image
+      dispatch(deliverOrderAction(id));
+    }
+    setShowImageUpload(false);
+    setDeliveryImage(null);
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setDeliveryImage(file);
+    }
   };
 
   return (
@@ -81,9 +104,23 @@ function OrderScreen() {
                   {order.shippingAddress.country}
                 </p>
                 {order.isDelivered ? (
-                  <Message variant="success">
-                    Delivered on {order.deliveredAt}
-                  </Message>
+                  <div>
+                    <Message variant="success">
+                      Delivered on {order.deliveredAt}
+                    </Message>
+                    {order.deliveryImage && (
+                      <div className="mt-2">
+                        <small className="text-muted">Delivery Proof:</small>
+                        <br />
+                        <img 
+                          src={`${process.env.REACT_APP_MEDIA_URL}${order.deliveryImage}`}
+                          alt="Delivery Proof"
+                          style={{ maxWidth: '200px', maxHeight: '150px' }}
+                          className="img-thumbnail"
+                        />
+                      </div>
+                    )}
+                  </div>
                 ) : (
                   <Message variant="warning">Not Delivered</Message>
                 )}
@@ -173,22 +210,63 @@ function OrderScreen() {
                       </Button>
                     )}
                   </ListGroup.Item>
-                  {/* deliver */}
+                  {/* deliver - Now works for both paid and unpaid orders */}
                   {loadingDeliver ? (
                     <Loader></Loader>
                   ) : (
                     userInfo &&
                     userInfo.isAdmin &&
-                    order.isPaid &&
                     !order.isDelivered && (
                       <ListGroup.Item>
-                        <Button
-                          type="button"
-                          className="btn btn-primary w-100"
-                          onClick={deliverHandler}
-                        >
-                          Mark As Delivered
-                        </Button>
+                        {!showImageUpload ? (
+                          <div>
+                            <Button
+                              type="button"
+                              className="btn btn-primary w-100 mb-2"
+                              onClick={() => setShowImageUpload(true)}
+                            >
+                              Mark As Delivered
+                            </Button>
+                            <Button
+                              type="button"
+                              className="btn btn-outline-primary w-100"
+                              onClick={deliverHandler}
+                            >
+                              Mark As Delivered (No Image)
+                            </Button>
+                          </div>
+                        ) : (
+                          <div>
+                            <Form.Group className="mb-3">
+                              <Form.Label>Upload Delivery Proof Image</Form.Label>
+                              <Form.Control
+                                type="file"
+                                accept="image/*"
+                                onChange={handleImageChange}
+                              />
+                            </Form.Group>
+                            <div className="d-flex gap-2">
+                              <Button
+                                type="button"
+                                className="btn btn-success flex-fill"
+                                onClick={deliverHandler}
+                                disabled={!deliveryImage}
+                              >
+                                Confirm Delivery
+                              </Button>
+                              <Button
+                                type="button"
+                                className="btn btn-secondary flex-fill"
+                                onClick={() => {
+                                  setShowImageUpload(false);
+                                  setDeliveryImage(null);
+                                }}
+                              >
+                                Cancel
+                              </Button>
+                            </div>
+                          </div>
+                        )}
                       </ListGroup.Item>
                     )
                   )}

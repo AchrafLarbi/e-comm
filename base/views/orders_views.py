@@ -213,10 +213,20 @@ def updateOrderToPaid(request,pk):
 @api_view(['PUT'])
 @permission_classes([IsAdminUser])
 def updateOrderToDelivered(request,pk):
-    order=Order.objects.filter(id=pk).first()
+    order = Order.objects.filter(id=pk).first()
     if order is None:
-        return Response({'detail':'Order not found'},status=status.HTTP_400_BAD_REQUEST)
-    order.isDelivered=True
-    order.deliveredAt=timezone.now()
+        return Response({'detail':'Order not found'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    # Handle delivery image if provided
+    delivery_image = request.FILES.get('deliveryImage')
+    if delivery_image:
+        # Save the delivery image to the order
+        # You might want to add a deliveryImage field to your Order model
+        order.deliveryImage = delivery_image
+    
+    order.isDelivered = True
+    order.deliveredAt = timezone.now()
     order.save()
-    return Response({'detail':'Order was delivered'},status=status.HTTP_200_OK)
+    
+    serializer = OrderSerializer(order, many=False)
+    return Response(serializer.data)

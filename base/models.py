@@ -75,6 +75,7 @@ class Order(models.Model):
     paidAt=models.DateTimeField(auto_now_add=False,null=True,blank=True)
     isDelivered=models.BooleanField(default=False)
     deliveredAt=models.DateTimeField(auto_now_add=False,null=True,blank=True)
+    deliveryImage=models.ImageField(upload_to='delivery_images/',null=True,blank=True)
     createdAt=models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
