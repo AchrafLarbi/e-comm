@@ -190,6 +190,25 @@ def create_paypal_payment(order_id):
     else:
         return None
 
+# update order to paid (Admin only)
+@api_view(['PUT'])
+@permission_classes([IsAdminUser])
+def updateOrderToPaid(request,pk):
+    order=Order.objects.filter(id=pk).first()
+    if order is None:
+        return Response({'detail':'Order not found'},status=status.HTTP_400_BAD_REQUEST)
+    
+    # Get payment details from request or set defaults
+    payment_data = request.data
+    
+    order.isPaid=True
+    order.paidAt=timezone.now()
+    order.paymentId = payment_data.get('id', f'admin_payment_{pk}_{timezone.now().timestamp()}')
+    order.save()
+    
+    serializer = OrderSerializer(order, many=False)
+    return Response(serializer.data)
+
 # update order to delivered
 @api_view(['PUT'])
 @permission_classes([IsAdminUser])
