@@ -176,3 +176,24 @@ def getTopProducts(request):
     products=Product.objects.filter(rating__gte=4).order_by('-rating')[:3]
     serialized_products=ProductSerializer(products,many=True)
     return Response(serialized_products.data,status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+@permission_classes([IsAdminUser])
+def uploadImage(request, pk):
+    """
+    Upload product image
+    """
+    try:
+        product = Product.objects.get(pk=pk)
+    except Product.DoesNotExist:
+        return Response({'detail': 'Product does not exist'}, status=status.HTTP_404_NOT_FOUND)
+    
+    if 'image' not in request.FILES:
+        return Response({'detail': 'No image provided'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    image = request.FILES['image']
+    product.image = image
+    product.save()
+    
+    serialized_product = ProductSerializer(product, many=False)
+    return Response(serialized_product.data, status=status.HTTP_200_OK)
