@@ -19,7 +19,7 @@ function OrderScreen() {
   const dispatch = useDispatch();
   const [deliveryImage, setDeliveryImage] = useState(null);
   const [showImageUpload, setShowImageUpload] = useState(false);
-  
+
   // user login state
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -56,9 +56,9 @@ function OrderScreen() {
     if (deliveryImage) {
       // If image is selected, upload it first then mark as delivered
       const formData = new FormData();
-      formData.append('deliveryImage', deliveryImage);
-      formData.append('orderId', id);
-      
+      formData.append("deliveryImage", deliveryImage);
+      formData.append("orderId", id);
+
       // You can extend this to send the image to your backend
       dispatch(deliverOrderAction(id, formData));
     } else {
@@ -112,10 +112,10 @@ function OrderScreen() {
                       <div className="mt-2">
                         <small className="text-muted">Delivery Proof:</small>
                         <br />
-                        <img 
+                        <img
                           src={`${process.env.REACT_APP_MEDIA_URL}${order.deliveryImage}`}
                           alt="Delivery Proof"
-                          style={{ maxWidth: '200px', maxHeight: '150px' }}
+                          style={{ maxWidth: "200px", maxHeight: "150px" }}
                           className="img-thumbnail"
                         />
                       </div>
@@ -238,7 +238,9 @@ function OrderScreen() {
                         ) : (
                           <div>
                             <Form.Group className="mb-3">
-                              <Form.Label>Upload Delivery Proof Image</Form.Label>
+                              <Form.Label>
+                                Upload Delivery Proof Image
+                              </Form.Label>
                               <Form.Control
                                 type="file"
                                 accept="image/*"
