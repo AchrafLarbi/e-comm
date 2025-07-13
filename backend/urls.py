@@ -21,6 +21,10 @@ from django.conf.urls.static import static
 from django.views.generic import TemplateView
 urlpatterns = [
     path("admin/", admin.site.urls),
+    # Admin-only API routes
+    path("api/admin/", include('base.urls.admin_urls')),
+    
+    # Regular user API routes
     path("api/users/",include('base.urls.users_urls')),
     path("api/products/",include('base.urls.products_urls')),
     path("api/orders/",include('base.urls.orders_urls')),

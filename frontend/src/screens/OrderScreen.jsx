@@ -43,7 +43,7 @@ function OrderScreen() {
     if (!order || order.id !== Number(id) || successPay || successDeliver) {
       dispatch({ type: ORDER_PAY_RESET });
       dispatch({ type: ORDER_DELIVER_RESET });
-      
+
       // Use admin routes if user is admin, otherwise use regular routes
       if (userInfo && userInfo.isAdmin) {
         dispatch(adminGetOrderDetailsAction(id));
@@ -60,7 +60,7 @@ function OrderScreen() {
       update_time: new Date().toISOString(),
       email_address: "admin@ecommerce.com",
     };
-    
+
     // Use admin route for payment
     if (userInfo && userInfo.isAdmin) {
       dispatch(adminPayOrderAction(id, paymentResult));
@@ -76,11 +76,19 @@ function OrderScreen() {
       formData.append("deliveryImage", deliveryImage);
       formData.append("orderId", id);
 
-      // You can extend this to send the image to your backend
-      dispatch(deliverOrderAction(id, formData));
+      // Use admin route for delivery with image
+      if (userInfo && userInfo.isAdmin) {
+        dispatch(adminDeliverOrderAction(id, formData));
+      } else {
+        dispatch(deliverOrderAction(id, formData));
+      }
     } else {
-      // Mark as delivered without image
-      dispatch(deliverOrderAction(id));
+      // Mark as delivered without image - use admin route if admin
+      if (userInfo && userInfo.isAdmin) {
+        dispatch(adminDeliverOrderAction(id));
+      } else {
+        dispatch(deliverOrderAction(id));
+      }
     }
     setShowImageUpload(false);
     setDeliveryImage(null);
@@ -170,7 +178,8 @@ function OrderScreen() {
                           </Col>
                           <Col>{item.name}</Col>
                           <Col md={4}>
-                            {item.quantity} x {item.price} DZD = {item.quantity * item.price} DZD
+                            {item.quantity} x {item.price} DZD ={" "}
+                            {item.quantity * item.price} DZD
                           </Col>
                         </Row>
                       </ListGroup.Item>

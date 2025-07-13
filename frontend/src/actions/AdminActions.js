@@ -18,7 +18,9 @@ import {
 export const adminGetAllOrdersAction = () => async (dispatch, getState) => {
   try {
     dispatch({ type: ORDER_ALL_REQUEST });
-    const { userLogin: { userInfo } } = getState();
+    const {
+      userLogin: { userInfo },
+    } = getState();
     const url = process.env.REACT_APP_API_URL + "/api/admin/orders/";
     const config = {
       headers: {
@@ -38,89 +40,101 @@ export const adminGetAllOrdersAction = () => async (dispatch, getState) => {
   }
 };
 
-export const adminGetOrderDetailsAction = (id) => async (dispatch, getState) => {
-  try {
-    dispatch({ type: ORDER_DETAILS_REQUEST });
-    const { userLogin: { userInfo } } = getState();
-    const url = process.env.REACT_APP_API_URL + `/api/admin/orders/${id}/`;
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-    const { data } = await axios.get(url, config);
-    dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
-  } catch (error) {
-    dispatch({
-      type: ORDER_DETAILS_FAIL,
-      payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
-          : error.message,
-    });
-  }
-};
-
-export const adminPayOrderAction = (orderId, paymentResult) => async (dispatch, getState) => {
-  try {
-    dispatch({ type: ORDER_PAY_REQUEST });
-    const { userLogin: { userInfo } } = getState();
-    const url = process.env.REACT_APP_API_URL + `/api/admin/orders/${orderId}/pay/`;
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-    const { data } = await axios.put(url, paymentResult, config);
-    dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
-  } catch (error) {
-    dispatch({
-      type: ORDER_PAY_FAIL,
-      payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
-          : error.message,
-    });
-  }
-};
-
-export const adminDeliverOrderAction = (id, formData = null) => async (dispatch, getState) => {
-  try {
-    dispatch({ type: ORDER_DELIVER_REQUEST });
-    const { userLogin: { userInfo } } = getState();
-    const url = process.env.REACT_APP_API_URL + `/api/admin/orders/${id}/deliver/`;
-    
-    let config;
-    let requestData;
-    
-    if (formData) {
-      config = {
+export const adminGetOrderDetailsAction =
+  (id) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: ORDER_DETAILS_REQUEST });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const url = process.env.REACT_APP_API_URL + `/api/admin/orders/${id}/`;
+      const config = {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
-          'Content-Type': 'multipart/form-data',
         },
       };
-      requestData = formData;
-    } else {
-      config = {
-        headers: {
-          Authorization: `Bearer ${userInfo.token}`,
-          'Content-Type': 'application/json',
-        },
-      };
-      requestData = {};
+      const { data } = await axios.get(url, config);
+      dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: ORDER_DETAILS_FAIL,
+        payload:
+          error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+      });
     }
-    
-    const { data } = await axios.put(url, requestData, config);
-    dispatch({ type: ORDER_DELIVER_SUCCESS, payload: data });
-  } catch (error) {
-    dispatch({
-      type: ORDER_DELIVER_FAIL,
-      payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
-          : error.message,
-    });
-  }
-};
+  };
+
+export const adminPayOrderAction =
+  (orderId, paymentResult) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: ORDER_PAY_REQUEST });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const url =
+        process.env.REACT_APP_API_URL + `/api/admin/orders/${orderId}/pay/`;
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.put(url, paymentResult, config);
+      dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: ORDER_PAY_FAIL,
+        payload:
+          error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+      });
+    }
+  };
+
+export const adminDeliverOrderAction =
+  (id, formData = null) =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({ type: ORDER_DELIVER_REQUEST });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const url =
+        process.env.REACT_APP_API_URL + `/api/admin/orders/${id}/deliver/`;
+
+      let config;
+      let requestData;
+
+      if (formData) {
+        config = {
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        };
+        requestData = formData;
+      } else {
+        config = {
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+            "Content-Type": "application/json",
+          },
+        };
+        requestData = {};
+      }
+
+      const { data } = await axios.put(url, requestData, config);
+      dispatch({ type: ORDER_DELIVER_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: ORDER_DELIVER_FAIL,
+        payload:
+          error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+      });
+    }
+  };
