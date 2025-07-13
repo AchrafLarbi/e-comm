@@ -10,6 +10,11 @@ import {
   payOrderAction,
 } from "../actions/OrderActions";
 import {
+  adminDeliverOrderAction,
+  adminGetOrderDetailsAction,
+  adminPayOrderAction,
+} from "../actions/AdminActions";
+import {
   ORDER_DELIVER_RESET,
   ORDER_PAY_RESET,
 } from "../constants/OrderConstants";
@@ -38,9 +43,15 @@ function OrderScreen() {
     if (!order || order.id !== Number(id) || successPay || successDeliver) {
       dispatch({ type: ORDER_PAY_RESET });
       dispatch({ type: ORDER_DELIVER_RESET });
-      dispatch(getOrderDetailsAction(id));
+      
+      // Use admin routes if user is admin, otherwise use regular routes
+      if (userInfo && userInfo.isAdmin) {
+        dispatch(adminGetOrderDetailsAction(id));
+      } else {
+        dispatch(getOrderDetailsAction(id));
+      }
     }
-  }, [id, order, successDeliver, successPay, dispatch]);
+  }, [id, order, successDeliver, successPay, dispatch, userInfo]);
 
   const markAsPaidHandler = () => {
     const paymentResult = {
@@ -49,7 +60,13 @@ function OrderScreen() {
       update_time: new Date().toISOString(),
       email_address: "admin@ecommerce.com",
     };
-    dispatch(payOrderAction(id, paymentResult));
+    
+    // Use admin route for payment
+    if (userInfo && userInfo.isAdmin) {
+      dispatch(adminPayOrderAction(id, paymentResult));
+    } else {
+      dispatch(payOrderAction(id, paymentResult));
+    }
   };
 
   const deliverHandler = () => {
@@ -153,8 +170,7 @@ function OrderScreen() {
                           </Col>
                           <Col>{item.name}</Col>
                           <Col md={4}>
-                            {item.quantity} x ${item.price} = $
-                            {item.quantity * item.price}
+                            {item.quantity} x {item.price} DZD = {item.quantity * item.price} DZD
                           </Col>
                         </Row>
                       </ListGroup.Item>
@@ -174,25 +190,25 @@ function OrderScreen() {
                   <ListGroup.Item>
                     <Row>
                       <Col>Items Price</Col>
-                      <Col>${order.itemsPrice}</Col>
+                      <Col>{order.itemsPrice} DZD</Col>
                     </Row>
                   </ListGroup.Item>
                   <ListGroup.Item>
                     <Row>
                       <Col>Shipping</Col>
-                      <Col>${order.shippingPrice}</Col>
+                      <Col>{order.shippingPrice} DZD</Col>
                     </Row>
                   </ListGroup.Item>
                   <ListGroup.Item>
                     <Row>
                       <Col>Tax</Col>
-                      <Col>${order.taxPrice}</Col>
+                      <Col>{order.taxPrice} DZD</Col>
                     </Row>
                   </ListGroup.Item>
                   <ListGroup.Item>
                     <Row>
                       <Col>Total</Col>
-                      <Col>${order.totalPrice}</Col>
+                      <Col>{order.totalPrice} DZD</Col>
                     </Row>
                   </ListGroup.Item>
                   {/* payment */}
