@@ -21,8 +21,8 @@ function AdminHomeScreen() {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const orderAll = useSelector((state) => state.orderAll);
-  const { orders, loading, error } = orderAll;
+  const allOrders = useSelector((state) => state.allOrders);
+  const { orders, loading, error } = allOrders;
 
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {

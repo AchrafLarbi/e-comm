@@ -134,8 +134,18 @@ def getAllOrders(request):
     serlizer=OrderSerializer(orders,many=True)
     return Response(serlizer.data)
 
-
-
+@api_view(['GET'])
+@permission_classes([IsAdminUser])
+def getOrderByIdAdmin(request, pk):
+    """
+    Admin-only function to get any order by ID
+    """
+    try:
+        order = Order.objects.get(id=pk)
+        serializer = OrderSerializer(order, many=False)
+        return Response(serializer.data)
+    except Order.DoesNotExist:
+        return Response({'detail': 'Order does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
 
 

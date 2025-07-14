@@ -5,7 +5,7 @@ from ..views import orders_views, users_views, products_views
 urlpatterns = [
     # Admin Orders Management
     path('orders/', orders_views.getAllOrders, name='admin_get_all_orders'),
-    path('orders/<str:pk>/', orders_views.getOrderById, name='admin_get_order_by_id'),
+    path('orders/<str:pk>/', orders_views.getOrderByIdAdmin, name='admin_get_order_by_id'),
     path('orders/<str:pk>/pay/', orders_views.updateOrderToPaid, name='admin_update_order_to_paid'),
     path('orders/<str:pk>/deliver/', orders_views.updateOrderToDelivered, name='admin_update_order_to_delivered'),
     

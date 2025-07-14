@@ -40,16 +40,25 @@ function OrderScreen() {
   const orderDeliver = useSelector((state) => state.orderDeliver);
   const { success: successDeliver, loading: loadingDeliver } = orderDeliver;
   useEffect(() => {
+    console.log(`[OrderScreen] useEffect triggered - ID: ${id}`);
+    console.log(`[OrderScreen] Current order:`, order);
+    console.log(`[OrderScreen] User info:`, userInfo);
+    console.log(`[OrderScreen] Is Admin:`, userInfo?.isAdmin);
+    
     if (!order || order.id !== Number(id) || successPay || successDeliver) {
       dispatch({ type: ORDER_PAY_RESET });
       dispatch({ type: ORDER_DELIVER_RESET });
 
       // Use admin routes if user is admin, otherwise use regular routes
       if (userInfo && userInfo.isAdmin) {
+        console.log(`[OrderScreen] Using ADMIN route for order ${id}`);
         dispatch(adminGetOrderDetailsAction(id));
       } else {
+        console.log(`[OrderScreen] Using REGULAR route for order ${id}`);
         dispatch(getOrderDetailsAction(id));
       }
+    } else {
+      console.log(`[OrderScreen] Order already loaded, skipping fetch`);
     }
   }, [id, order, successDeliver, successPay, dispatch, userInfo]);
 
@@ -109,6 +118,8 @@ function OrderScreen() {
         <Loader></Loader>
       ) : error ? (
         <Message variant="danger"> {error}</Message>
+      ) : !order ? (
+        <Loader></Loader>
       ) : (
         <Row>
           <Col md={8}>
@@ -124,9 +135,9 @@ function OrderScreen() {
                 </p>
                 <p>
                   <strong>Shipping: </strong>
-                  {order.shippingAddress.address}, {order.shippingAddress.city},{" "}
-                  {order.shippingAddress.postalCode},{" "}
-                  {order.shippingAddress.country}
+                  {order && order.shippingAddress
+                    ? `${order.shippingAddress.address}, ${order.shippingAddress.city}, ${order.shippingAddress.postalCode}, ${order.shippingAddress.country}`
+                    : "Loading..."}
                 </p>
                 {order.isDelivered ? (
                   <div>

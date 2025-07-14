@@ -43,19 +43,25 @@ export const adminGetAllOrdersAction = () => async (dispatch, getState) => {
 export const adminGetOrderDetailsAction =
   (id) => async (dispatch, getState) => {
     try {
+      console.log(`[ADMIN] Fetching order details for ID: ${id}`);
       dispatch({ type: ORDER_DETAILS_REQUEST });
       const {
         userLogin: { userInfo },
       } = getState();
-      const url = process.env.REACT_APP_API_URL + `/api/admin/orders/${id}/`;
+      const url = (process.env.REACT_APP_API_URL || 'http://localhost:8000') + `/api/admin/orders/${id}/`;
+      console.log(`[ADMIN] Request URL: ${url}`);
+      console.log(`[ADMIN] User token: ${userInfo?.token ? 'Present' : 'Missing'}`);
       const config = {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
       const { data } = await axios.get(url, config);
+      console.log(`[ADMIN] Order data received:`, data);
       dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
     } catch (error) {
+      console.error(`[ADMIN] Error fetching order ${id}:`, error);
+      console.error(`[ADMIN] Error response:`, error.response?.data);
       dispatch({
         type: ORDER_DETAILS_FAIL,
         payload:
