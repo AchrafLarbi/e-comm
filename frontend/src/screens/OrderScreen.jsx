@@ -165,6 +165,13 @@ function OrderScreen() {
                   {order && order.shippingAddress
                     ? `${order.shippingAddress.address}, ${order.shippingAddress.city}, ${order.shippingAddress.postalCode}, ${order.shippingAddress.country}`
                     : "Loading..."}
+                  <br />
+                  {order && order.shippingAddress && order.shippingAddress.phone && (
+                    <>
+                      <strong>Phone: </strong>
+                      {order.shippingAddress.phone}
+                    </>
+                  )}
                 </p>
                 {order.isDelivered ? (
                   <div>

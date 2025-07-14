@@ -53,7 +53,11 @@ function Haeder() {
               {(!userInfo || !userInfo.isAdmin) && (
                 <LinkContainer to="cart/">
                   <Nav.Link className="nav-link-hover">
-                    <i className="fa fa-cart-shopping me-1"></i> Cart
+                    <i
+                      className="fa fa-cart-shopping me-1 cart-icon"
+                      data-cart-icon
+                    ></i>{" "}
+                    Cart
                   </Nav.Link>
                 </LinkContainer>
               )}

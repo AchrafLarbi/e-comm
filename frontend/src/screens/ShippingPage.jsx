@@ -20,12 +20,13 @@ function ShippingPage() {
     const [city, setCity] = useState(shippingAddress.city)
     const [postalCode, setPostalCode] = useState(shippingAddress.postalCode)
     const [country, setCountry] = useState( shippingAddress.country)
+    const [phone, setPhone] = useState(shippingAddress.phone)
 
     
   
     const submitHandler = (e) => {
         e.preventDefault()
-        dispatch(saveShippingAddresAction({ address, city, postalCode, country }))
+        dispatch(saveShippingAddresAction({ address, city, postalCode, country, phone }))
         navigate('/payment')
     }
 
@@ -69,6 +70,15 @@ function ShippingPage() {
                         placeholder='Enter Country'
                         value={country}
                         onChange={(e) => setCountry(e.target.value)}
+                    ></Form.Control>
+                </Form.Group>
+                <Form.Group controlId='phone'>
+                    <Form.Label>Phone Number</Form.Label>
+                    <Form.Control
+                        type='tel'
+                        placeholder='Enter Phone Number'
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
                     ></Form.Control>
                 </Form.Group>
                 <Button type='submit' variant='primary'>Continue</Button>

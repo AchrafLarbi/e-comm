@@ -59,7 +59,7 @@ def addOrderItems(request):
     if isinstance(orderItems,str):
         orderItems=json.loads(orderItems)
     
-    # shippingAddress contains address,city,postalCode,country as dict
+    # shippingAddress contains address,city,postalCode,country,phone as dict
     shippingAddress = data.get('shippingAddress',{})
     if isinstance(shippingAddress,str):
         shippingAddress=json.loads(shippingAddress)
@@ -83,6 +83,7 @@ def addOrderItems(request):
             city=shippingAddress['city'],
             postalCode=shippingAddress['postalCode'],
             country=shippingAddress['country'],
+            phone=shippingAddress.get('phone', ''),
         )
        
         # 3 create order items
@@ -141,10 +142,13 @@ def getOrderByIdAdmin(request, pk):
     Admin-only function to get any order by ID
     """
     try:
+        print(f"[BACKEND] Admin requesting order {pk}")
         order = Order.objects.get(id=pk)
         serializer = OrderSerializer(order, many=False)
+        print(f"[BACKEND] Order {pk} found and serialized")
         return Response(serializer.data)
     except Order.DoesNotExist:
+        print(f"[BACKEND] Order {pk} not found")
         return Response({'detail': 'Order does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
 

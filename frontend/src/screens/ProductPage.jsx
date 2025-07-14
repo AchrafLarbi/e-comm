@@ -21,6 +21,10 @@ import {
 } from "../actions/productActions";
 import { addToCartAction } from "../actions/CartActions";
 import { PRODUCT_CREATE_REVIEW_RESET } from "../constants/productConstants";
+import {
+  flyToCart,
+  showCartSuccessIndicator,
+} from "../utils/flyToCartAnimation";
 
 function ProductPage() {
   const { id } = useParams();
@@ -59,7 +63,21 @@ function ProductPage() {
     navigate(`/cart/${id}?quantity=${quantity}`);
   };
   const addToCartHandler = () => {
-    dispatch(addToCartAction(id, Number(quantity)));
+    // Get product image and cart icon elements
+    const productImage = document.querySelector(".product-main-image");
+    const cartIcon =
+      document.querySelector(".cart-icon") ||
+      document.querySelector("[data-cart-icon]") ||
+      document.querySelector(".fa-shopping-cart");
+
+    // Trigger fly-to-cart animation with callback
+    flyToCart(productImage, cartIcon, () => {
+      // Add product to cart after animation completes
+      dispatch(addToCartAction(id, Number(quantity)));
+
+      // Show success indicator
+      showCartSuccessIndicator(cartIcon);
+    });
   };
   const submitHandler = (e) => {
     e.preventDefault();
@@ -96,7 +114,7 @@ function ProductPage() {
                   src={`${process.env.REACT_APP_MEDIA_URL}${product.image}`}
                   alt={product.name}
                   fluid
-                  className="product-image"
+                  className="product-image product-main-image"
                   style={{
                     maxHeight: "400px",
                     objectFit: "contain",
@@ -198,7 +216,7 @@ function ProductPage() {
                       <Button
                         variant="primary"
                         size="md"
-                        className="mb-2"
+                        className="mb-2 add-to-cart-btn"
                         type="button"
                         disabled={product.countInStock === 0}
                         onClick={addToCartHandler}
