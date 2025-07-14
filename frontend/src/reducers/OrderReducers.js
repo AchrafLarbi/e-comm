@@ -34,12 +34,12 @@ export const OrderReducers = (state = {}, action) => {
       return {
         loading: false,
         success: true,
-        order: action.playload,
+        order: action.payload,
       };
     case ORDER_CREATE_FAIL:
       return {
         loading: false,
-        error: action.playload,
+        error: action.payload,
       };
     case ORDER_CREATE_RESET:
       return {};
@@ -63,12 +63,12 @@ export const OrderDetailsReducers = (
     case ORDER_DETAILS_SUCCESS:
       return {
         loading: false,
-        order: action.playload,
+        order: action.payload,
       };
     case ORDER_DETAILS_FAIL:
       return {
         loading: false,
-        error: action.playload,
+        error: action.payload,
       };
     default:
       return state;
@@ -86,12 +86,12 @@ export const OrderPayReducers = (state = {  }, action) => {
       return {
         loading: false,
         success: true,
-        message: action.playload,
+        message: action.payload,
       };
     case ORDER_PAY_FAIL:
       return {
         loading: false,
-        error: action.playload,
+        error: action.payload,
       };
     case ORDER_PAY_RESET:
       return {};
@@ -111,12 +111,12 @@ export const MyordersReducers = (state = {  }, action) => {
       return {
         loading: false,
         success: true,
-        orders: action.playload,
+        orders: action.payload,
       };
     case ORDER_MYORDERS_FAIL:
       return {
         loading: false,
-        error: action.playload,
+        error: action.payload,
       };
       case ORDER_MYORDERS_RESET:
       return {
@@ -137,12 +137,12 @@ export const allOrdersReducers = (state = { orders: [] }, action) => {
     case ORDER_ALL_SUCCESS:
       return {
         loading: false,
-        orders: action.playload,
+        orders: action.payload,
       };
     case ORDER_ALL_FAIL:
       return {
         loading: false,
-        error: action.playload,
+        error: action.payload,
       };
     default:
       return state;
@@ -160,12 +160,12 @@ export const OrderDeliverReducers = (state = {  }, action) => {
       return {
         loading: false,
         success: true,
-        message: action.playload,
+        message: action.payload,
       };
     case ORDER_DELIVER_FAIL:
       return {
         loading: false,
-        error: action.playload,
+        error: action.payload,
       };
     case ORDER_DELIVER_RESET:
       return {};

@@ -44,7 +44,7 @@ function OrderScreen() {
     console.log(`[OrderScreen] Current order:`, order);
     console.log(`[OrderScreen] User info:`, userInfo);
     console.log(`[OrderScreen] Is Admin:`, userInfo?.isAdmin);
-    
+
     if (!order || order.id !== Number(id) || successPay || successDeliver) {
       dispatch({ type: ORDER_PAY_RESET });
       dispatch({ type: ORDER_DELIVER_RESET });
@@ -61,6 +61,13 @@ function OrderScreen() {
       console.log(`[OrderScreen] Order already loaded, skipping fetch`);
     }
   }, [id, order, successDeliver, successPay, dispatch, userInfo]);
+
+  // Debug loading state changes
+  useEffect(() => {
+    console.log(`[OrderScreen] Loading state changed: ${loading}`);
+    console.log(`[OrderScreen] Error state: ${error}`);
+    console.log(`[OrderScreen] Order exists: ${!!order}`);
+  }, [loading, error, order]);
 
   const markAsPaidHandler = () => {
     const paymentResult = {
@@ -113,6 +120,26 @@ function OrderScreen() {
   return (
     <div>
       <h1>Order {id}</h1>
+
+      {/* Debug info for development */}
+      {process.env.NODE_ENV === "development" && (
+        <div
+          style={{
+            background: "#f8f9fa",
+            padding: "10px",
+            margin: "10px 0",
+            borderRadius: "5px",
+            fontSize: "12px",
+          }}
+        >
+          <strong>Debug Info:</strong>
+          <br />
+          Loading: {loading ? "Yes" : "No"} | Error: {error || "None"} | Order:{" "}
+          {order ? `Loaded (ID: ${order.id})` : "Not loaded"} | Admin:{" "}
+          {userInfo?.isAdmin ? "Yes" : "No"} | API URL:{" "}
+          {process.env.REACT_APP_API_URL || "http://localhost:8000"}
+        </div>
+      )}
 
       {loading ? (
         <Loader></Loader>

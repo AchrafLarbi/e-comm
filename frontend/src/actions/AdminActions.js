@@ -48,9 +48,13 @@ export const adminGetOrderDetailsAction =
       const {
         userLogin: { userInfo },
       } = getState();
-      const url = (process.env.REACT_APP_API_URL || 'http://localhost:8000') + `/api/admin/orders/${id}/`;
+      const url =
+        (process.env.REACT_APP_API_URL || "http://localhost:8000") +
+        `/api/admin/orders/${id}/`;
       console.log(`[ADMIN] Request URL: ${url}`);
-      console.log(`[ADMIN] User token: ${userInfo?.token ? 'Present' : 'Missing'}`);
+      console.log(
+        `[ADMIN] User token: ${userInfo?.token ? "Present" : "Missing"}`
+      );
       const config = {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,

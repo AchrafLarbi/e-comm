@@ -36,14 +36,14 @@ export const createOrderAction = (order) => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.post(url, order, config);
-    dispatch({ type: ORDER_CREATE_SUCCESS, playload: data });
+    dispatch({ type: ORDER_CREATE_SUCCESS, payload: data });
     dispatch({ type: CART_CLEAR_ITEMS });
     // remove the cart items from the local storage
     localStorage.removeItem("cartItems");
   } catch (error) {
     dispatch({
       type: ORDER_CREATE_FAIL,
-      playload:
+      payload:
         error.response && error.response.data.detail
           ? error.response.data.detail
           : error.message,
@@ -59,9 +59,13 @@ export const getOrderDetailsAction = (id) => async (dispatch, getState) => {
     const {
       userLogin: { userInfo },
     } = getState();
-    const url = (process.env.REACT_APP_API_URL || 'http://localhost:8000') + `/api/orders/${id}/`;
+    const url =
+      (process.env.REACT_APP_API_URL || "http://localhost:8000") +
+      `/api/orders/${id}/`;
     console.log(`[REGULAR] Request URL: ${url}`);
-    console.log(`[REGULAR] User token: ${userInfo?.token ? 'Present' : 'Missing'}`);
+    console.log(
+      `[REGULAR] User token: ${userInfo?.token ? "Present" : "Missing"}`
+    );
     const config = {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
@@ -99,11 +103,11 @@ export const payOrderAction =
         },
       };
       const { data } = await axios.put(url, paymentResult, config);
-      dispatch({ type: ORDER_PAY_SUCCESS, playload: data });
+      dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
     } catch (error) {
       dispatch({
         type: ORDER_PAY_FAIL,
-        playload:
+        payload:
           error.response && error.response.data.detail
             ? error.response.data.detail
             : error.message,
@@ -123,11 +127,11 @@ export const MyOrdersAction = () => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.get(url, config);
-    dispatch({ type: ORDER_MYORDERS_SUCCESS, playload: data });
+    dispatch({ type: ORDER_MYORDERS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
       type: ORDER_MYORDERS_FAIL,
-      playload:
+      payload:
         error.response && error.response.data.detail
           ? error.response.data.detail
           : error.message,
@@ -149,11 +153,11 @@ export const allOrdersAction = () => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.get(url, config);
-    dispatch({ type: ORDER_ALL_SUCCESS, playload: data });
+    dispatch({ type: ORDER_ALL_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
       type: ORDER_ALL_FAIL,
-      playload:
+      payload:
         error.response && error.response.data.detail
           ? error.response.data.detail
           : error.message,
@@ -195,11 +199,11 @@ export const deliverOrderAction =
       }
 
       const { data } = await axios.put(url, requestData, config);
-      dispatch({ type: ORDER_DELIVER_SUCCESS, playload: data });
+      dispatch({ type: ORDER_DELIVER_SUCCESS, payload: data });
     } catch (error) {
       dispatch({
         type: ORDER_DELIVER_FAIL,
-        playload:
+        payload:
           error.response && error.response.data.detail
             ? error.response.data.detail
             : error.message,

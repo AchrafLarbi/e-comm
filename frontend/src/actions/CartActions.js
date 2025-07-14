@@ -12,7 +12,7 @@ export const addToCartAction = (id, quantity) => async (dispatch, getState) => {
   const { data } = await axios.get(url);
   dispatch({
     type: CART_ADD_ITEM,
-    playload: {
+    payload: {
       product: data.id,
       name: data.name,
       image: data.image,
@@ -27,16 +27,16 @@ export const addToCartAction = (id, quantity) => async (dispatch, getState) => {
 export const removeItemCartAction = (id) => async (dispatch, getState) => {
   dispatch({
     type: CART_REMOVE_ITEM,
-    playload: id,
+    payload: id,
   });
   // save the cart items in the local storage
   localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
 };
 export const saveShippingAddresAction = (data) => (dispatch) => {
-  dispatch({ type: CART_SAVE_SHIPPING_ADDRESS, playload: data });
+  dispatch({ type: CART_SAVE_SHIPPING_ADDRESS, payload: data });
   localStorage.setItem("shippingAddress", JSON.stringify(data));
 };
 export const savePaymentMethodAction = (payment) => (dispatch) => {
-  dispatch({ type: CART_SAVE_PAYMENT_METHOD, playload: payment });
+  dispatch({ type: CART_SAVE_PAYMENT_METHOD, payload: payment });
   localStorage.setItem("paymentMethod", JSON.stringify(payment));
 };

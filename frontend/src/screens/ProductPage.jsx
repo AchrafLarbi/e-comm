@@ -120,7 +120,7 @@ function ProductPage() {
                 <ListGroup.Item className="border-0 px-0">
                   <h4 style={{ color: "#4a4a4a", fontWeight: "500" }}>
                     <Badge bg="dark" pill className="px-3 py-2">
-                      ${product.price}
+                      {product.price}DZD
                     </Badge>
                   </h4>
                 </ListGroup.Item>
@@ -142,7 +142,7 @@ function ProductPage() {
                       <Col>Price:</Col>
                       <Col>
                         <h4 className="mb-0 fw-bold text-primary">
-                          ${product.price}
+                          {product.price}DZD
                         </h4>
                       </Col>
                     </Row>
