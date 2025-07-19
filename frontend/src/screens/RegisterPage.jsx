@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import Product from "../components/Product";
+
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Form, Button } from "react-bootstrap";
