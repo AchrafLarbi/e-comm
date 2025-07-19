@@ -10,8 +10,8 @@ export const CartReducers = (state = { cartItems: [] }, action) => {
   // this reducer will update the state of the cart
   switch (action.type) {
     case CART_ADD_ITEM:
-      // playload is product
-      const item = action.playload;
+      // payload is product
+      const item = action.payload;
       // check if the item is already in the cart
       const existItem = state.cartItems.find((x) => x.product === item.product);
 
@@ -30,17 +30,17 @@ export const CartReducers = (state = { cartItems: [] }, action) => {
     case CART_REMOVE_ITEM:
       return {
         ...state,
-        cartItems: state.cartItems.filter((x) => x.product !== action.playload),
+        cartItems: state.cartItems.filter((x) => x.product !== action.payload),
       };
-    // note that the playload is the product id
+    // note that the payload is the product id
     case CART_SAVE_SHIPPING_ADDRESS:
       return {
-        ...state,shippingAddress:action.playload
+        ...state,shippingAddress:action.payload
       };
 
     case CART_SAVE_PAYMENT_METHOD:
       return {
-        ...state,paymentMethod:action.playload
+        ...state,paymentMethod:action.payload
       };
 
       case CART_CLEAR_ITEMS:

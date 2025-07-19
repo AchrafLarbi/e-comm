@@ -59,7 +59,7 @@ def addOrderItems(request):
     if isinstance(orderItems,str):
         orderItems=json.loads(orderItems)
     
-    # shippingAddress contains address,city,postalCode,country as dict
+    # shippingAddress contains address,city,postalCode,country,phone as dict
     shippingAddress = data.get('shippingAddress',{})
     if isinstance(shippingAddress,str):
         shippingAddress=json.loads(shippingAddress)
@@ -83,6 +83,7 @@ def addOrderItems(request):
             city=shippingAddress['city'],
             postalCode=shippingAddress['postalCode'],
             country=shippingAddress['country'],
+            phone=shippingAddress.get('phone', ''),
         )
        
         # 3 create order items
@@ -134,8 +135,21 @@ def getAllOrders(request):
     serlizer=OrderSerializer(orders,many=True)
     return Response(serlizer.data)
 
-
-
+@api_view(['GET'])
+@permission_classes([IsAdminUser])
+def getOrderByIdAdmin(request, pk):
+    """
+    Admin-only function to get any order by ID
+    """
+    try:
+        print(f"[BACKEND] Admin requesting order {pk}")
+        order = Order.objects.get(id=pk)
+        serializer = OrderSerializer(order, many=False)
+        print(f"[BACKEND] Order {pk} found and serialized")
+        return Response(serializer.data)
+    except Order.DoesNotExist:
+        print(f"[BACKEND] Order {pk} not found")
+        return Response({'detail': 'Order does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
 
 
@@ -190,14 +204,43 @@ def create_paypal_payment(order_id):
     else:
         return None
 
+# update order to paid (Admin only)
+@api_view(['PUT'])
+@permission_classes([IsAdminUser])
+def updateOrderToPaid(request,pk):
+    order=Order.objects.filter(id=pk).first()
+    if order is None:
+        return Response({'detail':'Order not found'},status=status.HTTP_400_BAD_REQUEST)
+    
+    # Get payment details from request or set defaults
+    payment_data = request.data
+    
+    order.isPaid=True
+    order.paidAt=timezone.now()
+    order.paymentId = payment_data.get('id', f'admin_payment_{pk}_{timezone.now().timestamp()}')
+    order.save()
+    
+    serializer = OrderSerializer(order, many=False)
+    return Response(serializer.data)
+
 # update order to delivered
 @api_view(['PUT'])
 @permission_classes([IsAdminUser])
 def updateOrderToDelivered(request,pk):
-    order=Order.objects.filter(id=pk).first()
+    order = Order.objects.filter(id=pk).first()
     if order is None:
-        return Response({'detail':'Order not found'},status=status.HTTP_400_BAD_REQUEST)
-    order.isDelivered=True
-    order.deliveredAt=timezone.now()
+        return Response({'detail':'Order not found'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    # Handle delivery image if provided
+    delivery_image = request.FILES.get('deliveryImage')
+    if delivery_image:
+        # Save the delivery image to the order
+        # You might want to add a deliveryImage field to your Order model
+        order.deliveryImage = delivery_image
+    
+    order.isDelivered = True
+    order.deliveredAt = timezone.now()
     order.save()
-    return Response({'detail':'Order was delivered'},status=status.HTTP_200_OK)
+    
+    serializer = OrderSerializer(order, many=False)
+    return Response(serializer.data)

@@ -9,10 +9,10 @@ function Message({ content }) {
 }
 
 function PayPal({ orderId }) {
-    const userInfo = useSelector((state) => state.userLogin.userInfo);
+  const userInfo = useSelector((state) => state.userLogin.userInfo);
 
   const initialOptions = {
-    "client-id":PAYPAL_CLIENT_ID,
+    "client-id": PAYPAL_CLIENT_ID,
     "enable-funding": "venmo",
     "disable-funding": "",
     currency: "USD",
@@ -34,53 +34,60 @@ function PayPal({ orderId }) {
             label: "paypal",
           }}
           createOrder={async () => {
-              try {
-                  const response = await fetch(`/api/orders/create-payment/${orderId}/`, {
-                      method: 'POST',
-                      headers: {
-                          'Content-Type': 'application/json',
-                          Authorization: `Bearer ${userInfo.token}`,
-                      },
-                  });
-                  
-                  const data = await response.json();
-                  if (response.ok) {
-                    alert("response",data)
-                    return data.id; // Return the payment ID from the backend
+            try {
+              const response = await fetch(
+                `${process.env.REACT_APP_API_URL}/api/orders/create-payment/${orderId}/`,
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${userInfo.token}`,
+                  },
+                }
+              );
 
-                  } else {
-                      throw new Error(data.error || 'Could not create PayPal payment');
-                  }
-              } catch (error) {
-                  console.error(error);
-                  setMessage(`Error: ${error.message}`);
-                  return null;
+              const data = await response.json();
+              if (response.ok) {
+                alert("response", data);
+                return data.id; // Return the payment ID from the backend
+              } else {
+                throw new Error(
+                  data.error || "Could not create PayPal payment"
+                );
               }
+            } catch (error) {
+              console.error(error);
+              setMessage(`Error: ${error.message}`);
+              return null;
+            }
           }}
           onApprove={async (data) => {
-              try {
-                  const response = await fetch(`/api/orders/${orderId}/pay/paypal/`, {
-                      method: 'POST',
-                      headers: {
-                          'Content-Type': 'application/json',
-                          Authorization: `Bearer ${userInfo.token}`,
-                      },
-                      body: JSON.stringify({
-                          paymentId: data.orderID,
-                          PayerID: data.payerID,
-                      }),
-                  });
+            try {
+              const response = await fetch(
+                `${process.env.REACT_APP_API_URL}/api/orders/${orderId}/pay/paypal/`,
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${userInfo.token}`,
+                  },
+                  body: JSON.stringify({
+                    paymentId: data.orderID,
+                    PayerID: data.payerID,
+                  }),
+                }
+              );
 
-                  const result = await response.json();
-                  if (response.ok) {
-                      setMessage(`Payment successful: ${result.status}`);
-                  } else {
-                      throw new Error(result.error || 'Payment execution failed');
-                  }
-              } catch (error) {
-                  console.error(error);
-                  setMessage(`Error: ${error.message}`);
+              const result = await response.json();
+              if (response.ok) {
+                setMessage(`Payment successful: ${result.status}`);
+              } else {
+                throw new Error(result.error || "Payment execution failed");
               }
+            } catch (error) {
+              console.error(error);
+              setMessage(`Error: ${error.message}`);
+            }
           }}
         />
       </PayPalScriptProvider>

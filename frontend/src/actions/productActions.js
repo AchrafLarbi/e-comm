@@ -35,11 +35,11 @@ export const productsListAction =
         process.env.REACT_APP_API_URL + "/api/products/" + searchQuery;
 
       const { data } = await axios.get(url);
-      dispatch({ type: PRODUCT_LIST_SUCCESS, playload: data });
+      dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
     } catch (error) {
       dispatch({
         type: PRODUCT_LIST_FAIL,
-        playload:
+        payload:
           error.response && error.response.data.detail
             ? error.response.data.detail
             : error.message,
@@ -55,11 +55,11 @@ export const productsDetailsAction = (id) => async (dispatch) => {
     const url = process.env.REACT_APP_API_URL + `/api/products/${id}/`;
     const { data } = await axios.get(url);
     // update the state
-    dispatch({ type: PRODUCT_DETAILS_SUCCESS, playload: data });
+    dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
       type: PRODUCT_DETAILS_FAIL,
-      playload:
+      payload:
         error.response && error.response.data.detail
           ? error.response.data.detail
           : error.message,
@@ -89,7 +89,7 @@ export const deleteProductAction = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: PRODUCT_DELETE_FAIL,
-      playload:
+      payload:
         error.response && error.response.data.detail
           ? error.response.data.detail
           : error.message,
@@ -116,19 +116,19 @@ export const createOrUpdateProductAction =
       if (!id) {
         const url = process.env.REACT_APP_API_URL + `/api/products/create/`;
         const { data } = await axios.post(url, product, config);
-        dispatch({ type: PRODUCT_CREATE_OR_UPDATE_SUCCESS, playload: data });
+        dispatch({ type: PRODUCT_CREATE_OR_UPDATE_SUCCESS, payload: data });
       } else {
         const url =
           process.env.REACT_APP_API_URL +
           `/api/products/update/${product.get("id")}/`;
         const { data } = await axios.put(url, product, config);
-        dispatch({ type: PRODUCT_CREATE_OR_UPDATE_SUCCESS, playload: data });
+        dispatch({ type: PRODUCT_CREATE_OR_UPDATE_SUCCESS, payload: data });
       }
       dispatch(productsListAction());
     } catch (error) {
       dispatch({
         type: PRODUCT_CREATE_OR_UPDATE_FAIL,
-        playload:
+        payload:
           error.response && error.response.data.detail
             ? error.response.data.detail
             : error.message,
@@ -158,7 +158,7 @@ export const createReviewAction =
     } catch (error) {
       dispatch({
         type: PRODUCT_CREATE_REVIEW_FAIL,
-        playload:
+        payload:
           error.response && error.response.data.detail
             ? error.response.data.detail
             : error.message,
@@ -174,11 +174,11 @@ export const topRatedProductsAction = () => async (dispatch) => {
     const url = process.env.REACT_APP_API_URL + `/api/products/top/`;
     const { data } = await axios.get(url);
     // update the state
-    dispatch({ type: PRODUCT_TOP_SUCCESS, playload: data });
+    dispatch({ type: PRODUCT_TOP_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
       type: PRODUCT_TOP_FAIL,
-      playload:
+      payload:
         error.response && error.response.data.detail
           ? error.response.data.detail
           : error.message,

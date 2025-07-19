@@ -75,6 +75,7 @@ class Order(models.Model):
     paidAt=models.DateTimeField(auto_now_add=False,null=True,blank=True)
     isDelivered=models.BooleanField(default=False)
     deliveredAt=models.DateTimeField(auto_now_add=False,null=True,blank=True)
+    deliveryImage=models.ImageField(upload_to='delivery_images/',null=True,blank=True)
     createdAt=models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
@@ -99,6 +100,7 @@ class ShippingAddress(models.Model):
     city=models.CharField(max_length=200,null=True,blank=True)
     postalCode=models.CharField(max_length=200,null=True,blank=True)
     country=models.CharField(max_length=200,null=True,blank=True)
+    phone=models.CharField(max_length=20,null=True,blank=True)
     shippingPrice=models.DecimalField(max_digits=7,decimal_places=2,null=True,blank=True)
     
     def __str__(self):

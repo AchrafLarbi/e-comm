@@ -31,9 +31,9 @@ export const ProductListReducers = (state = { products: [] }, action) => {
       return { loading: true, products: [] };
     case PRODUCT_LIST_SUCCESS:
       // ply load will cintain products list,number pages and current page
-      return { loading: false, products: action.playload.products, pages: action.playload.pages, page: action.playload.page };
+      return { loading: false, products: action.payload.products, pages: action.payload.pages, page: action.payload.page };
     case PRODUCT_LIST_FAIL:
-      return { loading: false, error: action.playload };
+      return { loading: false, error: action.payload };
 
     default:
       return state;
@@ -45,9 +45,9 @@ export const ProductDetailsReducers = (state = { product: { reviews: [] } }, act
     case PRODUCT_DETAILS_REQUEST:
       return { loading: true, ...state };
     case PRODUCT_DETAILS_SUCCESS:
-      return { loading: false, product: action.playload };
+      return { loading: false, product: action.payload };
     case PRODUCT_DETAILS_FAIL:
-      return { loading: false, error: action.playload };
+      return { loading: false, error: action.payload };
     case PRODUCT_DETAILS_RESET:
       return { product: { reviews: [] } };
 
@@ -64,7 +64,7 @@ export const ProductDeleteReducers = (state = {}, action) => {
     case PRODUCT_DELETE_SUCCESS:
       return { loading: false, success: true };
     case PRODUCT_DELETE_FAIL:
-      return { loading: false, error: action.playload };
+      return { loading: false, error: action.payload };
     case PRODUCT_DELETE_RESET:
       return {};
     default:
@@ -78,9 +78,9 @@ export const ProductCreateOrUpdateReducers = (state = { product: {} }, action) =
     case PRODUCT_CREATE_OR_UPDATE_REQUEST:
       return { loading: true };
     case PRODUCT_CREATE_OR_UPDATE_SUCCESS:
-      return { loading: false, success: true, product: action.playload };
+      return { loading: false, success: true, product: action.payload };
     case PRODUCT_CREATE_OR_UPDATE_FAIL:
-      return { loading: false, error: action.playload };
+      return { loading: false, error: action.payload };
     case PRODUCT_CREATE_OR_UPDATE_RESET:
       return { product: {} };
     default:
@@ -96,7 +96,7 @@ export const ProductCreateReviewReducers = (state = {}, action) => {
     case PRODUCT_CREATE_REVIEW_SUCCESS:
       return { loading: false, success: true };
     case PRODUCT_CREATE_REVIEW_FAIL:
-      return { loading: false, error: action.playload };
+      return { loading: false, error: action.payload };
     case PRODUCT_CREATE_REVIEW_RESET:
       return {};
     default:
@@ -110,9 +110,9 @@ export const ProductTopRatedReducers = (state = { products: [] }, action) => {
     case PRODUCT_TOP_REQUEST:
       return { loading: true, products: [] };
     case PRODUCT_TOP_SUCCESS:
-      return { loading: false, products: action.playload };
+      return { loading: false, products: action.payload };
     case PRODUCT_TOP_FAIL:
-      return { loading: false, error: action.playload };
+      return { loading: false, error: action.payload };
     case PRODUCT_TOP_RESET:
       default:
       return state;

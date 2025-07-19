@@ -47,12 +47,12 @@ export const userLoginAction = (email, password) => async (dispatch) => {
       },
       config
     );
-    dispatch({ type: USER_LOGIN_SUCCESS, playload: data });
+    dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
     localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,
-      playload:
+      payload:
         error.response && error.response.data.detail
           ? error.response.data.detail
           : error.message,
@@ -80,13 +80,13 @@ export const userRegisterAction =
         },
         config
       );
-      dispatch({ type: USER_REGISTER_SUCCESS, playload: data });
-      dispatch({ type: USER_LOGIN_SUCCESS, playload: data });
+      dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
+      dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
       localStorage.setItem("userInfo", JSON.stringify(data));
     } catch (error) {
       dispatch({
         type: USER_REGISTER_FAIL,
-        playload:
+        payload:
           error.response && error.response.data.detail
             ? error.response.data.detail
             : error.message,
@@ -119,11 +119,11 @@ export const getUserDetailAction = (id, url= `/api/users/${id}/`
       },
     };
     const { data } = await axios.get(url, config);
-    dispatch({ type: USER_DETAILS_SUCCESS, playload: data });
+    dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
       type: USER_DETAILS_FAIL,
-      playload:
+      payload:
         error.response && error.response.data.detail
           ? error.response.data.detail
           : error.message,
@@ -145,13 +145,13 @@ export const userUpadateProfileAction =
         },
       };
       const { data } = await axios.put(url, user, config);
-      dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, playload: data });
-      dispatch({ type: USER_LOGIN_SUCCESS, playload: data });
+      dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
+      dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
       localStorage.setItem("userInfo", JSON.stringify(data));
     } catch (error) {
       dispatch({
         type: USER_UPDATE_PROFILE_FAIL,
-        playload:
+        payload:
           error.response && error.response.data.detail
             ? error.response.data.detail
             : error.message,
@@ -172,11 +172,11 @@ export const userListAction = () => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.get(url, config);
-    dispatch({ type: USER_LIST_SUCCESS, playload: data });
+    dispatch({ type: USER_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
       type: USER_LIST_FAIL,
-      playload:
+      payload:
         error.response && error.response.data.detail
           ? error.response.data.detail
           : error.message,
@@ -202,7 +202,7 @@ export const deleteUserAction = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: USER_DELETE_FAIL,
-      playload:
+      payload:
         error.response && error.response.data.detail
           ? error.response.data.detail
           : error.message,
@@ -225,11 +225,11 @@ export const updateUserAction = (id,user) => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.put(url, user, config);
-    dispatch({ type: USER_UPDATE_SUCCESS, playload: data });
+    dispatch({ type: USER_UPDATE_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
       type: USER_UPDATE_FAIL,
-      playload:
+      payload:
         error.response && error.response.data.detail
           ? error.response.data.detail
           : error.message,
