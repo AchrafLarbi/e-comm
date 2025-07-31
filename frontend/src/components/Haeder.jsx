@@ -27,19 +27,23 @@ function Haeder() {
       <Navbar
         expand="lg"
         className="p-2"
-        style={{background: 'linear-gradient(135deg, var(--syra-green) 70%, var(--syra-burgundy) 100%)', color: 'var(--syra-gold)'}}
+        style={{
+          background:
+            "linear-gradient(135deg, var(--syra-green) 70%, var(--syra-burgundy) 100%)",
+          color: "var(--syra-gold)",
+        }}
         variant="dark"
         collapseOnSelect
       >
         <Container fluid>
           <LinkContainer to="/">
             <Navbar.Brand className="d-flex align-items-center">
-              <img 
-                src="/textlogo.png" 
-                alt="Maison SYRA Logo" 
-                height="100" 
+              <img
+                src="/textlogo.png"
+                alt="Maison SYRA Logo"
+                height="100"
                 className="me-2"
-                style={{ borderRadius: '4px' }}
+                style={{ borderRadius: "4px" }}
               />
             </Navbar.Brand>
           </LinkContainer>
