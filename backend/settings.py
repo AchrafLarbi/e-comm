@@ -29,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
  
-SECRET_KEY=os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-fallback-key-for-development-only')
 
 
 
@@ -142,12 +142,24 @@ WSGI_APPLICATION = "backend.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# postgresql database
-DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('DB_URL')
-    )
-}
+# Check if DB_URL is available, otherwise use SQLite for local development
+db_url = os.environ.get('DB_URL')
+
+if db_url:
+    # Use PostgreSQL with Supabase
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=db_url
+        )
+    }
+else:
+    # Use SQLite for local development
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation

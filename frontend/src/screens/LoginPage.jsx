@@ -40,6 +40,13 @@ function LoginPage() {
                 <Card className="shadow-sm border-0">
                     <Card.Body className="p-4">
                         <div className="text-center mb-4">
+                            <img 
+                                src="/logo.png" 
+                                alt="Maison SYRA Logo" 
+                                height="100" 
+                                className="mb-3"
+                                style={{ borderRadius: '8px' }}
+                            />
                             <h2 className="fw-bold">Sign In</h2>
                             <p className="text-muted">Access your account</p>
                         </div>

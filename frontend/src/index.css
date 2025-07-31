@@ -1,5 +1,132 @@
+/* Maison SYRA Brand Colors */
+:root {
+  --syra-green: #1d3b3a;
+  --syra-burgundy: #4b1936;
+  --syra-gold: #d9b88f;
+  --syra-pearl: #f7f6f3;
+  --syra-dark: #181c1d;
+  --syra-gray: #e5e4e1;
+}
+
+/* Import Poppins font for both headings and body */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body {
+  background: var(--syra-pearl);
+  color: var(--syra-dark);
+  font-family: 'Poppins', Arial, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  /* Subtle geometric pattern background */
+  background-image: repeating-linear-gradient(135deg, rgba(217,184,143,0.07) 0 20px, transparent 20px 40px),
+    repeating-linear-gradient(-135deg, rgba(29,59,58,0.04) 0 20px, transparent 20px 40px);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', Arial, sans-serif;
+  color: var(--syra-green);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
 main {
   min-height: 80vh;
+  background: rgba(255,255,255,0.7);
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 32px rgba(29,59,58,0.07);
+  padding: 2rem 0;
+}
+
+/* Buttons */
+.btn, .add-to-cart-btn, button {
+  background: var(--syra-green);
+  color: var(--syra-gold);
+  border: none;
+  border-radius: 2rem;
+  font-family: 'Poppins', Arial, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(75,25,54,0.07);
+}
+.btn:hover, .add-to-cart-btn:hover, button:hover {
+  background: var(--syra-burgundy);
+  color: var(--syra-gold);
+}
+
+/* Cards and containers */
+.card, .product-card, .form-container {
+  background: #fff;
+  border-radius: 1.25rem;
+  box-shadow: 0 2px 16px rgba(29,59,58,0.08);
+  border: 1px solid var(--syra-gray);
+}
+
+/* Links */
+a {
+  color: var(--syra-burgundy);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+a:hover {
+  color: var(--syra-gold);
+}
+
+/* Inputs */
+input, select, textarea {
+  border-radius: 0.5rem;
+  border: 1px solid var(--syra-green);
+  background: var(--syra-pearl);
+  color: var(--syra-dark);
+  font-family: 'Poppins', Arial, sans-serif;
+}
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid var(--syra-burgundy);
+  border-color: var(--syra-burgundy);
+}
+
+/* Alerts and messages */
+.alert, .message {
+  background: var(--syra-gold);
+  color: var(--syra-burgundy);
+  border-radius: 1rem;
+  border: none;
+  font-family: 'Poppins', Arial, sans-serif;
+}
+
+/* Loader spinner color override */
+.spinner-border {
+  color: var(--syra-burgundy) !important;
+}
+
+/* Footer and header backgrounds */
+footer, header, .navbar {
+  background: linear-gradient(135deg, var(--syra-green) 70%, var(--syra-burgundy) 100%);
+  color: var(--syra-gold);
+  font-family: 'Poppins', Arial, sans-serif;
+}
+
+/* Diamond/lozenge motif utility class */
+.syra-diamond {
+  display: inline-block;
+  padding: 0.5em 1.2em;
+  background: var(--syra-gold);
+  color: var(--syra-burgundy);
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  font-family: 'Poppins', Arial, sans-serif;
+  font-size: 1.2em;
+  letter-spacing: 0.1em;
+  margin: 0.5em 0;
+}
+
+/* Custom scrollbars for elegance */
+::-webkit-scrollbar {
+  width: 8px;
+  background: var(--syra-pearl);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--syra-gold);
+  border-radius: 4px;
 }
 
 /* Fly-to-cart animation styles */

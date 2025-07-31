@@ -26,15 +26,21 @@ function Haeder() {
     <header>
       <Navbar
         expand="lg"
-        className="bg-dark p-2"
+        className="p-2"
+        style={{background: 'linear-gradient(135deg, var(--syra-green) 70%, var(--syra-burgundy) 100%)', color: 'var(--syra-gold)'}}
         variant="dark"
         collapseOnSelect
       >
         <Container fluid>
           <LinkContainer to="/">
             <Navbar.Brand className="d-flex align-items-center">
-              <i className="fa fa-shopping-cart me-2"></i>
-              <span className="fw-bold">Django Shopping</span>
+              <img 
+                src="/textlogo.png" 
+                alt="Maison SYRA Logo" 
+                height="100" 
+                className="me-2"
+                style={{ borderRadius: '4px' }}
+              />
             </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
