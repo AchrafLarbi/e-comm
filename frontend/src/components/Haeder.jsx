@@ -53,8 +53,11 @@ function Haeder() {
               className="me-auto my-2 my-lg-0"
               style={{ maxHeight: "100px" }}
             >
-              <LinkContainer to="/">
-                <Nav.Link href="/" className="me-2 nav-link-hover">
+              <LinkContainer to={userInfo && userInfo.isAdmin ? "/admin" : "/"}>
+                <Nav.Link
+                  href={userInfo && userInfo.isAdmin ? "/admin" : "/"}
+                  className="me-2 nav-link-hover"
+                >
                   <i className="fa fa-home me-1"></i>
                   {userInfo && userInfo.isAdmin ? "Dashboard" : "Home"}
                 </Nav.Link>

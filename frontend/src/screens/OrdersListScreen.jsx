@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { deleteUserAction, userListAction } from "../actions/UserActions";
+
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import {
   Alert,
   Button,
-  ButtonGroup,
   Table,
   Row,
   Col,
@@ -17,7 +16,6 @@ import {
   Badge,
   Pagination,
 } from "react-bootstrap";
-import AlertModal from "../components/AertModal";
 import { allOrdersAction } from "../actions/OrderActions";
 
 function OrdersListScreen() {

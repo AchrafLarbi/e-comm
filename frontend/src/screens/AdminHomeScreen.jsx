@@ -160,58 +160,67 @@ function AdminHomeScreen() {
               ) : error ? (
                 <Message variant="danger">{error}</Message>
               ) : (
-                <Table striped bordered hover responsive>
-                  <thead>
-                    <tr>
-                      <th>Order ID</th>
-                      <th>Customer</th>
-                      <th>Date</th>
-                      <th>Total</th>
-                      <th>Payment</th>
-                      <th>Delivery</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {orders &&
-                      orders.slice(0, 10).map((order) => (
-                        <tr key={order.id}>
-                          <td>
-                            <Link
-                              to={`/order/${order.id}`}
-                              className="text-decoration-none"
-                            >
-                              #{order.id}
-                            </Link>
-                          </td>
-                          <td>{order.user?.name || "N/A"}</td>
-                          <td>
-                            {new Date(order.createdAt).toLocaleDateString()}
-                          </td>
-                          <td>{formatCurrency(order.totalPrice)}</td>
-                          <td>
-                            <Badge bg={order.isPaid ? "success" : "warning"}>
-                              {order.isPaid ? "Paid" : "Unpaid"}
-                            </Badge>
-                          </td>
-                          <td>
-                            <Badge
-                              bg={order.isDelivered ? "success" : "secondary"}
-                            >
-                              {order.isDelivered ? "Delivered" : "Pending"}
-                            </Badge>
-                          </td>
-                          <td>
-                            <Link to={`/order/${order.id}`}>
-                              <Button variant="outline-primary" size="sm">
-                                Manage
-                              </Button>
-                            </Link>
-                          </td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </Table>
+                <div style={{ maxHeight: "400px", overflowY: "auto" }}>
+                  <Table striped bordered hover responsive>
+                    <thead
+                      style={{
+                        position: "sticky",
+                        top: 0,
+                        backgroundColor: "#fff",
+                        zIndex: 1,
+                      }}
+                    >
+                      <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                        <th>Payment</th>
+                        <th>Delivery</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {orders &&
+                        orders.slice(0, 10).map((order) => (
+                          <tr key={order.id}>
+                            <td>
+                              <Link
+                                to={`/order/${order.id}`}
+                                className="text-decoration-none"
+                              >
+                                #{order.id}
+                              </Link>
+                            </td>
+                            <td>{order.user?.name || "N/A"}</td>
+                            <td>
+                              {new Date(order.createdAt).toLocaleDateString()}
+                            </td>
+                            <td>{formatCurrency(order.totalPrice)}</td>
+                            <td>
+                              <Badge bg={order.isPaid ? "success" : "warning"}>
+                                {order.isPaid ? "Paid" : "Unpaid"}
+                              </Badge>
+                            </td>
+                            <td>
+                              <Badge
+                                bg={order.isDelivered ? "success" : "secondary"}
+                              >
+                                {order.isDelivered ? "Delivered" : "Pending"}
+                              </Badge>
+                            </td>
+                            <td>
+                              <Link to={`/order/${order.id}`}>
+                                <Button variant="outline-primary" size="sm">
+                                  Manage
+                                </Button>
+                              </Link>
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </Table>
+                </div>
               )}
             </Card.Body>
           </Card>

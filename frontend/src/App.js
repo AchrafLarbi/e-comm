@@ -43,6 +43,7 @@ function App() {
             <Route path="/placeorder" Component={PlaceOrderScreen}></Route>
             <Route path="/order/:id" Component={OrderScreen}></Route>
             {/* admin */}
+            <Route path="/admin" Component={ConditionalHome}></Route>
             <Route path="/admin/users" Component={UserListScreen}></Route>
             <Route
               path="admin/users/:id/edit"
