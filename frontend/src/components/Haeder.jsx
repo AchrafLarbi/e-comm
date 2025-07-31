@@ -59,7 +59,7 @@ function Haeder() {
                   className="me-2 nav-link-hover"
                 >
                   <i className="fa fa-home me-1"></i>
-                  {userInfo && userInfo.isAdmin ? "Dashboard" : "Home"}
+                  {userInfo && userInfo.isAdmin ? "Tableau de Bord" : "Accueil"}
                 </Nav.Link>
               </LinkContainer>
               {/* Hide cart for admins */}
@@ -70,7 +70,7 @@ function Haeder() {
                       className="fa fa-cart-shopping me-1 cart-icon"
                       data-cart-icon
                     ></i>{" "}
-                    Cart
+                    Panier
                   </Nav.Link>
                 </LinkContainer>
               )}
@@ -89,7 +89,7 @@ function Haeder() {
                 >
                   <LinkContainer to="/profile">
                     <NavDropdown.Item className="py-2">
-                      <i className="fa fa-user-circle me-2"></i>Profile
+                      <i className="fa fa-user-circle me-2"></i>Profil
                     </NavDropdown.Item>
                   </LinkContainer>
                   {/* Show different menu items for admin vs regular users */}
@@ -97,37 +97,38 @@ function Haeder() {
                     <>
                       <LinkContainer to="/admin/orders">
                         <NavDropdown.Item className="py-2">
-                          <i className="fa fa-shopping-bag me-2"></i>All Orders
+                          <i className="fa fa-shopping-bag me-2"></i>Toutes les
+                          Commandes
                         </NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to="/admin/products">
                         <NavDropdown.Item className="py-2">
-                          <i className="fa fa-box me-2"></i>Products
+                          <i className="fa fa-box me-2"></i>Produits
                         </NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to="/admin/users">
                         <NavDropdown.Item className="py-2">
-                          <i className="fa fa-users me-2"></i>Users
+                          <i className="fa fa-users me-2"></i>Utilisateurs
                         </NavDropdown.Item>
                       </LinkContainer>
                     </>
                   ) : (
                     <LinkContainer to="/my-orders">
                       <NavDropdown.Item className="py-2">
-                        <i className="fa fa-shopping-bag me-2"></i>My Orders
+                        <i className="fa fa-shopping-bag me-2"></i>Mes Commandes
                       </NavDropdown.Item>
                     </LinkContainer>
                   )}
                   <AlertModal
                     customebutton={
                       <NavDropdown.Item className="py-2 text-danger">
-                        <i className="fa fa-sign-out-alt me-2"></i>Logout
+                        <i className="fa fa-sign-out-alt me-2"></i>Déconnexion
                       </NavDropdown.Item>
                     }
                     myaction={logoutHandler}
-                    title="Logout"
-                    message="Are you sure you want to logout?"
-                    savetitle="Logout"
+                    title="Déconnexion"
+                    message="Êtes-vous sûr de vouloir vous déconnecter ?"
+                    savetitle="Déconnexion"
                     variant="danger"
                   />
                 </NavDropdown>
@@ -138,13 +139,13 @@ function Haeder() {
                 >
                   <LinkContainer to="/register">
                     <Nav.Link className="text-white me-2 nav-link-hover">
-                      <i className="fa fa-user-plus me-1"></i> Sign Up
+                      <i className="fa fa-user-plus me-1"></i> S'inscrire
                     </Nav.Link>
                   </LinkContainer>
 
                   <LinkContainer to="/login">
                     <Button className="btn bg-white text-dark rounded-pill fw-bold border-0 shadow-sm px-3 py-1 btn-hover">
-                      <i className="fa fa-sign-in-alt me-1"></i> Sign In
+                      <i className="fa fa-sign-in-alt me-1"></i> Se Connecter
                     </Button>
                   </LinkContainer>
                 </div>
@@ -162,17 +163,17 @@ function Haeder() {
                 >
                   <LinkContainer to="/admin/users">
                     <NavDropdown.Item className="py-2">
-                      <i className="fa fa-users me-2"></i>Users
+                      <i className="fa fa-users me-2"></i>Utilisateurs
                     </NavDropdown.Item>
                   </LinkContainer>
                   <LinkContainer to="/admin/products">
                     <NavDropdown.Item className="py-2">
-                      <i className="fa fa-box me-2"></i>Products
+                      <i className="fa fa-box me-2"></i>Produits
                     </NavDropdown.Item>
                   </LinkContainer>
                   <LinkContainer to="/admin/orders">
                     <NavDropdown.Item className="py-2">
-                      <i className="fa fa-shopping-bag me-2"></i>Orders
+                      <i className="fa fa-shopping-bag me-2"></i>Commandes
                     </NavDropdown.Item>
                   </LinkContainer>
                 </NavDropdown>

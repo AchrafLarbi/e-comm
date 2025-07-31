@@ -56,9 +56,9 @@ function AdminHomeScreen() {
     <Container>
       <Row className="my-4">
         <Col>
-          <h1>Admin Dashboard</h1>
+          <h1>Tableau de Bord Admin</h1>
           <p className="text-muted">
-            Welcome back, {userInfo?.name}! Here's your business overview.
+            Bon retour, {userInfo?.name}! Voici votre aperçu d'activité.
           </p>
         </Col>
       </Row>
@@ -69,7 +69,7 @@ function AdminHomeScreen() {
           <Card className="text-center bg-primary text-white">
             <Card.Body>
               <h3>{stats.totalOrders}</h3>
-              <Card.Text>Total Orders</Card.Text>
+              <Card.Text>Total des Commandes</Card.Text>
             </Card.Body>
           </Card>
         </Col>
@@ -77,7 +77,7 @@ function AdminHomeScreen() {
           <Card className="text-center bg-success text-white">
             <Card.Body>
               <h3>{stats.paidOrders}</h3>
-              <Card.Text>Paid Orders</Card.Text>
+              <Card.Text>Commandes Payées</Card.Text>
             </Card.Body>
           </Card>
         </Col>
@@ -85,7 +85,7 @@ function AdminHomeScreen() {
           <Card className="text-center bg-info text-white">
             <Card.Body>
               <h3>{stats.deliveredOrders}</h3>
-              <Card.Text>Delivered Orders</Card.Text>
+              <Card.Text>Commandes Livrées</Card.Text>
             </Card.Body>
           </Card>
         </Col>
@@ -93,7 +93,7 @@ function AdminHomeScreen() {
           <Card className="text-center bg-warning text-white">
             <Card.Body>
               <h3>{formatCurrency(stats.totalRevenue)}</h3>
-              <Card.Text>Total Revenue</Card.Text>
+              <Card.Text>Chiffre d'Affaires Total</Card.Text>
             </Card.Body>
           </Card>
         </Col>
@@ -104,11 +104,13 @@ function AdminHomeScreen() {
         <Col md={4}>
           <Card className="h-100">
             <Card.Body className="text-center">
-              <Card.Title>Orders Management</Card.Title>
-              <Card.Text>View, manage, and process customer orders</Card.Text>
+              <Card.Title>Gestion des Commandes</Card.Title>
+              <Card.Text>
+                Voir, gérer et traiter les commandes clients
+              </Card.Text>
               <Link to="/admin/orders">
                 <Button variant="primary" size="lg">
-                  Manage Orders
+                  Gérer les Commandes
                 </Button>
               </Link>
             </Card.Body>
@@ -117,11 +119,13 @@ function AdminHomeScreen() {
         <Col md={4}>
           <Card className="h-100">
             <Card.Body className="text-center">
-              <Card.Title>Products Management</Card.Title>
-              <Card.Text>Add, edit, and manage your product catalog</Card.Text>
+              <Card.Title>Gestion des Produits</Card.Title>
+              <Card.Text>
+                Ajouter, modifier et gérer votre catalogue de produits
+              </Card.Text>
               <Link to="/admin/products">
                 <Button variant="success" size="lg">
-                  Manage Products
+                  Gérer les Produits
                 </Button>
               </Link>
             </Card.Body>
@@ -130,11 +134,11 @@ function AdminHomeScreen() {
         <Col md={4}>
           <Card className="h-100">
             <Card.Body className="text-center">
-              <Card.Title>Users Management</Card.Title>
-              <Card.Text>View and manage customer accounts</Card.Text>
+              <Card.Title>Gestion des Utilisateurs</Card.Title>
+              <Card.Text>Voir et gérer les comptes clients</Card.Text>
               <Link to="/admin/users">
                 <Button variant="info" size="lg">
-                  Manage Users
+                  Gérer les Utilisateurs
                 </Button>
               </Link>
             </Card.Body>
@@ -147,10 +151,10 @@ function AdminHomeScreen() {
         <Col>
           <Card>
             <Card.Header className="d-flex justify-content-between align-items-center">
-              <h4>Recent Orders</h4>
+              <h4>Commandes Récentes</h4>
               <Link to="/admin/orders">
                 <Button variant="outline-primary" size="sm">
-                  View All Orders
+                  Voir Toutes les Commandes
                 </Button>
               </Link>
             </Card.Header>
@@ -171,12 +175,12 @@ function AdminHomeScreen() {
                       }}
                     >
                       <tr>
-                        <th>Order ID</th>
-                        <th>Customer</th>
+                        <th>ID Commande</th>
+                        <th>Client</th>
                         <th>Date</th>
                         <th>Total</th>
-                        <th>Payment</th>
-                        <th>Delivery</th>
+                        <th>Paiement</th>
+                        <th>Livraison</th>
                         <th>Actions</th>
                       </tr>
                     </thead>
@@ -199,20 +203,20 @@ function AdminHomeScreen() {
                             <td>{formatCurrency(order.totalPrice)}</td>
                             <td>
                               <Badge bg={order.isPaid ? "success" : "warning"}>
-                                {order.isPaid ? "Paid" : "Unpaid"}
+                                {order.isPaid ? "Payé" : "Non Payé"}
                               </Badge>
                             </td>
                             <td>
                               <Badge
                                 bg={order.isDelivered ? "success" : "secondary"}
                               >
-                                {order.isDelivered ? "Delivered" : "Pending"}
+                                {order.isDelivered ? "Livré" : "En Attente"}
                               </Badge>
                             </td>
                             <td>
                               <Link to={`/order/${order.id}`}>
                                 <Button variant="outline-primary" size="sm">
-                                  Manage
+                                  Gérer
                                 </Button>
                               </Link>
                             </td>

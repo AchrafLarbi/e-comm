@@ -38,15 +38,15 @@ function CartPage() {
 
   return (
     <div>
-      <h1>Shopping Cart</h1>
+      <h1>Panier d'Achat</h1>
       {/* if the cart is empty */}
       {cartItems.length === 0 ? (
         <Message>
           {" "}
-          Your cart is empty <Link to="/">Go Back</Link>
+          Votre panier est vide <Link to="/">Retourner</Link>
         </Message>
       ) : (
-        <Link to="/">Go Back</Link>
+        <Link to="/">Retourner</Link>
       )}
       <Row>
         <Col md={8}>
@@ -102,9 +102,9 @@ function CartPage() {
             <ListGroup variant="flush">
               <ListGroup.Item>
                 <h2>
-                  Subtotal (
+                  Sous-total (
                   {cartItems.reduce((acc, item) => acc + item.quantity, 0)})
-                  items
+                  articles
                 </h2>
                 {cartItems
                   .reduce((acc, item) => acc + item.quantity * item.price, 0)
@@ -118,7 +118,7 @@ function CartPage() {
                   disabled={cartItems.length === 0}
                   onClick={checkoutHandler}
                 >
-                  Proceed To Checkout
+                  Procéder au Paiement
                 </Button>
               </ListGroup.Item>
             </ListGroup>

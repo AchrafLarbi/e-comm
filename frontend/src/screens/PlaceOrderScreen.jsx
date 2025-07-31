@@ -84,7 +84,7 @@ function PlaceOrderScreen() {
             <ListGroup.Item>
               <h2>Order Items</h2>
               {cart.cartItems.length === 0 ? (
-                <Message variant="info">Your cart is empty</Message>
+                <Message variant="info">Votre panier est vide</Message>
               ) : (
                 <ListGroup variant="flush">
                   {cart.cartItems.map((item, index) => (
@@ -115,23 +115,23 @@ function PlaceOrderScreen() {
             <Card>
               <ListGroup variant="flush">
                 <ListGroup.Item>
-                  <h2>Order Summary</h2>
+                  <h2>Résumé de la Commande</h2>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
-                    <Col>Items</Col>
+                    <Col>Articles</Col>
                     <Col>{cart.itemsPrice} DZD</Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
-                    <Col>Shipping</Col>
+                    <Col>Livraison</Col>
                     <Col>{cart.shippingPrice} DZD</Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
-                    <Col>Tax</Col>
+                    <Col>Taxe</Col>
                     <Col>{cart.taxPrice} DZD</Col>
                   </Row>
                 </ListGroup.Item>
@@ -148,7 +148,7 @@ function PlaceOrderScreen() {
                     disabled={cart.cartItems === 0}
                     onClick={placOrderHandler}
                   >
-                    Place Order
+                    Passer la Commande
                   </Button>
                 </ListGroup.Item>
               </ListGroup>

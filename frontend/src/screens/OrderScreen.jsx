@@ -178,15 +178,17 @@ function OrderScreen() {
                 {order.isDelivered ? (
                   <div>
                     <Message variant="success">
-                      Delivered on {order.deliveredAt}
+                      Livré le {order.deliveredAt}
                     </Message>
                     {order.deliveryImage && (
                       <div className="mt-2">
-                        <small className="text-muted">Delivery Proof:</small>
+                        <small className="text-muted">
+                          Preuve de Livraison:
+                        </small>
                         <br />
                         <img
                           src={`${process.env.REACT_APP_MEDIA_URL}${order.deliveryImage}`}
-                          alt="Delivery Proof"
+                          alt="Preuve de Livraison"
                           style={{ maxWidth: "200px", maxHeight: "150px" }}
                           className="img-thumbnail"
                         />
@@ -194,7 +196,7 @@ function OrderScreen() {
                     )}
                   </div>
                 ) : (
-                  <Message variant="warning">Not Delivered</Message>
+                  <Message variant="warning">Non Livré</Message>
                 )}
               </ListGroup.Item>
               <ListGroup.Item>
@@ -202,15 +204,15 @@ function OrderScreen() {
                 <strong>Method: </strong>
                 {order.paymentMethod}
                 {order.isPaid ? (
-                  <Message variant="success">Paid on {order.paidAt}</Message>
+                  <Message variant="success">Payé le {order.paidAt}</Message>
                 ) : (
-                  <Message variant="warning">Not Paid</Message>
+                  <Message variant="warning">Non Payé</Message>
                 )}
               </ListGroup.Item>
               <ListGroup.Item>
                 <h2>Order Items</h2>
                 {order.orderItems.length === 0 ? (
-                  <Message variant="info">Your Order is empty</Message>
+                  <Message variant="info">Votre commande est vide</Message>
                 ) : (
                   <ListGroup variant="flush">
                     {order.orderItems.map((item, index) => (
@@ -278,7 +280,9 @@ function OrderScreen() {
                         onClick={markAsPaidHandler}
                         disabled={loadingPay}
                       >
-                        {loadingPay ? "Processing..." : "Mark Payment Done"}
+                        {loadingPay
+                          ? "Traitement..."
+                          : "Marquer Paiement Effectué"}
                       </Button>
                     )}
                   </ListGroup.Item>

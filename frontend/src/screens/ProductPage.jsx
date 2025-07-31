@@ -167,15 +167,15 @@ function ProductPage() {
                   </ListGroup.Item>
                   <ListGroup.Item>
                     <Row className="align-items-center">
-                      <Col>Status:</Col>
+                      <Col>Statut:</Col>
                       <Col>
                         {product.countInStock > 0 ? (
                           <Badge bg="success" pill className="px-3 py-2">
-                            In Stock
+                            En Stock
                           </Badge>
                         ) : (
                           <Badge bg="danger" pill className="px-3 py-2">
-                            Out of Stock
+                            Rupture de Stock
                           </Badge>
                         )}
                       </Col>
@@ -318,7 +318,7 @@ function ProductPage() {
                           disabled={rating.rating === 0 || loadingReview}
                           onClick={submitHandler}
                         >
-                          {loadingReview ? "Submitting..." : "Submit Review"}
+                          {loadingReview ? "Envoi..." : "Soumettre l'Avis"}
                         </Button>
                       </Form>
                     )

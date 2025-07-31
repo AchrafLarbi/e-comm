@@ -45,10 +45,10 @@ function MyOrders() {
           <div className="d-flex justify-content-between align-items-center">
             <h3 className="mb-0">
               <i className="fas fa-shopping-bag me-2"></i>
-              My Orders
+              Mes Commandes
             </h3>
             <Badge bg="light" text="dark" pill className="px-3 py-2 fs-6">
-              {orders ? orders.length : 0} Orders
+              {orders ? orders.length : 0} Commandes
             </Badge>
           </div>
         </Card.Header>
@@ -66,13 +66,14 @@ function MyOrders() {
           ) : orders && orders.length === 0 ? (
             <div className="text-center py-5">
               <i className="fas fa-shopping-cart fa-4x mb-3 text-muted"></i>
-              <h4 className="mb-3">You haven't placed any orders yet</h4>
+              <h4 className="mb-3">Vous n'avez encore passé aucune commande</h4>
               <p className="text-muted mb-4">
-                Browse our products and place your first order today!
+                Parcourez nos produits et passez votre première commande
+                aujourd'hui !
               </p>
               <Link to="/" className="btn btn-primary px-4 py-2">
                 <i className="fas fa-store me-2"></i>
-                Start Shopping
+                Commencer les Achats
               </Link>
             </div>
           ) : (
@@ -82,7 +83,7 @@ function MyOrders() {
                   <Col md={6} lg={4} key={order.id} className="mb-4">
                     <Card className="h-100 shadow-sm border-0 order-card">
                       <Card.Header className="d-flex justify-content-between align-items-center bg-light">
-                        <h5 className="mb-0">Order #{order.id}</h5>
+                        <h5 className="mb-0">Commande #{order.id}</h5>
                         <small className="text-muted">
                           {formatDate(order.createdAt)}
                         </small>
@@ -91,17 +92,19 @@ function MyOrders() {
                       <Card.Body className="d-flex flex-column">
                         <div className="mb-3">
                           <div className="d-flex justify-content-between mb-2">
-                            <span className="text-muted">Order Total:</span>
+                            <span className="text-muted">Total Commande:</span>
                             <span className="fw-bold">
                               {order.totalPrice} DZD
                             </span>
                           </div>
 
                           <div className="d-flex justify-content-between mb-2">
-                            <span className="text-muted">Payment Status:</span>
+                            <span className="text-muted">
+                              Statut de Paiement:
+                            </span>
                             {order.isPaid ? (
                               <Badge bg="success" pill className="px-3 py-2">
-                                <i className="fas fa-check me-1"></i> Paid
+                                <i className="fas fa-check me-1"></i> Payé
                               </Badge>
                             ) : (
                               <Badge
@@ -110,16 +113,18 @@ function MyOrders() {
                                 pill
                                 className="px-3 py-2"
                               >
-                                <i className="fas fa-clock me-1"></i> Pending
+                                <i className="fas fa-clock me-1"></i> En Attente
                               </Badge>
                             )}
                           </div>
 
                           <div className="d-flex justify-content-between">
-                            <span className="text-muted">Delivery Status:</span>
+                            <span className="text-muted">
+                              Statut de Livraison:
+                            </span>
                             {order.isDelivered ? (
                               <Badge bg="success" pill className="px-3 py-2">
-                                <i className="fas fa-truck me-1"></i> Delivered
+                                <i className="fas fa-truck me-1"></i> Livré
                               </Badge>
                             ) : (
                               <Badge
@@ -128,7 +133,8 @@ function MyOrders() {
                                 pill
                                 className="px-3 py-2"
                               >
-                                <i className="fas fa-dolly me-1"></i> Processing
+                                <i className="fas fa-dolly me-1"></i> En
+                                Traitement
                               </Badge>
                             )}
                           </div>

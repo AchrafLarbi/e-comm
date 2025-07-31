@@ -28,6 +28,9 @@ urlpatterns = [
     path("api/users/",include('base.urls.users_urls')),
     path("api/products/",include('base.urls.products_urls')),
     path("api/orders/",include('base.urls.orders_urls')),
+    
+    # Backend management and monitoring routes
+    path("api/", include('backend.management_urls')),
     # this to make react app as the main template for the project
     # and render the index.html file # setup static files and templates in settings.py 
     # path ('',TemplateView.as_view(template_name='index.html')),

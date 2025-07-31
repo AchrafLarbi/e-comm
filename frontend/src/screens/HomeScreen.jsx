@@ -14,15 +14,14 @@ import ProductsCarousel from "../components/ProductsCarousel/ProductsCarousel";
 function HomeScreen() {
   // get search keyword from the url
   const searchQuery = window.location ? window.location.search : "";
-  var keyword = '';
+  var keyword = "";
   if (searchQuery) {
-     keyword = searchQuery.split("keyword=")[1].split("&")[0] || "";
+    keyword = searchQuery.split("keyword=")[1].split("&")[0] || "";
   }
 
   const dispatch = useDispatch();
   const products_List = useSelector((state) => state.productsList);
   const { loading, products, error, pages, page } = products_List;
-
 
   useEffect(() => {
     dispatch(productsListAction(searchQuery));
@@ -33,7 +32,7 @@ function HomeScreen() {
       <div className="mb-4">
         <SearchBox />
       </div>
-      
+
       {loading ? (
         <Loader />
       ) : error ? (
@@ -41,8 +40,11 @@ function HomeScreen() {
       ) : products && products.length === 0 ? (
         <div className="text-center py-5">
           <Message variant="info">
-            <h4>No Products Found</h4>
-            <p className="mt-2">Try a different search term or browse our categories</p>
+            <h4>Aucun Produit Trouvé</h4>
+            <p className="mt-2">
+              Essayez un terme de recherche différent ou parcourez nos
+              catégories
+            </p>
           </Message>
         </div>
       ) : (
@@ -51,27 +53,36 @@ function HomeScreen() {
           {!searchQuery && (
             <>
               <div className="mb-4">
-                <h2 className="text-primary mb-3">Top Rated Products</h2>
+                <h2 className="text-primary mb-3">Produits les Mieux Notés</h2>
                 <ProductsCarousel />
               </div>
             </>
           )}
-          
+
           <div className="my-4">
             <h2 className={searchQuery ? "mb-4" : "mb-4"}>
-              {searchQuery ? `Search Results${keyword ? ` for "${keyword}"` : ""}` : "Latest Products"}
+              {searchQuery
+                ? `Résultats de Recherche${keyword ? ` pour "${keyword}"` : ""}`
+                : "Derniers Produits"}
             </h2>
             <Row>
-              {products && 
-               products.length > 0 && 
-               products.map((productitem) => (
-                <Col key={productitem.id} sm={12} md={6} lg={4} xl={3} className="mb-4">
-                  <Product product={productitem} />
-                </Col>
-              ))}
+              {products &&
+                products.length > 0 &&
+                products.map((productitem) => (
+                  <Col
+                    key={productitem.id}
+                    sm={12}
+                    md={6}
+                    lg={4}
+                    xl={3}
+                    className="mb-4"
+                  >
+                    <Product product={productitem} />
+                  </Col>
+                ))}
             </Row>
           </div>
-          
+
           <div className="d-flex justify-content-center mt-4">
             <Paginator pages={pages} page={page} keyword={keyword} />
           </div>

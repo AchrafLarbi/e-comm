@@ -85,13 +85,13 @@ function OrdersListScreen() {
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb">
               <li className="breadcrumb-item">
-                <Link to="/">Home</Link>
+                <Link to="/">Accueil</Link>
               </li>
               <li className="breadcrumb-item">
                 <Link to="/admin">Admin</Link>
               </li>
               <li className="breadcrumb-item active" aria-current="page">
-                Orders
+                Commandes
               </li>
             </ol>
           </nav>
@@ -103,7 +103,8 @@ function OrdersListScreen() {
           <Row>
             <Col>
               <h3>
-                <i className="fas fa-shopping-cart me-2"></i> Orders Management
+                <i className="fas fa-shopping-cart me-2"></i> Gestion des
+                Commandes
               </h3>
             </Col>
           </Row>
@@ -112,7 +113,7 @@ function OrdersListScreen() {
           <Row className="mb-3 align-items-center">
             <Col md={6}>
               <h5>
-                Total Orders:{" "}
+                Total Commandes:{" "}
                 <Badge bg="secondary">{filteredOrders.length}</Badge>
               </h5>
             </Col>
@@ -123,7 +124,7 @@ function OrdersListScreen() {
                 </InputGroup.Text>
                 <Form.Control
                   type="text"
-                  placeholder="Search by customer name or order ID"
+                  placeholder="Rechercher par nom de client ou ID de commande"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -142,11 +143,11 @@ function OrdersListScreen() {
                   <thead className="bg-light">
                     <tr>
                       <th>ID</th>
-                      <th>CUSTOMER</th>
+                      <th>CLIENT</th>
                       <th>DATE</th>
                       <th>TOTAL</th>
-                      <th>PAYMENT STATUS</th>
-                      <th>DELIVERY STATUS</th>
+                      <th>STATUT PAIEMENT</th>
+                      <th>STATUT LIVRAISON</th>
                       <th>ACTIONS</th>
                     </tr>
                   </thead>
@@ -163,24 +164,24 @@ function OrdersListScreen() {
                           <td>
                             {order.isPaid ? (
                               <Badge bg="success">
-                                Paid on{" "}
+                                Payé le{" "}
                                 {new Date(order.paidAt).toLocaleDateString()}
                               </Badge>
                             ) : (
-                              <Badge bg="danger">Not Paid</Badge>
+                              <Badge bg="danger">Non Payé</Badge>
                             )}
                           </td>
                           <td>
                             {order.isDelivered ? (
                               <Badge bg="success">
-                                Delivered on{" "}
+                                Livré le{" "}
                                 {new Date(
                                   order.deliveredAt
                                 ).toLocaleDateString()}
                               </Badge>
                             ) : (
                               <Badge bg="warning" text="dark">
-                                Pending
+                                En Attente
                               </Badge>
                             )}
                           </td>
@@ -190,7 +191,7 @@ function OrdersListScreen() {
                                 className="btn-sm me-2"
                                 variant="outline-primary"
                               >
-                                <i className="fas fa-eye"></i> View
+                                <i className="fas fa-eye"></i> Voir
                               </Button>
                             </Link>
                           </td>

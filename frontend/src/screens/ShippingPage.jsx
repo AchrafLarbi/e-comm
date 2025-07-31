@@ -29,56 +29,56 @@ function ShippingPage() {
   return (
     <div>
       <CheckoutSteps step1 step2 />
-      <h1>Shipping</h1>
+      <h1>Livraison</h1>
 
       <Form onSubmit={submitHandler}>
         <Form.Group controlId="address">
-          <Form.Label>Address</Form.Label>
+          <Form.Label>Adresse</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Enter Address"
+            placeholder="Entrez l'adresse"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
           ></Form.Control>
         </Form.Group>
         <Form.Group controlId="city">
-          <Form.Label>City</Form.Label>
+          <Form.Label>Ville</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Enter City"
+            placeholder="Entrez la ville"
             value={city}
             onChange={(e) => setCity(e.target.value)}
           ></Form.Control>
         </Form.Group>
         <Form.Group controlId="postalCode">
-          <Form.Label>Postal Code</Form.Label>
+          <Form.Label>Code Postal</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Enter Postal Code"
+            placeholder="Entrez le code postal"
             value={postalCode}
             onChange={(e) => setPostalCode(e.target.value)}
           ></Form.Control>
         </Form.Group>
         <Form.Group controlId="country">
-          <Form.Label>Country</Form.Label>
+          <Form.Label>Pays</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Enter Country"
+            placeholder="Entrez le pays"
             value={country}
             onChange={(e) => setCountry(e.target.value)}
           ></Form.Control>
         </Form.Group>
         <Form.Group controlId="phone">
-          <Form.Label>Phone Number</Form.Label>
+          <Form.Label>Numéro de Téléphone</Form.Label>
           <Form.Control
             type="tel"
-            placeholder="Enter Phone Number"
+            placeholder="Entrez le numéro de téléphone"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           ></Form.Control>
         </Form.Group>
         <Button type="submit" variant="primary">
-          Continue
+          Continuer
         </Button>
       </Form>
     </div>

@@ -24,7 +24,7 @@ function AdminDashboard() {
   if (!userInfo || !userInfo.isAdmin) {
     return (
       <Container>
-        <Message variant="danger">Access Denied. Admin Only.</Message>
+        <Message variant="danger">Accès Refusé. Admin Seulement.</Message>
       </Container>
     );
   }
@@ -110,7 +110,7 @@ function AdminDashboard() {
                                 order.isPaid ? "bg-success" : "bg-warning"
                               }`}
                             >
-                              {order.isPaid ? "Paid" : "Unpaid"}
+                              {order.isPaid ? "Payé" : "Non Payé"}
                             </span>
                           </td>
                           <td>
@@ -121,7 +121,7 @@ function AdminDashboard() {
                                   : "bg-secondary"
                               }`}
                             >
-                              {order.isDelivered ? "Delivered" : "Pending"}
+                              {order.isDelivered ? "Livré" : "En Attente"}
                             </span>
                           </td>
                           <td>

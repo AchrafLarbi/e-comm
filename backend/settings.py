@@ -111,8 +111,11 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # added middlware
     "corsheaders.middleware.CorsMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",   
-
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    # Backend management middleware
+    "backend.middleware.BackendKeepAliveMiddleware",
+    "backend.middleware.HealthCheckMiddleware",
+    "backend.middleware.CORSAndSecurityMiddleware",
 ]
 
 ROOT_URLCONF = "backend.urls"
@@ -264,3 +267,34 @@ else:
     "http://127.0.0.1:8000", 
     ]
     CORS_ALLOW_ALL_ORIGINS=True
+
+# Backend management settings
+import time
+SERVER_START_TIME = time.time()
+FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://localhost:3000')
+
+# Logging configuration for backend management
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': 'backend.log',
+        },
+    },
+    'root': {
+        'handlers': ['console', 'file'],
+        'level': 'INFO',
+    },
+    'loggers': {
+        'backend.middleware': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+}

@@ -100,7 +100,7 @@ function ProductsListScreen() {
           <Card.Header className="bg-light">
             <Row className="align-items-center">
               <Col>
-                <h5 className="mb-0">Products List</h5>
+                <h5 className="mb-0">Liste des Produits</h5>
               </Col>
               <Col xs="auto">
                 <Form.Select
@@ -108,10 +108,10 @@ function ProductsListScreen() {
                   onChange={(e) => setFilter(e.target.value)}
                   className="form-select-sm"
                 >
-                  <option value="all">All Categories</option>
-                  <option value="electronics">Electronics</option>
-                  <option value="clothing">Clothing</option>
-                  <option value="books">Books</option>
+                  <option value="all">Toutes les Catégories</option>
+                  <option value="electronics">Électronique</option>
+                  <option value="clothing">Vêtements</option>
+                  <option value="books">Livres</option>
                 </Form.Select>
               </Col>
             </Row>
@@ -122,10 +122,10 @@ function ProductsListScreen() {
                 <thead className="bg-light">
                   <tr>
                     <th>ID</th>
-                    <th>PRODUCT</th>
-                    <th>PRICE</th>
-                    <th>CATEGORY</th>
-                    <th>BRAND</th>
+                    <th>PRODUIT</th>
+                    <th>PRIX</th>
+                    <th>CATÉGORIE</th>
+                    <th>MARQUE</th>
                     <th>STOCK</th>
                     <th className="text-center">ACTIONS</th>
                   </tr>
@@ -184,11 +184,11 @@ function ProductsListScreen() {
                       <td>
                         {product.countInStock > 0 ? (
                           <Badge bg="success" pill>
-                            In Stock ({product.countInStock})
+                            En Stock ({product.countInStock})
                           </Badge>
                         ) : (
                           <Badge bg="danger" pill>
-                            Out of Stock
+                            Rupture de Stock
                           </Badge>
                         )}
                       </td>
@@ -215,7 +215,7 @@ function ProductsListScreen() {
                                 <i className="fas fa-trash-alt me-1"></i> Delete
                               </Button>
                             }
-                            title="Delete Product"
+                            title="Supprimer le Produit"
                           />
 
                           <Button
