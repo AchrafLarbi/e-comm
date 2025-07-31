@@ -72,7 +72,7 @@ function Haeder() {
             <div className="d-flex justify-content-center align-items-center mt-3 mt-md-0 text-white">
               {userInfo ? (
                 <NavDropdown
-                  className="d-none d-md-block fw-semibold"
+                  className="fw-semibold"
                   title={
                     <span>
                       <i className="fa fa-user me-1"></i> {userInfo.name}
