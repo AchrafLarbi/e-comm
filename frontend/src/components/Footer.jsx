@@ -14,10 +14,10 @@ function Footer() {
   return (
     <footer
       style={{
-        background: 'linear-gradient(135deg, var(--syra-green) 70%, var(--syra-burgundy) 100%)',
-        color: 'var(--syra-gold)',
-        marginTop: '3rem',
-        fontFamily: 'Nunito Sans, Arial, sans-serif',
+        background:
+          "linear-gradient(135deg, var(--syra-green) 70%, var(--syra-burgundy) 100%)",
+        color: "var(--syra-gold)",
+        fontFamily: "Nunito Sans, Arial, sans-serif",
       }}
     >
       <Container>
@@ -26,7 +26,12 @@ function Footer() {
           <Col lg={3} md={6} className="mb-4">
             <h6
               className="text-uppercase fw-bold mb-4"
-              style={{ fontFamily: 'Playfair Display, serif', color: 'var(--syra-gold)', letterSpacing: '0.1em', fontWeight: 700 }}
+              style={{
+                fontFamily: "Playfair Display, serif",
+                color: "var(--syra-gold)",
+                letterSpacing: "0.1em",
+                fontWeight: 700,
+              }}
             >
               CONTACT
             </h6>
@@ -44,7 +49,12 @@ function Footer() {
           <Col lg={2} md={6} className="mb-4">
             <h6
               className="text-uppercase fw-bold mb-4"
-              style={{ fontFamily: 'Playfair Display, serif', color: 'var(--syra-gold)', letterSpacing: '0.1em', fontWeight: 700 }}
+              style={{
+                fontFamily: "Playfair Display, serif",
+                color: "var(--syra-gold)",
+                letterSpacing: "0.1em",
+                fontWeight: 700,
+              }}
             >
               MENU
             </h6>
@@ -110,7 +120,12 @@ function Footer() {
           <Col lg={4} md={6} className="mb-4">
             <h6
               className="text-uppercase fw-bold mb-4"
-              style={{ fontFamily: 'Playfair Display, serif', color: 'var(--syra-gold)', letterSpacing: '0.1em', fontWeight: 700 }}
+              style={{
+                fontFamily: "Playfair Display, serif",
+                color: "var(--syra-gold)",
+                letterSpacing: "0.1em",
+                fontWeight: 700,
+              }}
             >
               RECENT POSTS
             </h6>
@@ -149,7 +164,12 @@ function Footer() {
           <Col lg={3} md={6} className="mb-4">
             <h6
               className="text-uppercase fw-bold mb-4"
-              style={{ fontFamily: 'Playfair Display, serif', color: 'var(--syra-gold)', letterSpacing: '0.1em', fontWeight: 700 }}
+              style={{
+                fontFamily: "Playfair Display, serif",
+                color: "var(--syra-gold)",
+                letterSpacing: "0.1em",
+                fontWeight: 700,
+              }}
             >
               NEWSLETTER
             </h6>
@@ -233,7 +253,14 @@ function Footer() {
         {/* Bottom Section */}
         <Row className="py-3" style={{ borderTop: "1px solid #444" }}>
           <Col className="text-center">
-            <p className="mb-0" style={{ color: 'var(--syra-gold)', fontSize: '0.9rem', fontFamily: 'Nunito Sans, Arial, sans-serif' }}>
+            <p
+              className="mb-0"
+              style={{
+                color: "var(--syra-gold)",
+                fontSize: "0.9rem",
+                fontFamily: "Nunito Sans, Arial, sans-serif",
+              }}
+            >
               © 2025 Maison SYRA. Built using Django and React.
             </p>
           </Col>
