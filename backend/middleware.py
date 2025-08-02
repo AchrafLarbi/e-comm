@@ -7,6 +7,14 @@ from django.http import JsonResponse
 from django.utils.deprecation import MiddlewareMixin
 from django.conf import settings
 import logging
+import os
+
+# Import render keep-alive service
+try:
+    from .render_keepalive import render_keep_alive, start_render_keep_alive
+except ImportError:
+    render_keep_alive = None
+    start_render_keep_alive = None
 
 logger = logging.getLogger(__name__)
 
@@ -23,6 +31,13 @@ class BackendKeepAliveMiddleware(MiddlewareMixin):
         
         # Start background keep-alive thread
         self.start_keep_alive_thread()
+        
+        # Start Render keep-alive service if on Render
+        if start_render_keep_alive:
+            is_render_started = start_render_keep_alive()
+            if is_render_started:
+                logger.info("🌐 Render keep-alive service initialized")
+        
         super().__init__(get_response)
     
     def start_keep_alive_thread(self):

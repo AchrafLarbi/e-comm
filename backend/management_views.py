@@ -12,6 +12,12 @@ import os
 import sys
 from django.conf import settings
 
+# Import render keep-alive service
+try:
+    from .render_keepalive import render_keep_alive
+except ImportError:
+    render_keep_alive = None
+
 
 @method_decorator([csrf_exempt, never_cache], name='dispatch')
 class HealthCheckView(View):
@@ -47,6 +53,8 @@ class HealthCheckView(View):
                     'debug_mode': settings.DEBUG,
                     'database_connected': self.check_database_connection(),
                     'static_files_accessible': self.check_static_files(),
+                    'render_deployment': self.is_render_deployment(),
+                    'render_keep_alive': self.get_render_keep_alive_status(),
                 }
             }
             
@@ -78,6 +86,16 @@ class HealthCheckView(View):
             return False
         except Exception:
             return False
+    
+    def is_render_deployment(self):
+        """Check if running on Render"""
+        return bool(os.environ.get('RENDER_EXTERNAL_URL') or os.environ.get('RENDER_SERVICE_NAME'))
+    
+    def get_render_keep_alive_status(self):
+        """Get Render keep-alive service status"""
+        if render_keep_alive and self.is_render_deployment():
+            return render_keep_alive.get_status()
+        return None
 
 
 @method_decorator([csrf_exempt, never_cache], name='dispatch')
@@ -103,12 +121,22 @@ class KeepAliveView(View):
     
     def get(self, request):
         """Handle keep-alive requests"""
-        return JsonResponse({
+        response_data = {
             'status': 'alive',
             'message': 'Server is active and responding',
             'timestamp': time.time(),
             'uptime': time.time() - getattr(settings, 'SERVER_START_TIME', time.time())
-        })
+        }
+        
+        # Add Render-specific information
+        if os.environ.get('RENDER_EXTERNAL_URL'):
+            response_data['render_info'] = {
+                'deployment_url': os.environ.get('RENDER_EXTERNAL_URL'),
+                'service_name': os.environ.get('RENDER_SERVICE_NAME', 'unknown'),
+                'keep_alive_active': render_keep_alive.is_active if render_keep_alive else False
+            }
+        
+        return JsonResponse(response_data)
     
     def post(self, request):
         """Handle keep-alive ping requests"""
