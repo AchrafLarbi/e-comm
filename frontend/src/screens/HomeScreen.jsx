@@ -75,6 +75,7 @@ function HomeScreen() {
             <h1 className={styles.heroTitle}>
               <span className={styles.animatedText}>MAISON DE SYRA</span>
             </h1>
+            <div className={styles.heroTagline}>L'artisanat, l'élégance, l'âme</div>
             <p className={styles.heroSubtitle}>
               Découvrez l'élégance, la créativité et l'authenticité. Explorez nos produits les mieux notés et les dernières tendances.
             </p>
