@@ -31,6 +31,7 @@ function Haeder() {
           background:
             "linear-gradient(135deg, var(--syra-green) 70%, var(--syra-burgundy) 100%)",
           color: "var(--syra-gold)",
+          fontFamily: "Inter, sans-serif"
         }}
         variant="dark"
         collapseOnSelect
@@ -184,6 +185,9 @@ function Haeder() {
       </Navbar>
 
       <style jsx>{`
+        .navbar, .nav-link, .navbar-brand, .dropdown-menu, .dropdown-item, .navbar-nav, .nav-dropdown, .btn, .btn * {
+          font-family: 'Inter', sans-serif !important;
+        }
         .nav-link-hover:hover {
           transform: translateY(-2px);
           transition: all 0.3s ease;

@@ -17,7 +17,7 @@ function Footer() {
         background:
           "linear-gradient(135deg, var(--syra-green) 70%, var(--syra-burgundy) 100%)",
         color: "var(--syra-gold)",
-        fontFamily: "Nunito Sans, Arial, sans-serif",
+        fontFamily: "Inter, sans-serif",
       }}
     >
       <Container>
@@ -27,7 +27,7 @@ function Footer() {
             <h6
               className="text-uppercase fw-bold mb-4"
               style={{
-                fontFamily: "Playfair Display, serif",
+                fontFamily: "Inter, sans-serif",
                 color: "var(--syra-gold)",
                 letterSpacing: "0.1em",
                 fontWeight: 700,
@@ -50,7 +50,7 @@ function Footer() {
             <h6
               className="text-uppercase fw-bold mb-4"
               style={{
-                fontFamily: "Playfair Display, serif",
+                fontFamily: "Inter, sans-serif",
                 color: "var(--syra-gold)",
                 letterSpacing: "0.1em",
                 fontWeight: 700,
@@ -121,7 +121,7 @@ function Footer() {
             <h6
               className="text-uppercase fw-bold mb-4"
               style={{
-                fontFamily: "Playfair Display, serif",
+                fontFamily: "Inter, sans-serif",
                 color: "var(--syra-gold)",
                 letterSpacing: "0.1em",
                 fontWeight: 700,
@@ -165,7 +165,7 @@ function Footer() {
             <h6
               className="text-uppercase fw-bold mb-4"
               style={{
-                fontFamily: "Playfair Display, serif",
+                fontFamily: "Inter, sans-serif",
                 color: "var(--syra-gold)",
                 letterSpacing: "0.1em",
                 fontWeight: 700,
@@ -258,7 +258,7 @@ function Footer() {
               style={{
                 color: "var(--syra-gold)",
                 fontSize: "0.9rem",
-                fontFamily: "Nunito Sans, Arial, sans-serif",
+                fontFamily: "Inter, sans-serif",
               }}
             >
               © 2025 Maison SYRA. Built using Django and React.
