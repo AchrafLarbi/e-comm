@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { FaShoppingCart, FaSearch, FaEye } from "react-icons/fa";
 
 import Loader from "../components/Loader";
 import Message from "../components/Message";
@@ -103,8 +104,7 @@ function OrdersListScreen() {
           <Row>
             <Col>
               <h3>
-                <i className="fas fa-shopping-cart me-2"></i> Gestion des
-                Commandes
+                <FaShoppingCart className="me-2" /> Gestion des Commandes
               </h3>
             </Col>
           </Row>
@@ -120,7 +120,7 @@ function OrdersListScreen() {
             <Col md={6}>
               <InputGroup>
                 <InputGroup.Text>
-                  <i className="fas fa-search"></i>
+                  <FaSearch />
                 </InputGroup.Text>
                 <Form.Control
                   type="text"
@@ -191,7 +191,7 @@ function OrdersListScreen() {
                                 className="btn-sm me-2"
                                 variant="outline-primary"
                               >
-                                <i className="fas fa-eye"></i> Voir
+                                <FaEye className="me-1" /> Voir
                               </Button>
                             </Link>
                           </td>

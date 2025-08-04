@@ -138,51 +138,10 @@ function HomeScreen() {
               </div>
             </div>
             {/* Right Side: Product & Stats */}
-            <div className={styles.heroEditorialRight}>
-              <div className={styles.heroEditorialProductShowcase}>
-                {/* Single Product Display */}
-                {products && products.length > 0 && (
-                  <div className={styles.heroEditorialMainProduct}>
-                    <img
-                      src={products[currentProductIndex]?.image}
-                      alt={products[currentProductIndex]?.name}
-                      className={styles.heroEditorialMainImage}
-                    />
-                    <span className={styles.heroEditorialDiscountBadge}>
-                      30%
-                      <br />
-                      OFF
-                    </span>
-                  </div>
-                )}
-              </div>
-              {/* Navigation dots */}
-              <div className={styles.heroEditorialNavigation}>
-                {loading ? (
-                  <Loader />
-                ) : error ? (
-                  <Message variant="danger">{error}</Message>
-                ) : (
-                  products &&
-                  products
-                    .slice(0, 4)
-                    .map((_, index) => (
-                      <button
-                        key={index}
-                        className={`${styles.heroEditorialNavDot} ${
-                          currentProductIndex === index ? styles.active : ""
-                        }`}
-                        onClick={() => handleProductNavigation(index)}
-                      ></button>
-                    ))
-                )}
-                <button
-                  className={styles.heroEditorialNavNext}
-                  onClick={handleNextProduct}
-                >
-                  →
-                </button>
-              </div>
+            <div className="mb-4">
+              <h2 className="text-primary mb-3">Produits les Mieux Notés</h2>
+
+              <ProductsCarousel />
             </div>
           </div>
         </section>

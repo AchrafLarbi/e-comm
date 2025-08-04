@@ -11,6 +11,7 @@ import {
   Form,
   Badge,
 } from "react-bootstrap";
+import { FaArrowLeft, FaShoppingCart, FaCreditCard } from "react-icons/fa";
 import Rating from "../components/Rating";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
@@ -89,7 +90,7 @@ function ProductPage() {
 
     <div>
       <Link to="/" className="btn btn-outline-secondary my-3">
-        <i className="fas fa-arrow-left me-2"></i> Retour aux Produits
+        <FaArrowLeft className="me-2" /> Retour aux Produits
       </Link>
       {loading ? (
         <Loader></Loader>
@@ -221,8 +222,7 @@ function ProductPage() {
                         disabled={product.countInStock === 0}
                         onClick={addToCartHandler}
                       >
-                        <i className="fas fa-shopping-cart me-2"></i> Ajouter au
-                        Panier
+                        <FaShoppingCart className="me-2" /> Ajouter au Panier
                       </Button>
 
                       <Button
@@ -232,8 +232,7 @@ function ProductPage() {
                         disabled={product.countInStock === 0}
                         onClick={checkoutHandler}
                       >
-                        <i className="fas fa-credit-card me-2"></i> Commander
-                        Maintenant
+                        <FaCreditCard className="me-2" /> Commander Maintenant
                       </Button>
                     </div>
                   </ListGroup.Item>

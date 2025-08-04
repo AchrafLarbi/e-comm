@@ -2,6 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Col, ListGroup, Row, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import {
+  FaShippingFast,
+  FaCreditCard,
+  FaShoppingBag,
+  FaCheckCircle,
+  FaTruck,
+  FaUpload,
+  FaTimes,
+  FaCamera,
+} from "react-icons/fa";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import {
@@ -152,7 +162,10 @@ function OrderScreen() {
           <Col md={8}>
             <ListGroup variant="flush">
               <ListGroup.Item>
-                <h2>Shipping</h2>
+                <h2>
+                  <FaShippingFast className="me-2" />
+                  Shipping
+                </h2>
                 <p>
                   <strong>Name: </strong>
                   {order.user.name}
@@ -200,7 +213,10 @@ function OrderScreen() {
                 )}
               </ListGroup.Item>
               <ListGroup.Item>
-                <h2>Payment Method</h2>
+                <h2>
+                  <FaCreditCard className="me-2" />
+                  Payment Method
+                </h2>
                 <strong>Method: </strong>
                 {order.paymentMethod}
                 {order.isPaid ? (
@@ -210,7 +226,10 @@ function OrderScreen() {
                 )}
               </ListGroup.Item>
               <ListGroup.Item>
-                <h2>Order Items</h2>
+                <h2>
+                  <FaShoppingBag className="me-2" />
+                  Order Items
+                </h2>
                 {order.orderItems.length === 0 ? (
                   <Message variant="info">Votre commande est vide</Message>
                 ) : (
@@ -280,6 +299,7 @@ function OrderScreen() {
                         onClick={markAsPaidHandler}
                         disabled={loadingPay}
                       >
+                        <FaCheckCircle className="me-2" />
                         {loadingPay
                           ? "Traitement..."
                           : "Marquer Paiement Effectué"}
@@ -301,6 +321,7 @@ function OrderScreen() {
                               className="btn btn-primary w-100 mb-2"
                               onClick={() => setShowImageUpload(true)}
                             >
+                              <FaTruck className="me-2" />
                               Mark As Delivered
                             </Button>
                             <Button
@@ -308,6 +329,7 @@ function OrderScreen() {
                               className="btn btn-outline-primary w-100"
                               onClick={deliverHandler}
                             >
+                              <FaCheckCircle className="me-2" />
                               Mark As Delivered (No Image)
                             </Button>
                           </div>
@@ -315,6 +337,7 @@ function OrderScreen() {
                           <div>
                             <Form.Group className="mb-3">
                               <Form.Label>
+                                <FaCamera className="me-2" />
                                 Upload Delivery Proof Image
                               </Form.Label>
                               <Form.Control
@@ -330,6 +353,7 @@ function OrderScreen() {
                                 onClick={deliverHandler}
                                 disabled={!deliveryImage}
                               >
+                                <FaUpload className="me-2" />
                                 Confirm Delivery
                               </Button>
                               <Button
@@ -340,6 +364,7 @@ function OrderScreen() {
                                   setDeliveryImage(null);
                                 }}
                               >
+                                <FaTimes className="me-2" />
                                 Cancel
                               </Button>
                             </div>
