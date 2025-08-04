@@ -4,7 +4,6 @@
   text-align: center;
 }
 .aboutTitle {
-  font-family: 'Playfair Display', serif;
   font-size: 2.5rem;
   font-weight: 700;
   color: #222;
@@ -15,7 +14,6 @@
   color: #555;
   max-width: 700px;
   margin: 0 auto 1.5rem auto;
-  font-family: 'Montserrat', sans-serif;
 }
 
 .valuesSection {
@@ -47,7 +45,6 @@
   margin-bottom: 0.7rem;
 }
 .valueTitle {
-  font-family: 'Playfair Display', serif;
   font-size: 1.2rem;
   font-weight: 600;
   color: #222;
@@ -56,7 +53,6 @@
 .valueText {
   font-size: 1rem;
   color: #666;
-  font-family: 'Montserrat', sans-serif;
 }
 
 .featuredSection {
@@ -64,7 +60,6 @@
   padding: 50px 0 30px 0;
 }
 .featuredTitle {
-  font-family: 'Playfair Display', serif;
   font-size: 2rem;
   font-weight: 700;
   color: #222;
@@ -84,7 +79,6 @@
   text-align: center;
 }
 .testimonialsTitle {
-  font-family: 'Playfair Display', serif;
   font-size: 2rem;
   font-weight: 700;
   color: #222;
@@ -103,7 +97,6 @@
   padding: 1.5rem 1.2rem;
   max-width: 320px;
   text-align: left;
-  font-family: 'Montserrat', sans-serif;
 }
 .testimonialText {
   font-size: 1.05rem;
@@ -114,7 +107,6 @@
   font-size: 0.98rem;
   color: #bfa46b;
   font-weight: 600;
-  font-family: 'Playfair Display', serif;
 }
 
 .newsletterSection {
@@ -123,7 +115,6 @@
   text-align: center;
 }
 .newsletterTitle {
-  font-family: 'Playfair Display', serif;
   font-size: 1.7rem;
   font-weight: 700;
   color: #222;
@@ -133,7 +124,6 @@
   font-size: 1.1rem;
   color: #555;
   margin-bottom: 1.2rem;
-  font-family: 'Montserrat', sans-serif;
 }
 .newsletterForm {
   display: flex;
@@ -148,7 +138,6 @@
   border: 1px solid #ccc;
   font-size: 1rem;
   outline: none;
-  font-family: 'Montserrat', sans-serif;
 }
 .newsletterButton {
   padding: 0.6rem 1.5rem;
@@ -163,6 +152,13 @@
 }
 .newsletterButton:hover {
   background: #a68d4a;
+}
+
+.aboutTitle, .valueTitle, .featuredTitle, .testimonialsTitle, .newsletterTitle {
+  font-family: 'Inter', sans-serif;
+}
+.aboutText, .valueText, .featuredGrid, .testimonialText, .testimonialAuthor, .newsletterText, .newsletterInput, .newsletterButton {
+  font-family: 'Inter', sans-serif;
 }
 
 @media (max-width: 900px) {
