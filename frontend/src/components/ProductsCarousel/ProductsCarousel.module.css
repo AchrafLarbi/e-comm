@@ -1,21 +1,178 @@
-.carousel-caption h4 {
-    color: #fff;
+.carouselWrapper {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  padding: 0 0 16px 0;
+}
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 340px;
+  overflow: hidden;
+  border-radius: 24px;
+  background: linear-gradient(120deg, #f8f9fa 0%, #e9ecef 100%);
+  box-shadow: 0 4px 24px rgba(31,38,135,0.07), 0 1.5px 6px rgba(191,164,107,0.07);
+}
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(60px) scale(0.98);
+  transition: opacity 0.7s cubic-bezier(.4,2,.6,1), transform 0.7s cubic-bezier(.4,2,.6,1);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0) scale(1);
+  z-index: 2;
+}
+.left {
+  opacity: 0;
+  transform: translateX(-60px) scale(0.98);
+}
+.right {
+  opacity: 0;
+  transform: translateX(60px) scale(0.98);
+}
+.slideLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  text-decoration: none;
+}
+.slideImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 24px;
+  background: #f8f9fa;
+  box-shadow: 0 2px 12px rgba(191,164,107,0.07);
+  transition: transform 0.3s cubic-bezier(.4,2,.6,1);
+}
+.slideOverlay {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 0 0 0.5rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  pointer-events: none;
+}
+.slideCaption {
+  background: rgba(255,255,255,0.82);
+  box-shadow: 0 4px 24px rgba(191,164,107,0.09);
+  border-radius: 18px;
+  padding: 1.1rem 2.2rem 1.1rem 2.2rem;
+  margin-bottom: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 220px;
+  max-width: 90%;
+  animation: fadeInUp 1.1s cubic-bezier(.4,2,.6,1);
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
   }
-  
-  .carousel img {
-    display:block;
-    height: 300px;
-    padding: 30px;
-    margin: 40px;
-    border-radius: 50%;
-    margin-left: auto;
-    margin-right: auto;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  .carousel a {
-    margin: 0 auto;
+}
+.slideName {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 0.3rem;
+  text-align: center;
+}
+.slidePrice {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #bfa46b;
+  text-align: center;
+}
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.85);
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  font-size: 1.6rem;
+  color: #bfa46b;
+  box-shadow: 0 2px 8px rgba(191,164,107,0.09);
+  cursor: pointer;
+  z-index: 3;
+  transition: background 0.18s, color 0.18s, transform 0.18s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+}
+.arrow:hover {
+  background: #bfa46b;
+  color: #fff;
+  transform: scale(1.08);
+}
+.leftArrow {
+  left: 18px;
+}
+.rightArrow {
+  right: 18px;
+}
+.dots {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  z-index: 4;
+}
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #e9ecef;
+  border: 2px solid #bfa46b;
+  transition: background 0.18s, border 0.18s;
+  cursor: pointer;
+}
+.activeDot {
+  background: #bfa46b;
+  border: 2px solid #bfa46b;
+}
+@media (max-width: 700px) {
+  .carouselWrapper {
+    max-width: 98vw;
   }
-  @media (max-width: 900px) {
-    .carousel-caption h2 {
-      font-size: 2.5vw;
-    }
+  .carousel {
+    height: 220px;
   }
+  .slideCaption {
+    padding: 0.7rem 1.1rem 0.7rem 1.1rem;
+    min-width: 120px;
+  }
+}
