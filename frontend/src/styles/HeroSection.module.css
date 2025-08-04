@@ -143,6 +143,191 @@
   /* Use burgundy for the bottle accent */
 }
 
+.heroEditorial {
+  padding: 0;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+}
+.heroEditorialGrid {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+  gap: 3.5rem;
+  padding: 48px 0 32px 0;
+}
+.heroEditorialLeft {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-width: 320px;
+  max-width: 520px;
+  z-index: 2;
+}
+.heroEditorialHeadline {
+  font-family: 'Inter', sans-serif;
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: #23253a;
+  line-height: 1.08;
+  margin-bottom: 1.2rem;
+  letter-spacing: -1px;
+}
+.heroEditorialSubtext {
+  font-size: 1.1rem;
+  color: #444;
+  margin-bottom: 1.7rem;
+  font-family: 'Inter', sans-serif;
+  max-width: 420px;
+}
+.heroEditorialCta {
+  display: inline-block;
+  background: #23253a;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 1.08rem;
+  border-radius: 32px;
+  padding: 0.85em 2.2em;
+  text-decoration: none;
+  margin-bottom: 1.5rem;
+  margin-top: 0.2rem;
+  box-shadow: 0 2px 12px rgba(35,37,58,0.08);
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+}
+.heroEditorialCta:hover {
+  background: #bfa46b;
+  color: #23253a;
+  box-shadow: 0 4px 24px rgba(191,164,107,0.18);
+}
+.heroEditorialRatingRow {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 1.2rem;
+}
+.heroEditorialAvatars {
+  display: flex;
+  align-items: center;
+  margin-right: 0.5rem;
+}
+.heroEditorialAvatars img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  object-fit: cover;
+  margin-left: -10px;
+  box-shadow: 0 1px 4px rgba(35,37,58,0.08);
+  background: #eee;
+}
+.heroEditorialAvatars img:first-child {
+  margin-left: 0;
+}
+.heroEditorialRatingStar {
+  color: #ffb300;
+  font-size: 1.2rem;
+  margin-right: 0.2rem;
+}
+.heroEditorialRatingText {
+  color: #444;
+  font-size: 1.02rem;
+  font-family: 'Inter', sans-serif;
+}
+.heroEditorialInfoBox {
+  background: #fff6e6;
+  color: #23253a;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.01rem;
+  border-radius: 18px;
+  padding: 0.7em 1.5em;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 2px 8px rgba(191,164,107,0.07);
+  border: 1.5px solid #f3e3c2;
+  display: inline-block;
+}
+.heroEditorialArrow {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+.heroEditorialRight {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 2.2rem;
+  min-width: 320px;
+  justify-content: center;
+}
+.heroEditorialImageWrap {
+  position: relative;
+  width: 180px;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 90px / 130px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(35,37,58,0.13);
+  background: #eee;
+}
+.heroEditorialImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 90px / 130px;
+  display: block;
+}
+.heroEditorialDiscountBadge {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  background: #bfa46b;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  padding: 0.5em 1.1em;
+  border-radius: 18px;
+  box-shadow: 0 2px 8px rgba(191,164,107,0.13);
+  z-index: 2;
+  text-align: center;
+  line-height: 1.1;
+  letter-spacing: 0.5px;
+}
+@media (max-width: 900px) {
+  .heroEditorialGrid {
+    flex-direction: column;
+    gap: 2.5rem;
+    padding: 32px 0 16px 0;
+  }
+  .heroEditorialLeft, .heroEditorialRight {
+    min-width: 0;
+    max-width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+  .heroEditorialHeadline {
+    font-size: 2.1rem;
+  }
+  .heroEditorialImageWrap {
+    width: 120px;
+    height: 170px;
+    border-radius: 60px / 85px;
+  }
+  .heroEditorialImage {
+    border-radius: 60px / 85px;
+  }
+}
+
 @media (max-width: 768px) {
   .heroTitle {
     font-size: 2.1rem;

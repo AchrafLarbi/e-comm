@@ -69,25 +69,53 @@ function HomeScreen() {
     <div className={landingStyles.landingBg}>
       {/* Hero Section */}
       {!searchQuery && (
-        <section className={styles.heroSection}>
-          {/* Gold brushstroke SVG accent behind brand name */}
-          <svg className={styles.heroBrushstroke} viewBox="0 0 320 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 28C80 8 240 8 310 28" stroke="#bfa46b" strokeWidth="16" strokeLinecap="round"/>
-          </svg>
-          <div className={styles.heroContent}>
-            <h1 className={styles.heroTitle}>
-              <span className={styles.animatedText}>MAISON DE SYRA</span>
-            </h1>
-            <div className={styles.heroTagline}>L'artisanat, l'élégance, l'âme</div>
-            <p className={styles.heroSubtitle}>
-              Découvrez l'élégance, la créativité et l'authenticité. Explorez nos produits les mieux notés et les dernières tendances.
-            </p>
-            <a href="#products" className={styles.ctaButton}>
-              Découvrir la Collection
-            </a>
-          </div>
-          <div className={styles.heroCarouselWrapper}>
-            <ProductsCarousel />
+        <section className={styles.heroSection + ' ' + styles.heroEditorial}>
+          <div className={styles.heroEditorialGrid}>
+            {/* Left Side: Text */}
+            <div className={styles.heroEditorialLeft}>
+              <h1 className={styles.heroEditorialHeadline}>
+                Smell is a word<br />Perfume is<br />Literature
+              </h1>
+              <p className={styles.heroEditorialSubtext}>
+                Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit.
+              </p>
+              <a href="#products" className={styles.heroEditorialCta}>Learn More</a>
+              <div className={styles.heroEditorialRatingRow}>
+                <div className={styles.heroEditorialAvatars}>
+                  <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="avatar1" />
+                  <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="avatar2" />
+                  <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="avatar3" />
+                  <img src="https://randomuser.me/api/portraits/women/46.jpg" alt="avatar4" />
+                </div>
+                <span className={styles.heroEditorialRatingStar}>★</span>
+                <span className={styles.heroEditorialRatingText}>5.6 Average session rating</span>
+              </div>
+              <div className={styles.heroEditorialInfoBox}>
+                <span>Our unique production for 100% beauty</span>
+              </div>
+              <svg className={styles.heroEditorialArrow} width="80" height="40" viewBox="0 0 80 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 35 Q40 5 75 35" stroke="#bfa46b" strokeWidth="3" fill="none"/>
+                <circle cx="75" cy="35" r="4" fill="#bfa46b" />
+              </svg>
+            </div>
+            {/* Right Side: Images */}
+            <div className={styles.heroEditorialRight}>
+              <div className={styles.heroEditorialImageWrap}>
+                <img
+                  src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80"
+                  alt="Perfume 1"
+                  className={styles.heroEditorialImage}
+                />
+                <span className={styles.heroEditorialDiscountBadge}>25%<br />DISCOUNT</span>
+              </div>
+              <div className={styles.heroEditorialImageWrap}>
+                <img
+                  src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80"
+                  alt="Perfume 2"
+                  className={styles.heroEditorialImage}
+                />
+              </div>
+            </div>
           </div>
         </section>
       )}
