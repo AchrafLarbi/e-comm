@@ -36,56 +36,48 @@ function Haeder() {
         variant="dark"
         collapseOnSelect
       >
-        <Container fluid className="d-flex flex-row align-items-center justify-content-between position-relative" style={{ minHeight: '80px' }}>
-          {/* Left: Nav links */}
-          <div className="d-flex align-items-center flex-grow-1" style={{ minWidth: 0 }}>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav
-                className="me-auto my-2 my-lg-0"
-                style={{ maxHeight: "100px" }}
-              >
-                <LinkContainer to={userInfo && userInfo.isAdmin ? "/admin" : "/"}>
-                  <Nav.Link
-                    href={userInfo && userInfo.isAdmin ? "/admin" : "/"}
-                    className="me-2 nav-link-hover"
-                  >
-                    <i className="fa fa-home me-1"></i>
-                    {userInfo && userInfo.isAdmin ? "Tableau de Bord" : "Accueil"}
+        <Container fluid>
+          <LinkContainer to="/">
+            <Navbar.Brand className="d-flex align-items-center">
+              <img
+                src="/textlogo.png"
+                alt="Maison SYRA Logo"
+                height="100"
+                className="me-2"
+                style={{ borderRadius: "4px" }}
+              />
+            </Navbar.Brand>
+          </LinkContainer>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav
+              className="me-auto my-2 my-lg-0"
+              style={{ maxHeight: "100px" }}
+            >
+              <LinkContainer to={userInfo && userInfo.isAdmin ? "/admin" : "/"}>
+                <Nav.Link
+                  href={userInfo && userInfo.isAdmin ? "/admin" : "/"}
+                  className="me-2 nav-link-hover"
+                >
+                  <i className="fa fa-home me-1"></i>
+                  {userInfo && userInfo.isAdmin ? "Tableau de Bord" : "Accueil"}
+                </Nav.Link>
+              </LinkContainer>
+              {/* Hide cart for admins */}
+              {(!userInfo || !userInfo.isAdmin) && (
+                <LinkContainer to="cart/">
+                  <Nav.Link className="nav-link-hover">
+                    <i
+                      className="fa fa-cart-shopping me-1 cart-icon"
+                      data-cart-icon
+                    ></i>{" "}
+                    Panier
                   </Nav.Link>
                 </LinkContainer>
-                {/* Hide cart for admins */}
-                {(!userInfo || !userInfo.isAdmin) && (
-                  <LinkContainer to="cart/">
-                    <Nav.Link className="nav-link-hover">
-                      <i
-                        className="fa fa-cart-shopping me-1 cart-icon"
-                        data-cart-icon
-                      ></i>{" "}
-                      Panier
-                    </Nav.Link>
-                  </LinkContainer>
-                )}
-              </Nav>
-            </Navbar.Collapse>
-          </div>
-          {/* Center: Logo */}
-          <div className="position-absolute top-50 start-50 translate-middle" style={{ zIndex: 2 }}>
-            <LinkContainer to="/">
-              <Navbar.Brand className="d-flex align-items-center justify-content-center mx-auto">
-                <img
-                  src="/textlogo.png"
-                  alt="Maison SYRA Logo"
-                  height="80"
-                  className="mx-auto"
-                  style={{ borderRadius: "4px", display: 'block' }}
-                />
-              </Navbar.Brand>
-            </LinkContainer>
-          </div>
-          {/* Right: User/Profile/Login */}
-          <div className="d-flex align-items-center justify-content-end flex-grow-1" style={{ minWidth: 0 }}>
-            <div className="d-flex justify-content-center align-items-center mt-3 mt-md-0 text-white ms-auto">
+              )}
+            </Nav>
+
+            <div className="d-flex justify-content-center align-items-center mt-3 mt-md-0 text-white">
               {userInfo ? (
                 <NavDropdown
                   className="fw-semibold"
@@ -188,7 +180,7 @@ function Haeder() {
                 </NavDropdown>
               )}
             </div>
-          </div>
+          </Navbar.Collapse>
         </Container>
       </Navbar>
 
