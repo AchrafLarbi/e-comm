@@ -36,129 +36,13 @@ function Footer() {
               CONTACT
             </h6>
             <div style={{ color: "#cccccc", lineHeight: "1.8" }}>
-              <p className="mb-2">Street 2017 Harron Drive</p>
-              <p className="mb-2">City: Baltimore</p>
-              <p className="mb-2">State Full: Maryland</p>
-              <p className="mb-2">Zip Code: 21201</p>
-              <p className="mb-2">Phone Number: 443-498-7166</p>
-              <p className="mb-0">Mobile Number: 443-934-9384</p>
+              <p className="mb-2">Boulevard des lions, Oran, Algérie</p>
+              <p className="mb-2">Email: contact@maisonsyra.com</p>
+              <p className="mb-2">Numero de telephone: +213 540 540 540</p>
             </div>
           </Col>
 
-          {/* MENU Section */}
-          <Col lg={2} md={6} className="mb-4">
-            <h6
-              className="text-uppercase fw-bold mb-4"
-              style={{
-                fontFamily: "Inter, sans-serif",
-                color: "var(--syra-gold)",
-                letterSpacing: "0.1em",
-                fontWeight: 700,
-              }}
-            >
-              MENU
-            </h6>
-            <ul className="list-unstyled" style={{ lineHeight: "2" }}>
-              <li className="mb-2">
-                <a
-                  href="/"
-                  className="text-decoration-none"
-                  style={{ color: "#cccccc" }}
-                >
-                  Home
-                </a>
-              </li>
-              <li className="mb-2">
-                <a
-                  href="/products"
-                  className="text-decoration-none"
-                  style={{ color: "#cccccc" }}
-                >
-                  Books
-                </a>
-              </li>
-              <li className="mb-2">
-                <a
-                  href="/about"
-                  className="text-decoration-none"
-                  style={{ color: "#cccccc" }}
-                >
-                  About
-                </a>
-              </li>
-              <li className="mb-2">
-                <a
-                  href="/courses"
-                  className="text-decoration-none"
-                  style={{ color: "#cccccc" }}
-                >
-                  Courses
-                </a>
-              </li>
-              <li className="mb-2">
-                <a
-                  href="/blog"
-                  className="text-decoration-none"
-                  style={{ color: "#cccccc" }}
-                >
-                  Our blog
-                </a>
-              </li>
-              <li className="mb-0">
-                <a
-                  href="/pricing"
-                  className="text-decoration-none"
-                  style={{ color: "#cccccc" }}
-                >
-                  Pricing
-                </a>
-              </li>
-            </ul>
-          </Col>
-
-          {/* RECENT POSTS Section */}
-          <Col lg={4} md={6} className="mb-4">
-            <h6
-              className="text-uppercase fw-bold mb-4"
-              style={{
-                fontFamily: "Inter, sans-serif",
-                color: "var(--syra-gold)",
-                letterSpacing: "0.1em",
-                fontWeight: 700,
-              }}
-            >
-              RECENT POSTS
-            </h6>
-            <div style={{ color: "#cccccc", lineHeight: "1.8" }}>
-              <p className="mb-3">
-                <a
-                  href="/post1"
-                  className="text-decoration-none"
-                  style={{ color: "#cccccc" }}
-                >
-                  Breaking Down Barriers
-                </a>
-              </p>
-              <p className="mb-3">
-                <a
-                  href="/post2"
-                  className="text-decoration-none"
-                  style={{ color: "#cccccc" }}
-                >
-                  A Celebration of Success
-                </a>
-              </p>
-              <p className="mb-0">
-                <a
-                  href="/post3"
-                  className="text-decoration-none"
-                  style={{ color: "#cccccc" }}
-                >
-                  A World of Opportunities
-                </a>
-              </p>
-            </div>
-          </Col>
+         
 
           {/* NEWSLETTER Section */}
           <Col lg={3} md={6} className="mb-4">
@@ -261,7 +145,7 @@ function Footer() {
                 fontFamily: "Inter, sans-serif",
               }}
             >
-              © 2025 Maison SYRA. Built using Django and React.
+              © 2025 Maison SYRA, tous les droits sont réservés.
             </p>
           </Col>
         </Row>
