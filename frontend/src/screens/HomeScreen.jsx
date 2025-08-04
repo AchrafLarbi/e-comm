@@ -27,8 +27,7 @@ function HomeScreen() {
     dispatch(productsListAction(searchQuery));
   }, [dispatch, searchQuery]);
 
-  // Sample data for featured products and testimonials
-  const featuredProducts = products ? products.slice(0, 4) : [];
+  // Sample data for testimonials
   const testimonials = [
     {
       text: "Des produits magnifiques et un service exceptionnel. J'ai adoré mon expérience!",
@@ -67,7 +66,7 @@ function HomeScreen() {
   ];
 
   return (
-    <>
+    <div className={landingStyles.landingBg}>
       {/* Hero Section */}
       {!searchQuery && (
         <section className={styles.heroSection}>
@@ -89,128 +88,116 @@ function HomeScreen() {
         </section>
       )}
 
-      {/* About Section */}
-      {!searchQuery && (
-        <section className={landingStyles.aboutSection}>
-          <h2 className={landingStyles.aboutTitle}>À propos de MAISON DE SYRA</h2>
-          <p className={landingStyles.aboutText}>
-            MAISON DE SYRA est une maison de création dédiée à l'artisanat d'excellence et au design contemporain. Nous croyons en la beauté des détails, l'authenticité des matières et la passion du fait-main. Découvrez une collection unique, pensée pour sublimer votre quotidien.
-          </p>
-        </section>
-      )}
-
-      {/* Values Section */}
-      {!searchQuery && (
-        <section className={landingStyles.valuesSection}>
-          <div className={landingStyles.valuesGrid}>
-            {values.map((val, idx) => (
-              <div className={landingStyles.valueCard} key={idx}>
-                <div className={landingStyles.valueIcon}>{val.icon}</div>
-                <div className={landingStyles.valueTitle}>{val.title}</div>
-                <div className={landingStyles.valueText}>{val.text}</div>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Featured Products Section */}
-      {!searchQuery && featuredProducts.length > 0 && (
-        <section className={landingStyles.featuredSection}>
-          <h2 className={landingStyles.featuredTitle}>Produits en Vedette</h2>
-          <div className={landingStyles.featuredGrid}>
-            {featuredProducts.map((productitem) => (
-              <div style={{ minWidth: 250, maxWidth: 270 }} key={productitem.id}>
-                <Product product={productitem} />
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Testimonials Section */}
-      {!searchQuery && (
-        <section className={landingStyles.testimonialsSection}>
-          <h2 className={landingStyles.testimonialsTitle}>Ils parlent de nous</h2>
-          <div className={landingStyles.testimonialsGrid}>
-            {testimonials.map((t, idx) => (
-              <div className={landingStyles.testimonialCard} key={idx}>
-                <div className={landingStyles.testimonialText}>"{t.text}"</div>
-                <div className={landingStyles.testimonialAuthor}>- {t.author}</div>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Newsletter Section */}
-      {!searchQuery && (
-        <section className={landingStyles.newsletterSection}>
-          <h2 className={landingStyles.newsletterTitle}>Restez informé(e)</h2>
-          <div className={landingStyles.newsletterText}>
-            Recevez nos nouveautés, offres et inspirations directement dans votre boîte mail.
-          </div>
-          <form className={landingStyles.newsletterForm} onSubmit={e => e.preventDefault()}>
-            <input
-              type="email"
-              className={landingStyles.newsletterInput}
-              placeholder="Votre email"
-              required
-            />
-            <button className={landingStyles.newsletterButton} type="submit">
-              S'inscrire
-            </button>
-          </form>
-        </section>
-      )}
-
-      {/* Product Catalog Section */}
-      <Container className="py-4">
-        {loading ? (
-          <Loader />
-        ) : error ? (
-          <Message variant="danger">{error}</Message>
-        ) : products && products.length === 0 ? (
-          <div className="text-center py-5">
-            <Message variant="info">
-              <h4>Aucun Produit Trouvé</h4>
-              <p className="mt-2">
-                Essayez un terme de recherche différent ou parcourez nos catégories
-              </p>
-            </Message>
-          </div>
-        ) : (
-          <div id="products">
-            <div className="my-4">
-              <h2 className={searchQuery ? "mb-4" : "mb-4"}>
-                {searchQuery
-                  ? `Résultats de Recherche${keyword ? ` pour "${keyword}"` : ""}`
-                  : "Tous les Produits"}
-              </h2>
-              <Row>
-                {products &&
-                  products.length > 0 &&
-                  products.map((productitem) => (
-                    <Col
-                      key={productitem.id}
-                      sm={12}
-                      md={6}
-                      lg={4}
-                      xl={3}
-                      className="mb-4"
-                    >
-                      <Product product={productitem} />
-                    </Col>
-                  ))}
-              </Row>
-            </div>
-            <div className="d-flex justify-content-center mt-4">
-              <Paginator pages={pages} page={page} keyword={keyword} />
-            </div>
-          </div>
+      <Container className={landingStyles.sectionsContainer}>
+        {/* About Section */}
+        {!searchQuery && (
+          <section className={landingStyles.aboutSection}>
+            <h2 className={landingStyles.aboutTitle}>À propos de MAISON DE SYRA</h2>
+            <p className={landingStyles.aboutText}>
+              MAISON DE SYRA est une maison de création dédiée à l'artisanat d'excellence et au design contemporain. Nous croyons en la beauté des détails, l'authenticité des matières et la passion du fait-main. Découvrez une collection unique, pensée pour sublimer votre quotidien.
+            </p>
+          </section>
         )}
+
+        {/* Values Section */}
+        {!searchQuery && (
+          <section className={landingStyles.valuesSection}>
+            <div className={landingStyles.valuesGrid}>
+              {values.map((val, idx) => (
+                <div className={landingStyles.valueCard} key={idx}>
+                  <div className={landingStyles.valueIcon}>{val.icon}</div>
+                  <div className={landingStyles.valueTitle}>{val.title}</div>
+                  <div className={landingStyles.valueText}>{val.text}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Testimonials Section */}
+        {!searchQuery && (
+          <section className={landingStyles.testimonialsSection}>
+            <h2 className={landingStyles.testimonialsTitle}>Ils parlent de nous</h2>
+            <div className={landingStyles.testimonialsGrid}>
+              {testimonials.map((t, idx) => (
+                <div className={landingStyles.testimonialCard} key={idx}>
+                  <div className={landingStyles.testimonialText}>"{t.text}"</div>
+                  <div className={landingStyles.testimonialAuthor}>- {t.author}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Newsletter Section */}
+        {!searchQuery && (
+          <section className={landingStyles.newsletterSection}>
+            <h2 className={landingStyles.newsletterTitle}>Restez informé(e)</h2>
+            <div className={landingStyles.newsletterText}>
+              Recevez nos nouveautés, offres et inspirations directement dans votre boîte mail.
+            </div>
+            <form className={landingStyles.newsletterForm} onSubmit={e => e.preventDefault()}>
+              <input
+                type="email"
+                className={landingStyles.newsletterInput}
+                placeholder="Votre email"
+                required
+              />
+              <button className={landingStyles.newsletterButton} type="submit">
+                S'inscrire
+              </button>
+            </form>
+          </section>
+        )}
+
+        {/* Product Catalog Section */}
+        <section className={landingStyles.productsSection}>
+          {loading ? (
+            <Loader />
+          ) : error ? (
+            <Message variant="danger">{error}</Message>
+          ) : products && products.length === 0 ? (
+            <div className="text-center py-5">
+              <Message variant="info">
+                <h4>Aucun Produit Trouvé</h4>
+                <p className="mt-2">
+                  Essayez un terme de recherche différent ou parcourez nos catégories
+                </p>
+              </Message>
+            </div>
+          ) : (
+            <div id="products">
+              <div className="my-4">
+                <h2 className={searchQuery ? "mb-4" : "mb-4"}>
+                  {searchQuery
+                    ? `Résultats de Recherche${keyword ? ` pour "${keyword}"` : ""}`
+                    : "Tous les Produits"}
+                </h2>
+                <Row>
+                  {products &&
+                    products.length > 0 &&
+                    products.map((productitem) => (
+                      <Col
+                        key={productitem.id}
+                        sm={12}
+                        md={6}
+                        lg={4}
+                        xl={3}
+                        className="mb-4"
+                      >
+                        <Product product={productitem} />
+                      </Col>
+                    ))}
+                </Row>
+              </div>
+              <div className="d-flex justify-content-center mt-4">
+                <Paginator pages={pages} page={page} keyword={keyword} />
+              </div>
+            </div>
+          )}
+        </section>
       </Container>
-    </>
+    </div>
   );
 }
 
