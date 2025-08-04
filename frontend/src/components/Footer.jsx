@@ -21,9 +21,9 @@ function Footer() {
       }}
     >
       <Container>
-        <Row className="py-5">
+        <Row className="py-5 gx-5 justify-content-between align-items-start" style={{ rowGap: '2rem', columnGap: '3rem' }}>
           {/* CONTACT Section */}
-          <Col lg={3} md={6} className="mb-4">
+          <Col lg={3} md={6} className="mb-4 text-start">
             <h6
               className="text-uppercase fw-bold mb-4"
               style={{
@@ -42,10 +42,8 @@ function Footer() {
             </div>
           </Col>
 
-         
-
           {/* NEWSLETTER Section */}
-          <Col lg={3} md={6} className="mb-4">
+          <Col lg={3} md={6} className="mb-4 text-end ms-auto">
             <h6
               className="text-uppercase fw-bold mb-4"
               style={{
@@ -58,7 +56,7 @@ function Footer() {
               NEWSLETTER
             </h6>
             <Form onSubmit={handleNewsletterSubmit}>
-              <div className="d-flex">
+              <div className="d-flex justify-content-end">
                 <Form.Control
                   type="email"
                   placeholder="Your email address"
@@ -89,7 +87,7 @@ function Footer() {
             </Form>
 
             {/* Social Media Icons */}
-            <div className="d-flex gap-3 mt-4">
+            <div className="d-flex gap-3 mt-4 justify-content-end">
               <a
                 href="https://facebook.com"
                 target="_blank"
