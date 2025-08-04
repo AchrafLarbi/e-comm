@@ -248,7 +248,6 @@ if myenv == 'PRODUCTION':
     ALLOWED_HOSTS = ['e-comm-django-99al.onrender.com','127.0.0.1','localhost', 'maisonsyra.vercel.app']
     # to prevent any one from acces our server
     CORS_ALLOWED_ORIGINS = [
-    "https://e-comm-django-99al.onrender.com",
     "http://localhost:3000",
     "https://e-comm-three-alpha.vercel.app"
     "https://maisonsyra.vercel.app"
