@@ -129,7 +129,7 @@ function RegisterPage() {
             ) : (
               ""
             )}
-            <Button type="submit" variant="primary">
+            <Button type="submit" className="mt-3" variant="primary">
               S'inscrire
             </Button>
           </Form>

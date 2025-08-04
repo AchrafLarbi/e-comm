@@ -42,13 +42,20 @@ function MyOrders() {
     <Container className="py-4">
       <Card className="shadow border-0 mb-4">
         <Card.Header className="bg-primary text-white py-3">
-          <div className="d-flex justify-content-between align-items-center">
-            <h3 className="mb-0">
+          <div className="d-flex justify-content-between align-items-center flex-wrap">
+            <h3 className="mb-0 me-2">
               <i className="fas fa-shopping-bag me-2"></i>
-              Mes Commandes
+              <span className="d-none d-sm-inline">Mes Commandes</span>
+              <span className="d-inline d-sm-none">Commandes</span>
             </h3>
-            <Badge bg="light" text="dark" pill className="px-3 py-2 fs-6">
-              {orders ? orders.length : 0} Commandes
+            <Badge
+              bg="light"
+              text="dark"
+              pill
+              className="px-2 py-1 fs-6 flex-shrink-0"
+            >
+              {orders ? orders.length : 0}
+              <span className="d-none d-sm-inline"> Commandes</span>
             </Badge>
           </div>
         </Card.Header>

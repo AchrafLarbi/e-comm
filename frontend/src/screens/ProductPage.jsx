@@ -89,7 +89,7 @@ function ProductPage() {
 
     <div>
       <Link to="/" className="btn btn-outline-secondary my-3">
-        <i className="fas fa-arrow-left me-2"></i> Back to Products
+        <i className="fas fa-arrow-left me-2"></i> Retour aux Produits
       </Link>
       {loading ? (
         <Loader></Loader>
@@ -132,7 +132,7 @@ function ProductPage() {
                 <ListGroup.Item className="border-0 px-0">
                   <Rating
                     value={product.rating}
-                    text={`${product.numReviews} reviews`}
+                    text={`${product.numReviews} avis`}
                   />
                 </ListGroup.Item>
                 <ListGroup.Item className="border-0 px-0">
@@ -144,7 +144,7 @@ function ProductPage() {
                 </ListGroup.Item>
                 <ListGroup.Item className="border-0 px-0">
                   <div className="product-description">
-                    <h5>Description:</h5>
+                    <h5>Description :</h5>
                     <p style={{ lineHeight: "1.6", color: "#6c757d" }}>
                       {product.description}
                     </p>
@@ -157,7 +157,7 @@ function ProductPage() {
                 <ListGroup variant="flush">
                   <ListGroup.Item>
                     <Row className="align-items-center">
-                      <Col>Price:</Col>
+                      <Col>Prix :</Col>
                       <Col>
                         <h4 className="mb-0 fw-bold text-primary">
                           {product.price}DZD
@@ -185,7 +185,7 @@ function ProductPage() {
                   {product.countInStock > 0 && (
                     <ListGroup.Item>
                       <Row className="align-items-center">
-                        <Col>Quantity:</Col>
+                        <Col>Quantité :</Col>
                         <Col>
                           <Form.Select
                             value={quantity}
@@ -221,8 +221,8 @@ function ProductPage() {
                         disabled={product.countInStock === 0}
                         onClick={addToCartHandler}
                       >
-                        <i className="fas fa-shopping-cart me-2"></i> Add To
-                        Cart
+                        <i className="fas fa-shopping-cart me-2"></i> Ajouter au
+                        Panier
                       </Button>
 
                       <Button
@@ -232,7 +232,8 @@ function ProductPage() {
                         disabled={product.countInStock === 0}
                         onClick={checkoutHandler}
                       >
-                        <i className="fas fa-credit-card me-2"></i> Checkout Now
+                        <i className="fas fa-credit-card me-2"></i> Commander
+                        Maintenant
                       </Button>
                     </div>
                   </ListGroup.Item>
@@ -243,9 +244,9 @@ function ProductPage() {
           {/* reviews row */}
           <Row className="mt-5">
             <Col md={6}>
-              <h3 className="border-bottom pb-2">Customer Reviews</h3>
+              <h3 className="border-bottom pb-2">Avis Clients</h3>
               {product.reviews.length === 0 && (
-                <Message>No Reviews Yet</Message>
+                <Message>Aucun avis pour le moment</Message>
               )}
               <ListGroup variant="flush">
                 {product.reviews.map((review) => (
@@ -266,41 +267,39 @@ function ProductPage() {
                   </ListGroup.Item>
                 ))}
                 <ListGroup.Item className="pt-4">
-                  <h4 className="mb-3">Write a Review</h4>
+                  <h4 className="mb-3">Écrire un Avis</h4>
                   {errorReview && (
                     <Message variant="danger">{errorReview}</Message>
                   )}
                   {successReview && (
-                    <Message variant="success">
-                      Review submitted successfully
-                    </Message>
+                    <Message variant="success">Avis soumis avec succès</Message>
                   )}
                   {userInfo ? (
                     userInfo.isAdmin ? (
                       <Message variant="info">
-                        Admins cannot write product reviews. Only customers can
-                        leave reviews.
+                        Les administrateurs ne peuvent pas écrire d'avis sur les
+                        produits. Seuls les clients peuvent laisser des avis.
                       </Message>
                     ) : (
                       <Form className="review-form">
                         <Form.Group controlId="rating" className="mb-3">
-                          <Form.Label>Rating</Form.Label>
+                          <Form.Label>Note</Form.Label>
                           <Form.Select
                             value={rating.rating}
                             onChange={(e) =>
                               setRating({ ...rating, rating: e.target.value })
                             }
                           >
-                            <option value="0">Select...</option>
-                            <option value="1">1 - Poor</option>
-                            <option value="2">2 - Fair</option>
-                            <option value="3">3 - Good</option>
-                            <option value="4">4 - Very Good</option>
+                            <option value="0">Sélectionner...</option>
+                            <option value="1">1 - Mauvais</option>
+                            <option value="2">2 - Passable</option>
+                            <option value="3">3 - Bien</option>
+                            <option value="4">4 - Très Bien</option>
                             <option value="5">5 - Excellent</option>
                           </Form.Select>
                         </Form.Group>
                         <Form.Group controlId="comment" className="mb-3">
-                          <Form.Label>Your Review</Form.Label>
+                          <Form.Label>Votre Avis</Form.Label>
                           <Form.Control
                             as="textarea"
                             rows={4}
@@ -308,7 +307,7 @@ function ProductPage() {
                             onChange={(e) =>
                               setRating({ ...rating, comment: e.target.value })
                             }
-                            placeholder="Share your thoughts about this product..."
+                            placeholder="Partagez vos impressions sur ce produit..."
                           ></Form.Control>
                         </Form.Group>
                         <Button
@@ -324,7 +323,8 @@ function ProductPage() {
                     )
                   ) : (
                     <Message>
-                      Please <Link to="/login">sign in</Link> to write a review
+                      Veuillez <Link to="/login">vous connecter</Link> pour
+                      écrire un avis
                     </Message>
                   )}
                 </ListGroup.Item>

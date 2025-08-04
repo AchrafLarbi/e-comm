@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Product from "../components/Product";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { productsListAction } from "../actions/productActions";
 import Loader from "../components/Loader";
@@ -23,9 +23,39 @@ function HomeScreen() {
   const products_List = useSelector((state) => state.productsList);
   const { loading, products, error, pages, page } = products_List;
 
+  // State for hero product carousel
+  const [currentProductIndex, setCurrentProductIndex] = useState(0);
+
   useEffect(() => {
     dispatch(productsListAction(searchQuery));
   }, [dispatch, searchQuery]);
+
+  // Auto-rotate products every 4 seconds
+  useEffect(() => {
+    if (products && products.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentProductIndex(
+          (prev) => (prev + 1) % Math.min(4, products.length)
+        );
+      }, 4000);
+
+      return () => clearInterval(interval);
+    }
+  }, [products]);
+
+  // Function to handle navigation dot clicks
+  const handleProductNavigation = (index) => {
+    setCurrentProductIndex(index);
+  };
+
+  // Function to handle next button click
+  const handleNextProduct = () => {
+    if (products && products.length > 0) {
+      setCurrentProductIndex(
+        (prev) => (prev + 1) % Math.min(4, products.length)
+      );
+    }
+  };
 
   // Sample data for testimonials
   const testimonials = [
@@ -69,51 +99,89 @@ function HomeScreen() {
     <div className={landingStyles.landingBg}>
       {/* Hero Section */}
       {!searchQuery && (
-        <section className={styles.heroSection + ' ' + styles.heroEditorial}>
+        <section className={styles.heroSection + " " + styles.heroEditorial}>
           <div className={styles.heroEditorialGrid}>
             {/* Left Side: Text */}
             <div className={styles.heroEditorialLeft}>
               <h1 className={styles.heroEditorialHeadline}>
-                Smell is a word<br />Perfume is<br />Literature
+                Une Symphonie
+                <br />
+                de Parfums
               </h1>
               <p className={styles.heroEditorialSubtext}>
-                Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit.
+                Laissez-vous envoûter par un parfum créé pour transcender le
+                temps—une symphonie d'élégance, de mystère et d'allure, conçue
+                pour ceux qui recherchent la beauté à chaque respiration.
               </p>
-              <a href="#products" className={styles.heroEditorialCta}>Learn More</a>
-              <div className={styles.heroEditorialRatingRow}>
-                <div className={styles.heroEditorialAvatars}>
-                  <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="avatar1" />
-                  <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="avatar2" />
-                  <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="avatar3" />
-                  <img src="https://randomuser.me/api/portraits/women/46.jpg" alt="avatar4" />
-                </div>
-                <span className={styles.heroEditorialRatingStar}>★</span>
-                <span className={styles.heroEditorialRatingText}>5.6 Average session rating</span>
+              <div className={styles.heroEditorialButtonGroup}>
+                <a href="#products" className={styles.heroEditorialCta}>
+                  Acheter Maintenant
+                </a>
+                <a
+                  href="#products"
+                  className={styles.heroEditorialCtaSecondary}
+                >
+                  Voir Détails
+                </a>
               </div>
-              <div className={styles.heroEditorialInfoBox}>
-                <span>Our unique production for 100% beauty</span>
+              <div className={styles.heroEditorialExpertsSection}>
+                <h3 className={styles.heroEditorialExpertsTitle}>
+                  Nos Experts
+                </h3>
+                <p className={styles.heroEditorialExpertsText}>
+                  Exploitez la puissance des ingrédients naturels pour révéler
+                  votre personnalité unique.
+                </p>
+                <a href="#about" className={styles.heroEditorialExploreMore}>
+                  Explorer Plus →
+                </a>
               </div>
-              <svg className={styles.heroEditorialArrow} width="80" height="40" viewBox="0 0 80 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5 35 Q40 5 75 35" stroke="#bfa46b" strokeWidth="3" fill="none"/>
-                <circle cx="75" cy="35" r="4" fill="#bfa46b" />
-              </svg>
             </div>
-            {/* Right Side: Images */}
+            {/* Right Side: Product & Stats */}
             <div className={styles.heroEditorialRight}>
-              <div className={styles.heroEditorialImageWrap}>
-                <img
-                  src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80"
-                  alt="Perfume 1"
-                  className={styles.heroEditorialImage}
-                />
-                <span className={styles.heroEditorialDiscountBadge}>25%<br />DISCOUNT</span>
+              <div className={styles.heroEditorialProductShowcase}>
+                {/* Single Product Display */}
+                {products && products.length > 0 && (
+                  <div className={styles.heroEditorialMainProduct}>
+                    <img
+                      src={products[currentProductIndex]?.image}
+                      alt={products[currentProductIndex]?.name}
+                      className={styles.heroEditorialMainImage}
+                    />
+                    <span className={styles.heroEditorialDiscountBadge}>
+                      30%
+                      <br />
+                      OFF
+                    </span>
+                  </div>
+                )}
               </div>
-              <div className={styles.heroEditorialImageWrap}>
-                <img
-                  src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80"
-                  alt="Perfume 2"
-                  className={styles.heroEditorialImage}
-                />
+              {/* Navigation dots */}
+              <div className={styles.heroEditorialNavigation}>
+                {loading ? (
+                  <Loader />
+                ) : error ? (
+                  <Message variant="danger">{error}</Message>
+                ) : (
+                  products &&
+                  products
+                    .slice(0, 4)
+                    .map((_, index) => (
+                      <button
+                        key={index}
+                        className={`${styles.heroEditorialNavDot} ${
+                          currentProductIndex === index ? styles.active : ""
+                        }`}
+                        onClick={() => handleProductNavigation(index)}
+                      ></button>
+                    ))
+                )}
+                <button
+                  className={styles.heroEditorialNavNext}
+                  onClick={handleNextProduct}
+                >
+                  →
+                </button>
               </div>
             </div>
           </div>
@@ -123,10 +191,16 @@ function HomeScreen() {
       <Container className={landingStyles.sectionsContainer}>
         {/* About Section */}
         {!searchQuery && (
-          <section className={landingStyles.aboutSection}>
-            <h2 className={landingStyles.aboutTitle}>À propos de MAISON DE SYRA</h2>
+          <section id="about" className={landingStyles.aboutSection}>
+            <h2 className={landingStyles.aboutTitle}>
+              À propos de MAISON DE SYRA
+            </h2>
             <p className={landingStyles.aboutText}>
-              MAISON DE SYRA est une maison de création dédiée à l'artisanat d'excellence et au design contemporain. Nous croyons en la beauté des détails, l'authenticité des matières et la passion du fait-main. Découvrez une collection unique, pensée pour sublimer votre quotidien.
+              MAISON DE SYRA est une maison de création dédiée à l'artisanat
+              d'excellence et au design contemporain. Nous croyons en la beauté
+              des détails, l'authenticité des matières et la passion du
+              fait-main. Découvrez une collection unique, pensée pour sublimer
+              votre quotidien.
             </p>
           </section>
         )}
@@ -149,12 +223,18 @@ function HomeScreen() {
         {/* Testimonials Section */}
         {!searchQuery && (
           <section className={landingStyles.testimonialsSection}>
-            <h2 className={landingStyles.testimonialsTitle}>Ils parlent de nous</h2>
+            <h2 className={landingStyles.testimonialsTitle}>
+              Ils parlent de nous
+            </h2>
             <div className={landingStyles.testimonialsGrid}>
               {testimonials.map((t, idx) => (
                 <div className={landingStyles.testimonialCard} key={idx}>
-                  <div className={landingStyles.testimonialText}>"{t.text}"</div>
-                  <div className={landingStyles.testimonialAuthor}>- {t.author}</div>
+                  <div className={landingStyles.testimonialText}>
+                    "{t.text}"
+                  </div>
+                  <div className={landingStyles.testimonialAuthor}>
+                    - {t.author}
+                  </div>
                 </div>
               ))}
             </div>
@@ -166,9 +246,13 @@ function HomeScreen() {
           <section className={landingStyles.newsletterSection}>
             <h2 className={landingStyles.newsletterTitle}>Restez informé(e)</h2>
             <div className={landingStyles.newsletterText}>
-              Recevez nos nouveautés, offres et inspirations directement dans votre boîte mail.
+              Recevez nos nouveautés, offres et inspirations directement dans
+              votre boîte mail.
             </div>
-            <form className={landingStyles.newsletterForm} onSubmit={e => e.preventDefault()}>
+            <form
+              className={landingStyles.newsletterForm}
+              onSubmit={(e) => e.preventDefault()}
+            >
               <input
                 type="email"
                 className={landingStyles.newsletterInput}
@@ -193,7 +277,8 @@ function HomeScreen() {
               <Message variant="info">
                 <h4>Aucun Produit Trouvé</h4>
                 <p className="mt-2">
-                  Essayez un terme de recherche différent ou parcourez nos catégories
+                  Essayez un terme de recherche différent ou parcourez nos
+                  catégories
                 </p>
               </Message>
             </div>
@@ -202,7 +287,9 @@ function HomeScreen() {
               <div className="my-4">
                 <h2 className={searchQuery ? "mb-4" : "mb-4"}>
                   {searchQuery
-                    ? `Résultats de Recherche${keyword ? ` pour "${keyword}"` : ""}`
+                    ? `Résultats de Recherche${
+                        keyword ? ` pour "${keyword}"` : ""
+                      }`
                     : "Tous les Produits"}
                 </h2>
                 <Row>

@@ -1,16 +1,8 @@
 import React, { useEffect } from "react";
-import {
-  Container,
-  Navbar,
-  Nav,
-  NavDropdown,
-  Form,
-  Button,
-} from "react-bootstrap";
+import { Container, Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import { userLogoutAction } from "../actions/UserActions";
-import SearchBox from "./SearchBox";
 import AlertModal from "./AertModal";
 
 function Haeder() {
@@ -31,7 +23,7 @@ function Haeder() {
           background:
             "linear-gradient(135deg, var(--syra-green) 70%, var(--syra-burgundy) 100%)",
           color: "var(--syra-gold)",
-          fontFamily: "Inter, sans-serif"
+          fontFamily: "Inter, sans-serif",
         }}
         variant="dark"
         collapseOnSelect
@@ -146,7 +138,7 @@ function Haeder() {
 
                   <LinkContainer to="/login">
                     <Button className="btn bg-white text-dark rounded-pill fw-bold border-0 shadow-sm px-3 py-1 btn-hover">
-                      <i className="fa fa-sign-in-alt me-1"></i> Se Connecter
+                      <i className="fa fa-sign-in me-1"></i> Se Connecter
                     </Button>
                   </LinkContainer>
                 </div>
@@ -185,8 +177,16 @@ function Haeder() {
       </Navbar>
 
       <style jsx>{`
-        .navbar, .nav-link, .navbar-brand, .dropdown-menu, .dropdown-item, .navbar-nav, .nav-dropdown, .btn, .btn * {
-          font-family: 'Inter', sans-serif !important;
+        .navbar,
+        .nav-link,
+        .navbar-brand,
+        .dropdown-menu,
+        .dropdown-item,
+        .navbar-nav,
+        .nav-dropdown,
+        .btn,
+        .btn * {
+          font-family: "Inter", sans-serif !important;
         }
         .nav-link-hover:hover {
           transform: translateY(-2px);
