@@ -44,48 +44,7 @@ function Footer() {
 
           {/* NEWSLETTER Section */}
           <Col lg={3} md={6} className="mb-4 text-end ms-auto">
-            <h6
-              className="text-uppercase fw-bold mb-4"
-              style={{
-                fontFamily: "Inter, sans-serif",
-                color: "var(--syra-gold)",
-                letterSpacing: "0.1em",
-                fontWeight: 700,
-              }}
-            >
-              NEWSLETTER
-            </h6>
-            <Form onSubmit={handleNewsletterSubmit}>
-              <div className="d-flex justify-content-end">
-                <Form.Control
-                  type="email"
-                  placeholder="Your email address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  style={{
-                    backgroundColor: "transparent",
-                    border: "1px solid #555",
-                    color: "#cccccc",
-                    borderRadius: "0",
-                    borderRight: "none",
-                  }}
-                />
-                <Button
-                  type="submit"
-                  style={{
-                    backgroundColor: "#dc3545",
-                    border: "1px solid #dc3545",
-                    borderRadius: "0",
-                    borderLeft: "none",
-                    padding: "0.375rem 1rem",
-                  }}
-                >
-                  SIGN UP
-                </Button>
-              </div>
-            </Form>
-
+            
             {/* Social Media Icons */}
             <div className="d-flex gap-3 mt-4 justify-content-end">
               <a
