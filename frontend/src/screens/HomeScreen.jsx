@@ -86,12 +86,6 @@ function HomeScreen() {
               Découvrir la Collection
             </a>
           </div>
-          {/* Faint perfume bottle SVG silhouette, bottom right */}
-          <svg className={styles.heroPerfumeSVG} viewBox="0 0 60 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="18" y="30" width="24" height="40" rx="8" fill="#5a2a3c" fillOpacity="0.18"/>
-            <rect x="22" y="18" width="16" height="16" rx="4" fill="#bfa46b" fillOpacity="0.12"/>
-            <rect x="26" y="10" width="8" height="10" rx="2" fill="#23253a" fillOpacity="0.10"/>
-          </svg>
           <div className={styles.heroCarouselWrapper}>
             <ProductsCarousel />
           </div>
