@@ -1,7 +1,7 @@
 .landingBg {
   min-height: 100vh;
   width: 100%;
-  background: linear-gradient(120deg, #f8f9fa 0%, #e9ecef 100%);
+  background: none;
   box-sizing: border-box;
 }
 .sectionsContainer {

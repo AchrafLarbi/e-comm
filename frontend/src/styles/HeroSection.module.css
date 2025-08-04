@@ -8,7 +8,7 @@
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
-  background: linear-gradient(120deg, #23403d 0%, #23253a 100%);
+  background: none;
 }
 
 /* Gold brushstroke SVG accent behind brand name */
@@ -53,7 +53,7 @@
   font-family: 'Inter', sans-serif;
   font-size: 3.5rem;
   font-weight: 800;
-  color: #fff;
+  color: #23253a;
   margin-bottom: 0.2rem;
   letter-spacing: 2px;
   position: relative;
@@ -89,7 +89,7 @@
 
 .heroSubtitle {
   font-size: 1.25rem;
-  color: #e6e6e6;
+  color: #23253a;
   margin-bottom: 2.1rem;
   font-family: 'Inter', sans-serif;
   max-width: 600px;
@@ -115,8 +115,8 @@
   z-index: 2;
 }
 .ctaButton:hover {
-  background: #bfa46b;
-  color: #23253a;
+  background: #23253a;
+  color: #fff;
   box-shadow: 0 4px 24px rgba(191,164,107,0.18);
 }
 
