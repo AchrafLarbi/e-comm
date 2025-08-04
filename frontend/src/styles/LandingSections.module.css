@@ -1,0 +1,173 @@
+.aboutSection {
+  background: #fff;
+  padding: 60px 0 40px 0;
+  text-align: center;
+}
+.aboutTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 1rem;
+}
+.aboutText {
+  font-size: 1.15rem;
+  color: #555;
+  max-width: 700px;
+  margin: 0 auto 1.5rem auto;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.valuesSection {
+  background: #f8f9fa;
+  padding: 50px 0 30px 0;
+}
+.valuesGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2.5rem;
+}
+.valueCard {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  padding: 2rem 1.5rem;
+  max-width: 260px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.valueCard:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+}
+.valueIcon {
+  font-size: 2.5rem;
+  color: #bfa46b;
+  margin-bottom: 0.7rem;
+}
+.valueTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 0.5rem;
+}
+.valueText {
+  font-size: 1rem;
+  color: #666;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.featuredSection {
+  background: #fff;
+  padding: 50px 0 30px 0;
+}
+.featuredTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 1.2rem;
+  text-align: center;
+}
+.featuredGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.testimonialsSection {
+  background: #f8f9fa;
+  padding: 50px 0 30px 0;
+  text-align: center;
+}
+.testimonialsTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 1.2rem;
+}
+.testimonialsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+.testimonialCard {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  padding: 1.5rem 1.2rem;
+  max-width: 320px;
+  text-align: left;
+  font-family: 'Montserrat', sans-serif;
+}
+.testimonialText {
+  font-size: 1.05rem;
+  color: #444;
+  margin-bottom: 0.7rem;
+}
+.testimonialAuthor {
+  font-size: 0.98rem;
+  color: #bfa46b;
+  font-weight: 600;
+  font-family: 'Playfair Display', serif;
+}
+
+.newsletterSection {
+  background: #fff;
+  padding: 40px 0 40px 0;
+  text-align: center;
+}
+.newsletterTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 0.7rem;
+}
+.newsletterText {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 1.2rem;
+  font-family: 'Montserrat', sans-serif;
+}
+.newsletterForm {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+.newsletterInput {
+  padding: 0.6rem 1rem;
+  border-radius: 30px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  outline: none;
+  font-family: 'Montserrat', sans-serif;
+}
+.newsletterButton {
+  padding: 0.6rem 1.5rem;
+  border-radius: 30px;
+  border: none;
+  background: #bfa46b;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.newsletterButton:hover {
+  background: #a68d4a;
+}
+
+@media (max-width: 900px) {
+  .valuesGrid, .featuredGrid, .testimonialsGrid {
+    flex-direction: column;
+    align-items: center;
+  }
+}
