@@ -1,33 +1,33 @@
 import React from "react";
-import { Card, Button } from "react-bootstrap";
 import Rating from "./Rating";
 import { Link } from "react-router-dom";
+import styles from "../styles/ProductCard.module.css";
 
 function Product({ product }) {
   return (
-    <Card className="my-3 p-3 rounded" style={{ height: "410px" }}>
-      <Link to={`/product/${product.id}`}>
-        <Card.Img
+    <div className={styles.card}>
+      <Link to={`/product/${product.id}`} className={styles.imageLink}>
+        <img
           src={`${process.env.REACT_APP_MEDIA_URL}${product.image}`}
-          variant="top"
-          height={200}
+          alt={product.name}
+          className={styles.image}
         />
+        <span className={styles.priceBadge}>{product.price} DZD</span>
       </Link>
-      <Card.Body>
-        <Link to={`/product/${product.id}`}>
-          <Card.Title as="div">
-            <strong>{product.name}</strong>
-          </Card.Title>
+      <div className={styles.body}>
+        <Link to={`/product/${product.id}`} className={styles.titleLink}>
+          <div className={styles.title}>{product.name}</div>
         </Link>
-        <Card.Text as="div">
-          <div className="my-3">
-            {product.rating} from {product.numReviews} reviews
-          </div>
-        </Card.Text>
-        <Rating value={product.rating} text={`${product.numReviews} reviews`} />
-        <Card.Text as="h3">{product.price}DZD</Card.Text>
-      </Card.Body>
-    </Card>
+        <div className={styles.ratingRow}>
+          <Rating value={product.rating} text={`${product.numReviews} reviews`} />
+        </div>
+        <div className={styles.ctaRow}>
+          <Link to={`/product/${product.id}`} className={styles.ctaButton}>
+            Voir le produit
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 }
 
