@@ -8,7 +8,7 @@
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
-  background: linear-gradient(120deg, #fdf6ee 0%, #f8f6f2 100%);
+  background: linear-gradient(120deg, #23403d 0%, #23253a 100%);
 }
 
 /* Gold brushstroke SVG accent behind brand name */
@@ -53,7 +53,7 @@
   font-family: 'Inter', sans-serif;
   font-size: 3.5rem;
   font-weight: 800;
-  color: #222;
+  color: #fff;
   margin-bottom: 0.2rem;
   letter-spacing: 2px;
   position: relative;
@@ -89,7 +89,7 @@
 
 .heroSubtitle {
   font-size: 1.25rem;
-  color: #555;
+  color: #e6e6e6;
   margin-bottom: 2.1rem;
   font-family: 'Inter', sans-serif;
   max-width: 600px;
@@ -116,7 +116,7 @@
 }
 .ctaButton:hover {
   background: #bfa46b;
-  color: #fff;
+  color: #23253a;
   box-shadow: 0 4px 24px rgba(191,164,107,0.18);
 }
 
@@ -140,6 +140,7 @@
   opacity: 0.08;
   z-index: 1;
   pointer-events: none;
+  /* Use burgundy for the bottle accent */
 }
 
 @media (max-width: 768px) {
