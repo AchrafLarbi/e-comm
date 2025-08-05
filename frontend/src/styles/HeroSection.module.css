@@ -567,8 +567,8 @@
 
 .diorHeroSection {
   position: relative;
-  width: 100%;
-  height: 90%;
+  width: screen.width;
+  height: screen.height;
   display: flex;
   overflow: hidden;
   z-index: 1;
