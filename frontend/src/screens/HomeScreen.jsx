@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Product from "../components/Product";
 import { useEffect, useState } from "react";
@@ -95,54 +95,67 @@ function HomeScreen() {
     },
   ];
 
+  // Dior hero section logic
+  const leftVideoRef = useRef(null);
+  const rightVideoRef = useRef(null);
+
+  const handleLeftHover = (play) => {
+    if (leftVideoRef.current) {
+      play ? leftVideoRef.current.play() : leftVideoRef.current.pause();
+    }
+  };
+  const handleRightHover = (play) => {
+    if (rightVideoRef.current) {
+      play ? rightVideoRef.current.play() : rightVideoRef.current.pause();
+    }
+  };
+
   return (
     <div className={landingStyles.landingBg}>
-      {/* Hero Section */}
+      {/* Dior-style Hero Section */}
       {!searchQuery && (
-        <section className={styles.heroSection + " " + styles.heroEditorial}>
-          <div className={styles.heroEditorialGrid}>
-            {/* Left Side: Text */}
-            <div className={styles.heroEditorialLeft}>
-              <h1 className={styles.heroEditorialHeadline}>
-                Une Symphonie
-                <br />
-                de Parfums
-              </h1>
-              <p className={styles.heroEditorialSubtext}>
-                Laissez-vous envoûter par un parfum créé pour transcender le
-                temps—une symphonie d'élégance, de mystère et d'allure, conçue
-                pour ceux qui recherchent la beauté à chaque respiration.
-              </p>
-              <div className={styles.heroEditorialButtonGroup}>
-                <a href="#products" className={styles.heroEditorialCta}>
-                  Acheter Maintenant
-                </a>
-                <a
-                  href="#products"
-                  className={styles.heroEditorialCtaSecondary}
-                >
-                  Voir Détails
-                </a>
-              </div>
-              <div className={styles.heroEditorialExpertsSection}>
-                <h3 className={styles.heroEditorialExpertsTitle}>
-                  Nos Experts
-                </h3>
-                <p className={styles.heroEditorialExpertsText}>
-                  Exploitez la puissance des ingrédients naturels pour révéler
-                  votre personnalité unique.
-                </p>
-                <a href="#about" className={styles.heroEditorialExploreMore}>
-                  Explorer Plus →
-                </a>
-              </div>
-            </div>
-            {/* Right Side: Product & Stats */}
-            <div className="mb-4">
-              <h2 className="text-primary mb-3">Produits les Mieux Notés</h2>
-
-              <ProductsCarousel />
-            </div>
+        <section className={styles.diorHeroSection}>
+          {/* Left Video */}
+          <div
+            className={styles.diorHeroSide}
+            onMouseEnter={() => handleLeftHover(true)}
+            onMouseLeave={() => handleLeftHover(false)}
+          >
+            <video
+              ref={leftVideoRef}
+              src="/videos/left-video.mp4"
+              className={styles.diorHeroVideo}
+              muted
+              loop
+              preload="auto"
+              playsInline
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
+            />
+          </div>
+          {/* Center Logo */}
+          <div className={styles.diorHeroLogoWrapper}>
+            <img
+              src="/images/syra-logo.png"
+              alt="Syra Logo"
+              className={styles.diorHeroLogo}
+            />
+          </div>
+          {/* Right Video */}
+          <div
+            className={styles.diorHeroSide}
+            onMouseEnter={() => handleRightHover(true)}
+            onMouseLeave={() => handleRightHover(false)}
+          >
+            <video
+              ref={rightVideoRef}
+              src="/videos/right-video.mp4"
+              className={styles.diorHeroVideo}
+              muted
+              loop
+              preload="auto"
+              playsInline
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
+            />
           </div>
         </section>
       )}
