@@ -299,7 +299,7 @@ function HomeScreen({ setHeaderTransparent }) {
                       : {}),
                   }}
                 >
-                  Découvrez l'élégance avec Maison de Syra
+                  Découvrez l'élégance avec Maison Syra
                 </h2>
                 <button
                   style={{
@@ -385,7 +385,7 @@ function HomeScreen({ setHeaderTransparent }) {
                     color: "white",
                   }}
                 >
-                  Faites partie de la Maison de Syra
+                  Faites partie de la Maison Syra
                 </h2>
                 <div
                   style={{
