@@ -1,10 +1,54 @@
 .landingBg {
   min-height: 100vh;
-  width: 100%;
-  background: none;
-  box-sizing: border-box;
+  width: 100vw;
   margin: 0;
   padding: 0;
+  position: relative;
+  top: 0;
+  left: 0;
+  /* Modern creative background: soft gradient with subtle blur and light spots */
+  background: linear-gradient(120deg, #f8f4e6 0%, #e7e3f4 100%);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Add a blurred light spot effect using a pseudo-element */
+.landingBg::before {
+  content: "";
+  position: absolute;
+  top: 10%;
+  left: 60%;
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  filter: blur(40px);
+  z-index: 0;
+  pointer-events: none;
+}
+.landingBg::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  width: 400px;
+  height: 300px;
+  background: radial-gradient(
+    circle,
+    rgba(191, 164, 107, 0.12) 0%,
+    rgba(255, 255, 255, 0) 80%
+  );
+  filter: blur(30px);
+  z-index: 0;
+  pointer-events: none;
+}
+.sectionsContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
 }
 .sectionsContainer {
   max-width: 1200px;
@@ -27,7 +71,7 @@
   margin-top: 56px;
 }
 .aboutTitle {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 2.5rem;
   font-weight: 700;
   color: #222;
@@ -38,7 +82,7 @@
   color: #555;
   max-width: 700px;
   margin: 0 auto 1.5rem auto;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 .valuesSection {
   margin-top: 0;
@@ -52,7 +96,7 @@
 .valueCard {
   background: #fff;
   border-radius: 18px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
   padding: 2rem 1.5rem;
   max-width: 260px;
   text-align: center;
@@ -60,7 +104,7 @@
 }
 .valueCard:hover {
   transform: translateY(-6px) scale(1.03);
-  box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
 }
 .valueIcon {
   font-size: 2.5rem;
@@ -68,7 +112,7 @@
   margin-bottom: 0.7rem;
 }
 .valueTitle {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 1.2rem;
   font-weight: 600;
   color: #222;
@@ -77,13 +121,13 @@
 .valueText {
   font-size: 1rem;
   color: #666;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 .testimonialsSection {
   text-align: center;
 }
 .testimonialsTitle {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 2rem;
   font-weight: 700;
   color: #222;
@@ -98,11 +142,11 @@
 .testimonialCard {
   background: #fff;
   border-radius: 18px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
   padding: 1.5rem 1.2rem;
   max-width: 320px;
   text-align: left;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 .testimonialText {
   font-size: 1.05rem;
@@ -113,13 +157,13 @@
   font-size: 0.98rem;
   color: #bfa46b;
   font-weight: 600;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 .newsletterSection {
   text-align: center;
 }
 .newsletterTitle {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 1.7rem;
   font-weight: 700;
   color: #222;
@@ -129,7 +173,7 @@
   font-size: 1.1rem;
   color: #555;
   margin-bottom: 1.2rem;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 .newsletterForm {
   display: flex;
@@ -144,7 +188,7 @@
   border: 1px solid #ccc;
   font-size: 1rem;
   outline: none;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 .newsletterButton {
   padding: 0.6rem 1.5rem;
@@ -164,7 +208,8 @@
   margin-bottom: 64px;
 }
 @media (max-width: 900px) {
-  .valuesGrid, .testimonialsGrid {
+  .valuesGrid,
+  .testimonialsGrid {
     flex-direction: column;
     align-items: center;
   }

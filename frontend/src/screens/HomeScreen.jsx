@@ -1,4 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import { Container, Row, Col } from "react-bootstrap";
 import Product from "../components/Product";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +17,20 @@ import { useNavigate } from "react-router-dom";
 function HomeScreen({ setHeaderTransparent }) {
   // get search keyword from the url
   const searchQuery = window.location ? window.location.search : "";
+  // Initialize AOS for scroll animations (only once)
+  useEffect(() => {
+    AOS.init({
+      duration: 900,
+      once: false,
+      offset: 60,
+      easing: "ease-in-out",
+      mirror: true,
+    });
+  }, []);
+  // Refresh AOS when searchQuery changes to ensure all sections are visible and animated
+  useEffect(() => {
+    AOS.refresh();
+  }, [searchQuery]);
   var keyword = "";
   if (searchQuery) {
     keyword = searchQuery.split("keyword=")[1]?.split("&")[0] || "";
@@ -146,8 +162,94 @@ function HomeScreen({ setHeaderTransparent }) {
         position: "relative",
         top: 0,
         left: 0,
+        overflow: "hidden",
+        background: `radial-gradient(ellipse 120% 80% at 50% 20%, #f8f6f2 80%, #e9e4d9 100%), linear-gradient(120deg, #f8f6f2 0%, #e9e4d9 100%)`,
       }}
     >
+      {/* Gold shimmer effect */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          background:
+            "linear-gradient(120deg, rgba(255,215,120,0.08) 0%, rgba(255,255,255,0.01) 100%)",
+          mixBlendMode: "screen",
+          zIndex: 0,
+          pointerEvents: "none",
+        }}
+      />
+      {/* Subtle vignette for depth */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          background:
+            "radial-gradient(ellipse 100% 80% at 50% 60%, rgba(0,0,0,0.07) 0%, rgba(0,0,0,0.18) 100%)",
+          zIndex: 0,
+          pointerEvents: "none",
+        }}
+      />
+      {/* Faint luxury pattern overlay (SVG) */}
+      <svg
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          zIndex: 0,
+          pointerEvents: "none",
+        }}
+        viewBox="0 0 1920 1080"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <pattern
+          id="luxuryPattern"
+          width="120"
+          height="120"
+          patternUnits="userSpaceOnUse"
+        >
+          <circle
+            cx="60"
+            cy="60"
+            r="48"
+            fill="none"
+            stroke="#d6cfc2"
+            strokeWidth="2"
+            opacity="0.08"
+          />
+          <circle
+            cx="60"
+            cy="60"
+            r="24"
+            fill="none"
+            stroke="#bfae8f"
+            strokeWidth="1"
+            opacity="0.07"
+          />
+        </pattern>
+        <rect width="1920" height="1080" fill="url(#luxuryPattern)" />
+      </svg>
+      {/* Soft blur effect for extra elegance */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          backdropFilter: "blur(6px)",
+          zIndex: 1,
+          pointerEvents: "none",
+        }}
+      />
       {/* Dior-style Hero Section - Responsive Split */}
       {!searchQuery && (
         <section className={styles.diorHeroSection}>
@@ -169,21 +271,7 @@ function HomeScreen({ setHeaderTransparent }) {
                 playsInline
                 style={{ objectFit: "cover", width: "100%", height: "100%" }}
               />
-              {focusedSide === "right" && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    background: "rgba(0,0,0,0.5)",
-                    zIndex: 2,
-                    pointerEvents: "none",
-                    transition: "background 0.3s",
-                  }}
-                />
-              )}
+              {/* Removed darkness effect on hover */}
               <div
                 style={{
                   position: "absolute",
@@ -199,21 +287,24 @@ function HomeScreen({ setHeaderTransparent }) {
                 <h2
                   style={{
                     fontFamily: "serif",
-                    fontSize: '2rem',
+                    fontSize: "2rem",
                     marginBottom: 24,
                     letterSpacing: 2,
                     fontWeight: 300,
                     lineHeight: 1.2,
                     textShadow: "2px 2px 4px rgba(0,0,0,0.3)",
                     color: "white",
-                    ...(window.innerWidth <= 900 ? { fontSize: '1.3rem', marginBottom: 16 } : {})
+                    ...(window.innerWidth <= 900
+                      ? { fontSize: "0rem", marginBottom: 16 }
+                      : {}),
                   }}
                 >
                   Découvrez l'élégance avec Maison de Syra
                 </h2>
                 <button
                   style={{
-                    padding: window.innerWidth <= 900 ? "12px 24px" : "16px 32px",
+                    padding:
+                      window.innerWidth <= 900 ? "12px 24px" : "16px 32px",
                     background: "rgba(255,255,255,0.9)",
                     color: "#1a1a1a",
                     fontWeight: 500,
@@ -269,21 +360,7 @@ function HomeScreen({ setHeaderTransparent }) {
                 playsInline
                 style={{ objectFit: "cover", width: "100%", height: "100%" }}
               />
-              {focusedSide === "left" && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    background: "rgba(0,0,0,0.5)",
-                    zIndex: 2,
-                    pointerEvents: "none",
-                    transition: "background 0.3s",
-                  }}
-                />
-              )}
+              {/* Removed darkness effect on hover */}
               <div
                 style={{
                   position: "absolute",
@@ -320,6 +397,7 @@ function HomeScreen({ setHeaderTransparent }) {
                   }}
                 >
                   <button
+                    type="button"
                     style={{
                       padding: "14px 28px",
                       background: "rgba(255,255,255,0.9)",
@@ -335,8 +413,11 @@ function HomeScreen({ setHeaderTransparent }) {
                       width: "fit-content",
                     }}
                     onClick={(e) => {
+                      e.preventDefault();
                       animateButton(e);
-                      navigate("/login");
+                      setTimeout(() => {
+                        navigate("/login");
+                      }, 200);
                     }}
                     onMouseEnter={(e) =>
                       (e.target.style.background = "rgba(255,255,255,1)")
