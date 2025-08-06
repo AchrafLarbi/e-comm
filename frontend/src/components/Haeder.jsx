@@ -4,21 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import { userLogoutAction } from "../actions/UserActions";
 import AlertModal from "./AertModal";
-import {
-  FaHome,
-  FaShoppingCart,
-  FaUser,
-  FaUserCircle,
-  FaShoppingBag,
-  FaBox,
-  FaUsers,
-  FaSignOutAlt,
-  FaUserPlus,
-  FaSignInAlt,
-  FaLock,
-} from "react-icons/fa";
 
-function Haeder() {
+function Haeder({ transparent }) {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, error, userInfo } = userLogin;
@@ -28,15 +15,31 @@ function Haeder() {
     dispatch(userLogoutAction());
   };
   return (
-    <header>
+    <header
+      style={{
+        background: transparent
+          ? "rgba(0,0,0,0)"
+          : "linear-gradient(135deg, var(--syra-green) 70%, var(--syra-burgundy) 100%)",
+        color: "var(--syra-gold)",
+        fontFamily: "Inter, sans-serif",
+        width: '100%',
+        zIndex: 9999,
+        boxShadow: transparent ? "none" : "0 2px 8px rgba(0,0,0,0.07)",
+        transition: "background 0.5s cubic-bezier(0.4,0,0.2,1), box-shadow 0.5s cubic-bezier(0.4,0,0.2,1)",
+        position: 'fixed',
+        top: 0,
+        left: 0,
+      }}
+    >
       <Navbar
         expand="lg"
         className="p-2"
         style={{
-          background:
-            "linear-gradient(135deg, var(--syra-green) 70%, var(--syra-burgundy) 100%)",
+          background: 'rgba(0,0,0,0)',
           color: "var(--syra-gold)",
           fontFamily: "Inter, sans-serif",
+          transition: "background 0.4s cubic-bezier(0.4,0,0.2,1)",
+          boxShadow: "none",
         }}
         variant="dark"
         collapseOnSelect
@@ -64,7 +67,7 @@ function Haeder() {
                   href={userInfo && userInfo.isAdmin ? "/admin" : "/"}
                   className="me-2 nav-link-hover"
                 >
-                  <FaHome className="me-1" />
+                  <i className="bi bi-house-door me-1"></i>
                   {userInfo && userInfo.isAdmin ? "Tableau de Bord" : "Accueil"}
                 </Nav.Link>
               </LinkContainer>
@@ -72,7 +75,7 @@ function Haeder() {
               {(!userInfo || !userInfo.isAdmin) && (
                 <LinkContainer to="cart/">
                   <Nav.Link className="nav-link-hover">
-                    <FaShoppingCart className="me-1 cart-icon" data-cart-icon />{" "}
+                    <i className="bi bi-cart me-1 cart-icon" data-cart-icon></i>{" "}
                     Panier
                   </Nav.Link>
                 </LinkContainer>
@@ -85,14 +88,14 @@ function Haeder() {
                   className="fw-semibold"
                   title={
                     <span>
-                      <FaUser className="me-1" /> {userInfo.name}
+                      <i className="bi bi-person me-1"></i> {userInfo.name}
                     </span>
                   }
                   id="username"
                 >
                   <LinkContainer to="/profile">
                     <NavDropdown.Item className="py-2">
-                      <FaUserCircle className="me-2" />
+                      <i className="bi bi-person-circle me-2"></i>
                       Profil
                     </NavDropdown.Item>
                   </LinkContainer>
@@ -101,19 +104,19 @@ function Haeder() {
                     <>
                       <LinkContainer to="/admin/orders">
                         <NavDropdown.Item className="py-2">
-                          <FaShoppingBag className="me-2" />
+                          <i className="bi bi-bag me-2"></i>
                           Toutes les Commandes
                         </NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to="/admin/products">
                         <NavDropdown.Item className="py-2">
-                          <FaBox className="me-2" />
+                          <i className="bi bi-box me-2"></i>
                           Produits
                         </NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to="/admin/users">
                         <NavDropdown.Item className="py-2">
-                          <FaUsers className="me-2" />
+                          <i className="bi bi-people me-2"></i>
                           Utilisateurs
                         </NavDropdown.Item>
                       </LinkContainer>
@@ -121,73 +124,23 @@ function Haeder() {
                   ) : (
                     <LinkContainer to="/my-orders">
                       <NavDropdown.Item className="py-2">
-                        <FaShoppingBag className="me-2" />
+                        <i className="bi bi-bag me-2"></i>
                         Mes Commandes
                       </NavDropdown.Item>
                     </LinkContainer>
                   )}
-                  <AlertModal
-                    customebutton={
-                      <NavDropdown.Item className="py-2 text-danger">
-                        <FaSignOutAlt className="me-2" />
-                        Déconnexion
-                      </NavDropdown.Item>
-                    }
-                    myaction={logoutHandler}
-                    title="Déconnexion"
-                    message="Êtes-vous sûr de vouloir vous déconnecter ?"
-                    savetitle="Déconnexion"
-                    variant="danger"
-                  />
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item className="py-2" onClick={logoutHandler}>
+                    <i className="bi bi-box-arrow-right me-2"></i>
+                    Déconnexion
+                  </NavDropdown.Item>
                 </NavDropdown>
               ) : (
-                <div
-                  className="d-flex justify-content-between align-items-center"
-                  style={{ minWidth: "150px" }}
-                >
-                  <LinkContainer to="/register">
-                    <Nav.Link className="text-white me-2 nav-link-hover">
-                      <FaUserPlus className="me-1" /> S'inscrire
-                    </Nav.Link>
-                  </LinkContainer>
-
-                  <LinkContainer to="/login">
-                    <Button className="btn bg-white text-dark rounded-pill fw-bold border-0 shadow-sm px-3 py-1 btn-hover">
-                      <FaSignInAlt className="me-1" /> Se Connecter
-                    </Button>
-                  </LinkContainer>
-                </div>
-              )}
-
-              {userInfo && userInfo.isAdmin && (
-                <NavDropdown
-                  title={
-                    <span className="ms-3">
-                      <FaLock className="me-1" /> Admin
-                    </span>
-                  }
-                  id="adminmenu"
-                  className="fw-semibold"
-                >
-                  <LinkContainer to="/admin/users">
-                    <NavDropdown.Item className="py-2">
-                      <FaUsers className="me-2" />
-                      Utilisateurs
-                    </NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to="/admin/products">
-                    <NavDropdown.Item className="py-2">
-                      <FaBox className="me-2" />
-                      Produits
-                    </NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to="/admin/orders">
-                    <NavDropdown.Item className="py-2">
-                      <FaShoppingBag className="me-2" />
-                      Commandes
-                    </NavDropdown.Item>
-                  </LinkContainer>
-                </NavDropdown>
+                <LinkContainer to="/login">
+                  <Button variant="outline-light" className="ms-2 btn-hover">
+                    <i className="bi bi-box-arrow-in-right me-1"></i> Connexion
+                  </Button>
+                </LinkContainer>
               )}
             </div>
           </Navbar.Collapse>
@@ -220,6 +173,11 @@ function Haeder() {
         }
         .navbar-brand:hover {
           transform: scale(1.05);
+        }
+        /* Match footer link hover */
+        header a:hover {
+          color: #ffffff !important;
+          transition: color 0.3s ease;
         }
       `}</style>
     </header>

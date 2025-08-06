@@ -1,7 +1,6 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Product from "../components/Product";
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { productsListAction } from "../actions/productActions";
 import Loader from "../components/Loader";
@@ -10,8 +9,10 @@ import Paginator from "../components/Paginator";
 import ProductsCarousel from "../components/ProductsCarousel/ProductsCarousel";
 import styles from "../styles/HeroSection.module.css";
 import landingStyles from "../styles/LandingSections.module.css";
+import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
-function HomeScreen() {
+function HomeScreen({ setHeaderTransparent }) {
   // get search keyword from the url
   const searchQuery = window.location ? window.location.search : "";
   var keyword = "";
@@ -25,6 +26,29 @@ function HomeScreen() {
 
   // State for hero product carousel
   const [currentProductIndex, setCurrentProductIndex] = useState(0);
+  const [focusedSide, setFocusedSide] = useState(null); // 'left', 'right', or null
+
+  // Remove showHeader state and scroll logic
+  // const [showHeader, setShowHeader] = useState(false);
+  // const [headerTransparent, setHeaderTransparent] = useState(true); // This state is now passed as a prop
+
+  useEffect(() => {
+    // Set initial transparency based on scroll position
+    if (window.scrollY < window.innerHeight - 10) {
+      setHeaderTransparent(true);
+    } else {
+      setHeaderTransparent(false);
+    }
+    const handleScroll = () => {
+      if (window.scrollY < window.innerHeight - 10) {
+        setHeaderTransparent(true);
+      } else {
+        setHeaderTransparent(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [setHeaderTransparent]);
 
   useEffect(() => {
     dispatch(productsListAction(searchQuery));
@@ -99,27 +123,29 @@ function HomeScreen() {
   const leftVideoRef = useRef(null);
   const rightVideoRef = useRef(null);
 
-  const handleLeftHover = (play) => {
-    if (leftVideoRef.current) {
-      play ? leftVideoRef.current.play() : leftVideoRef.current.pause();
-    }
-  };
-  const handleRightHover = (play) => {
-    if (rightVideoRef.current) {
-      play ? rightVideoRef.current.play() : rightVideoRef.current.pause();
-    }
+  // Remove play/pause logic, always play videos
+
+  const navigate = useNavigate();
+
+  // Animation helper
+  const animateButton = (e) => {
+    e.target.classList.add(styles.heroButtonClick);
+    setTimeout(() => {
+      e.target.classList.remove(styles.heroButtonClick);
+    }, 300);
   };
 
   return (
-    <div className={landingStyles.landingBg}>
-      {/* Dior-style Hero Section */}
+    <div className={landingStyles.landingBg} style={{ minHeight: '100vh', width: '100vw', margin: 0, padding: 0, position: 'relative', top: 0, left: 0 }}>
+      {/* Dior-style Hero Section - Side by Side Split */}
       {!searchQuery && (
         <section className={styles.diorHeroSection}>
-          {/* Left Video */}
+          {/* Left Video Side */}
           <div
             className={styles.diorHeroSide}
-            onMouseEnter={() => handleLeftHover(true)}
-            onMouseLeave={() => handleLeftHover(false)}
+            onMouseEnter={() => setFocusedSide('left')}
+            onMouseLeave={() => setFocusedSide(null)}
+            style={{ position: 'relative' }}
           >
             <video
               ref={leftVideoRef}
@@ -127,24 +153,88 @@ function HomeScreen() {
               className={styles.diorHeroVideo}
               muted
               loop
-              preload="auto"
+              autoPlay
               playsInline
               style={{ objectFit: "cover", width: "100%", height: "100%" }}
             />
+            {focusedSide === 'right' && (
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                background: 'rgba(0,0,0,0.5)',
+                zIndex: 2,
+                pointerEvents: 'none',
+                transition: 'background 0.3s',
+              }} />
+            )}
+            <div style={{ 
+              position: 'absolute', 
+              bottom: 80, 
+              left: '50%', 
+              transform: 'translateX(-50%)',
+              color: 'white', 
+              zIndex: 2,
+              maxWidth: '400px',
+              textAlign: 'center'
+            }}>
+              <h2 style={{ 
+                fontFamily: 'serif', 
+                fontSize: '2rem', 
+                marginBottom: 24, 
+                letterSpacing: 2, 
+                fontWeight: 300,
+                lineHeight: 1.2,
+                textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
+                color: 'white'
+              }}>
+                Découvrez l'élégance avec Maison de Syra
+              </h2>
+              <button
+                style={{
+                  padding: '16px 32px',
+                  background: 'rgba(255,255,255,0.9)',
+                  color: '#1a1a1a',
+                  fontWeight: 500,
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: '1rem',
+                  letterSpacing: 1,
+                  textTransform: 'uppercase',
+                  transition: 'all 0.3s ease',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
+                }}
+                onClick={e => {
+                  animateButton(e);
+                  const productsSection = document.getElementById('products');
+                  if (productsSection) {
+                    productsSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+                onMouseEnter={e => e.target.style.background = 'rgba(255,255,255,1)'}
+                onMouseLeave={e => e.target.style.background = 'rgba(255,255,255,0.9)'}
+                className={styles.heroButton}
+              >
+                Découvrir notre collection
+              </button>
+            </div>
           </div>
-          {/* Center Logo */}
-          <div className={styles.diorHeroLogoWrapper}>
-            <img
-              src="/images/syra-logo.png"
-              alt="Syra Logo"
-              className={styles.diorHeroLogo}
+          {/* Centered Logo/Text */}
+          <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', zIndex: 10 }}>
+            <img 
+              src="/images/syra-logo.png" 
+              alt="Syra Logo" 
+              style={{ height: '300px', width: 'auto', objectFit: 'contain' }}
             />
           </div>
-          {/* Right Video */}
+          {/* Right Video Side */}
           <div
             className={styles.diorHeroSide}
-            onMouseEnter={() => handleRightHover(true)}
-            onMouseLeave={() => handleRightHover(false)}
+            onMouseEnter={() => setFocusedSide('right')}
+            onMouseLeave={() => setFocusedSide(null)}
+            style={{ position: 'relative' }}
           >
             <video
               ref={rightVideoRef}
@@ -152,10 +242,103 @@ function HomeScreen() {
               className={styles.diorHeroVideo}
               muted
               loop
-              preload="auto"
+              autoPlay
               playsInline
               style={{ objectFit: "cover", width: "100%", height: "100%" }}
             />
+            {focusedSide === 'left' && (
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                background: 'rgba(0,0,0,0.5)',
+                zIndex: 2,
+                pointerEvents: 'none',
+                transition: 'background 0.3s',
+              }} />
+            )}
+            <div style={{ 
+              position: 'absolute', 
+              bottom: 80, 
+              left: '50%', 
+              transform: 'translateX(-50%)',
+              color: 'white', 
+              zIndex: 2,
+              maxWidth: '400px',
+              textAlign: 'center'
+            }}>
+              <h2 style={{ 
+                fontFamily: 'serif', 
+                fontSize: '2rem', 
+                marginBottom: 32, 
+                letterSpacing: 2, 
+                fontWeight: 300,
+                lineHeight: 1.2,
+                textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
+                color: 'white'
+              }}>
+                Faites partie de la Maison de Syra
+              </h2>
+              <div style={{ display: 'flex', gap: '16px', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                <button
+                  style={{
+                    padding: '14px 28px',
+                    background: 'rgba(255,255,255,0.9)',
+                    color: '#1a1a1a',
+                    fontWeight: 500,
+                    border: 'none',
+                    cursor: 'pointer',
+                    fontSize: '0.95rem',
+                    letterSpacing: 1,
+                    textTransform: 'uppercase',
+                    transition: 'all 0.3s ease',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                    width: 'fit-content'
+                  }}
+                  onClick={e => {
+                    animateButton(e);
+                    navigate('/login');
+                  }}
+                  onMouseEnter={e => e.target.style.background = 'rgba(255,255,255,1)'}
+                  onMouseLeave={e => e.target.style.background = 'rgba(255,255,255,0.9)'}
+                  className={styles.heroButton}
+                >
+                  Sign In
+                </button>
+                <button
+                  style={{
+                    padding: '14px 28px',
+                    background: 'transparent',
+                    color: 'white',
+                    fontWeight: 500,
+                    border: '2px solid rgba(255,255,255,0.8)',
+                    cursor: 'pointer',
+                    fontSize: '0.95rem',
+                    letterSpacing: 1,
+                    textTransform: 'uppercase',
+                    transition: 'all 0.3s ease',
+                    width: 'fit-content'
+                  }}
+                  onClick={e => {
+                    animateButton(e);
+                    navigate('/register');
+                  }}
+                  onMouseEnter={e => {
+                    e.target.style.background = 'rgba(255,255,255,0.1)';
+                    e.target.style.borderColor = 'rgba(255,255,255,1)';
+                  }}
+                  onMouseLeave={e => {
+                    e.target.style.background = 'transparent';
+                    e.target.style.borderColor = 'rgba(255,255,255,0.8)';
+                  }}
+                  className={styles.heroButton}
+                >
+                  Sign Up
+                </button>
+              </div>
+            </div>
           </div>
         </section>
       )}
@@ -291,5 +474,9 @@ function HomeScreen() {
     </div>
   );
 }
+
+HomeScreen.propTypes = {
+  setHeaderTransparent: PropTypes.func,
+};
 
 export default HomeScreen;

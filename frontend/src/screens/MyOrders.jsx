@@ -3,17 +3,6 @@ import { Container, Row, Col, Card, Badge } from "react-bootstrap";
 import { useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  FaShoppingBag,
-  FaExclamationCircle,
-  FaShoppingCart,
-  FaStore,
-  FaCheck,
-  FaClock,
-  FaTruck,
-  FaDolly,
-  FaEye,
-} from "react-icons/fa";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { Link, useNavigate } from "react-router-dom";
@@ -55,7 +44,7 @@ function MyOrders() {
         <Card.Header className="bg-primary text-white py-3">
           <div className="d-flex justify-content-between align-items-center flex-wrap">
             <h3 className="mb-0 me-2">
-              <FaShoppingBag className="me-2" />
+              <i className="bi bi-bag me-2"></i>
               <span className="d-none d-sm-inline">Mes Commandes</span>
               <span className="d-inline d-sm-none">Commandes</span>
             </h3>
@@ -78,19 +67,19 @@ function MyOrders() {
             </div>
           ) : errorOrders ? (
             <Message variant="danger">
-              <FaExclamationCircle className="me-2" />
+              <i className="bi bi-exclamation-circle me-2"></i>
               {errorOrders}
             </Message>
           ) : orders && orders.length === 0 ? (
             <div className="text-center py-5">
-              <FaShoppingCart className="fa-4x mb-3 text-muted" />
+              <i className="bi bi-cart fa-4x mb-3 text-muted"></i>
               <h4 className="mb-3">Vous n'avez encore passé aucune commande</h4>
               <p className="text-muted mb-4">
                 Parcourez nos produits et passez votre première commande
                 aujourd'hui !
               </p>
               <Link to="/" className="btn btn-primary px-4 py-2">
-                <FaStore className="me-2" />
+                <i className="bi bi-shop me-2"></i>
                 Commencer les Achats
               </Link>
             </div>
@@ -122,7 +111,7 @@ function MyOrders() {
                             </span>
                             {order.isPaid ? (
                               <Badge bg="success" pill className="px-3 py-2">
-                                <FaCheck className="me-1" /> Payé
+                                <i className="bi bi-check me-1"></i> Payé
                               </Badge>
                             ) : (
                               <Badge
@@ -131,7 +120,7 @@ function MyOrders() {
                                 pill
                                 className="px-3 py-2"
                               >
-                                <FaClock className="me-1" /> En Attente
+                                <i className="bi bi-clock me-1"></i> En Attente
                               </Badge>
                             )}
                           </div>
@@ -142,7 +131,7 @@ function MyOrders() {
                             </span>
                             {order.isDelivered ? (
                               <Badge bg="success" pill className="px-3 py-2">
-                                <FaTruck className="me-1" /> Livré
+                                <i className="bi bi-truck me-1"></i> Livré
                               </Badge>
                             ) : (
                               <Badge
@@ -151,7 +140,7 @@ function MyOrders() {
                                 pill
                                 className="px-3 py-2"
                               >
-                                <FaDolly className="me-1" /> En Traitement
+                                <i className="bi bi-box me-1"></i> En Traitement
                               </Badge>
                             )}
                           </div>
@@ -163,7 +152,7 @@ function MyOrders() {
                             className="w-100 py-2"
                             onClick={() => navigate(`/order/${order.id}`)}
                           >
-                            <FaEye className="me-2" />
+                            <i className="bi bi-eye me-2"></i>
                             View Order Details
                           </Button>
                         </div>

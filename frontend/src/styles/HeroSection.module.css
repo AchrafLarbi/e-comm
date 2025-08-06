@@ -121,6 +121,15 @@
   box-shadow: 0 4px 24px rgba(191, 164, 107, 0.18);
 }
 
+.heroButtonClick {
+  animation: heroButtonClickAnim 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+@keyframes heroButtonClickAnim {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(0.92); opacity: 0.85; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
 .heroCarouselWrapper {
   margin-top: 48px;
   width: 100%;
@@ -567,16 +576,24 @@
 
 .diorHeroSection {
   position: relative;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  min-height: 100vh;
+  height: 100vh;
   display: flex;
+  flex-direction: row;
   overflow: hidden;
+  overflow-x: hidden;
   z-index: 1;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
 }
 
 .diorHeroSide {
   flex: 1;
-  height: 100%;
+  height: 100vh;
+  min-height: 100vh;
   cursor: pointer;
   overflow: hidden;
   position: relative;

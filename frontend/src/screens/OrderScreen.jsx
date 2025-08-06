@@ -2,16 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Col, ListGroup, Row, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import {
-  FaShippingFast,
-  FaCreditCard,
-  FaShoppingBag,
-  FaCheckCircle,
-  FaTruck,
-  FaUpload,
-  FaTimes,
-  FaCamera,
-} from "react-icons/fa";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import {
@@ -163,7 +153,7 @@ function OrderScreen() {
             <ListGroup variant="flush">
               <ListGroup.Item>
                 <h2>
-                  <FaShippingFast className="me-2" />
+                  <i className="bi bi-truck me-2"></i>
                   Shipping
                 </h2>
                 <p>
@@ -214,7 +204,7 @@ function OrderScreen() {
               </ListGroup.Item>
               <ListGroup.Item>
                 <h2>
-                  <FaCreditCard className="me-2" />
+                  <i className="bi bi-credit-card me-2"></i>
                   Payment Method
                 </h2>
                 <strong>Method: </strong>
@@ -227,7 +217,7 @@ function OrderScreen() {
               </ListGroup.Item>
               <ListGroup.Item>
                 <h2>
-                  <FaShoppingBag className="me-2" />
+                  <i className="bi bi-bag me-2"></i>
                   Order Items
                 </h2>
                 {order.orderItems.length === 0 ? (
@@ -299,7 +289,7 @@ function OrderScreen() {
                         onClick={markAsPaidHandler}
                         disabled={loadingPay}
                       >
-                        <FaCheckCircle className="me-2" />
+                        <i className="bi bi-check-circle me-2"></i>
                         {loadingPay
                           ? "Traitement..."
                           : "Marquer Paiement Effectué"}
@@ -321,7 +311,7 @@ function OrderScreen() {
                               className="btn btn-primary w-100 mb-2"
                               onClick={() => setShowImageUpload(true)}
                             >
-                              <FaTruck className="me-2" />
+                              <i className="bi bi-truck me-2"></i>
                               Mark As Delivered
                             </Button>
                             <Button
@@ -329,7 +319,7 @@ function OrderScreen() {
                               className="btn btn-outline-primary w-100"
                               onClick={deliverHandler}
                             >
-                              <FaCheckCircle className="me-2" />
+                              <i className="bi bi-check-circle me-2"></i>
                               Mark As Delivered (No Image)
                             </Button>
                           </div>
@@ -337,7 +327,7 @@ function OrderScreen() {
                           <div>
                             <Form.Group className="mb-3">
                               <Form.Label>
-                                <FaCamera className="me-2" />
+                                <i className="bi bi-camera me-2"></i>
                                 Upload Delivery Proof Image
                               </Form.Label>
                               <Form.Control
@@ -353,7 +343,7 @@ function OrderScreen() {
                                 onClick={deliverHandler}
                                 disabled={!deliveryImage}
                               >
-                                <FaUpload className="me-2" />
+                                <i className="bi bi-upload me-2"></i>
                                 Confirm Delivery
                               </Button>
                               <Button
@@ -364,7 +354,7 @@ function OrderScreen() {
                                   setDeliveryImage(null);
                                 }}
                               >
-                                <FaTimes className="me-2" />
+                                <i className="bi bi-x me-2"></i>
                                 Cancel
                               </Button>
                             </div>
