@@ -1,3 +1,32 @@
+.diorHeroVideosWrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+@media (max-width: 900px) {
+  .diorHeroSection {
+    flex-direction: column;
+    min-height: 100vh;
+    height: 100vh;
+  }
+  .diorHeroVideosWrapper {
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+  }
+  .diorHeroSide {
+    height: 50vh;
+    min-height: 50vh;
+    width: 100vw;
+    flex: none;
+  }
+  .diorHeroLogoWrapper {
+    display: none;
+  }
+}
 .heroSection {
   width: 100%;
   min-height: 75vh;
@@ -122,12 +151,21 @@
 }
 
 .heroButtonClick {
-  animation: heroButtonClickAnim 0.3s cubic-bezier(0.4,0,0.2,1);
+  animation: heroButtonClickAnim 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 @keyframes heroButtonClickAnim {
-  0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(0.92); opacity: 0.85; }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.92);
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .heroCarouselWrapper {
