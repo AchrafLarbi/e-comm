@@ -138,8 +138,84 @@ function HomeScreen({ setHeaderTransparent }) {
   // Dior hero section logic
   const leftVideoRef = useRef(null);
   const rightVideoRef = useRef(null);
+  const heroSectionRef = useRef(null);
+  const [videosLoaded, setVideosLoaded] = useState({
+    left: false,
+    right: false,
+  });
+  const [videoErrors, setVideoErrors] = useState({ left: false, right: false });
+  const [isLeftVideoPlaying, setIsLeftVideoPlaying] = useState(false);
+  const [isRightVideoPlaying, setIsRightVideoPlaying] = useState(false);
+  const [shouldLoadVideos, setShouldLoadVideos] = useState(false);
 
-  // Remove play/pause logic, always play videos
+  // Video optimization and hover handling
+  const handleVideoLoad = (side) => {
+    setVideosLoaded((prev) => ({ ...prev, [side]: true }));
+  };
+
+  const handleVideoError = (side) => {
+    setVideoErrors((prev) => ({ ...prev, [side]: true }));
+    console.warn(`Failed to load ${side} video`);
+  };
+
+  const handleVideoHover = (side, isHovering) => {
+    const videoRef = side === "left" ? leftVideoRef : rightVideoRef;
+    const setVideoPlaying =
+      side === "left" ? setIsLeftVideoPlaying : setIsRightVideoPlaying;
+
+    if (videoRef.current && videosLoaded[side] && !videoErrors[side]) {
+      try {
+        if (isHovering) {
+          videoRef.current.play();
+          setVideoPlaying(true);
+        } else {
+          videoRef.current.pause();
+          setVideoPlaying(false);
+        }
+      } catch (error) {
+        console.warn(`Video ${isHovering ? "play" : "pause"} failed:`, error);
+      }
+    }
+  };
+
+  // Intersection observer for lazy loading videos
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setShouldLoadVideos(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (heroSectionRef.current) {
+      observer.observe(heroSectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Preload videos only when they should be loaded
+  useEffect(() => {
+    if (!shouldLoadVideos) return;
+
+    const preloadVideo = (src, side) => {
+      const video = document.createElement("video");
+      video.src = src;
+      video.muted = true;
+      video.preload = "metadata";
+      video.onloadedmetadata = () => handleVideoLoad(side);
+      video.onerror = () => handleVideoError(side);
+    };
+
+    // Preload both videos
+    preloadVideo("/videos/left-video.mp4", "left");
+    preloadVideo("/videos/right-video.mp4", "right");
+  }, [shouldLoadVideos]);
 
   const navigate = useNavigate();
 
@@ -252,24 +328,91 @@ function HomeScreen({ setHeaderTransparent }) {
       />
       {/* Dior-style Hero Section - Responsive Split */}
       {!searchQuery && (
-        <section className={styles.diorHeroSection}>
+        <section ref={heroSectionRef} className={styles.diorHeroSection}>
           <div className={styles.diorHeroVideosWrapper}>
             {/* Top/Left Video Side */}
             <div
               className={styles.diorHeroSide}
-              onMouseEnter={() => setFocusedSide("left")}
-              onMouseLeave={() => setFocusedSide(null)}
+              onMouseEnter={() => {
+                setFocusedSide("left");
+                handleVideoHover("left", true);
+              }}
+              onMouseLeave={() => {
+                setFocusedSide(null);
+                handleVideoHover("left", false);
+              }}
               style={{ position: "relative" }}
             >
+              {/* Loading placeholder */}
+              {!videosLoaded.left && !videoErrors.left && (
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    background:
+                      "linear-gradient(45deg, #f0f0f0 25%, transparent 25%), linear-gradient(-45deg, #f0f0f0 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f0f0f0 75%), linear-gradient(-45deg, transparent 75%, #f0f0f0 75%)",
+                    backgroundSize: "20px 20px",
+                    backgroundPosition: "0 0, 0 10px, 10px -10px, -10px 0px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    zIndex: 1,
+                    color: "#666",
+                    fontSize: "1.2rem",
+                  }}
+                >
+                  Chargement...
+                </div>
+              )}
+
+              {/* Error fallback */}
+              {videoErrors.left && (
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    background:
+                      "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    zIndex: 1,
+                  }}
+                >
+                  <div style={{ color: "white", textAlign: "center" }}>
+                    <i
+                      className="fas fa-image"
+                      style={{ fontSize: "3rem", marginBottom: "1rem" }}
+                    ></i>
+                    <div>Contenu de démonstration</div>
+                  </div>
+                </div>
+              )}
+
               <video
                 ref={leftVideoRef}
                 src="/videos/left-video.mp4"
                 className={styles.diorHeroVideo}
                 muted
                 loop
-                autoPlay
                 playsInline
-                style={{ objectFit: "cover", width: "100%", height: "100%" }}
+                preload="metadata"
+                poster="/images/video-poster-left.jpg"
+                onLoadedMetadata={() => handleVideoLoad("left")}
+                onError={() => handleVideoError("left")}
+                style={{
+                  objectFit: "cover",
+                  width: "100%",
+                  height: "100%",
+                  opacity: videosLoaded.left ? 1 : 0,
+                  transition: "opacity 0.3s ease",
+                }}
               />
               {/* Removed darkness effect on hover */}
               <div
@@ -346,19 +489,86 @@ function HomeScreen({ setHeaderTransparent }) {
             {/* Bottom/Right Video Side */}
             <div
               className={styles.diorHeroSide}
-              onMouseEnter={() => setFocusedSide("right")}
-              onMouseLeave={() => setFocusedSide(null)}
+              onMouseEnter={() => {
+                setFocusedSide("right");
+                handleVideoHover("right", true);
+              }}
+              onMouseLeave={() => {
+                setFocusedSide(null);
+                handleVideoHover("right", false);
+              }}
               style={{ position: "relative" }}
             >
+              {/* Loading placeholder */}
+              {!videosLoaded.right && !videoErrors.right && (
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    background:
+                      "linear-gradient(45deg, #f0f0f0 25%, transparent 25%), linear-gradient(-45deg, #f0f0f0 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f0f0f0 75%), linear-gradient(-45deg, transparent 75%, #f0f0f0 75%)",
+                    backgroundSize: "20px 20px",
+                    backgroundPosition: "0 0, 0 10px, 10px -10px, -10px 0px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    zIndex: 1,
+                    color: "#666",
+                    fontSize: "1.2rem",
+                  }}
+                >
+                  Chargement...
+                </div>
+              )}
+
+              {/* Error fallback */}
+              {videoErrors.right && (
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    background:
+                      "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    zIndex: 1,
+                  }}
+                >
+                  <div style={{ color: "white", textAlign: "center" }}>
+                    <i
+                      className="fas fa-image"
+                      style={{ fontSize: "3rem", marginBottom: "1rem" }}
+                    ></i>
+                    <div>Contenu de démonstration</div>
+                  </div>
+                </div>
+              )}
+
               <video
                 ref={rightVideoRef}
                 src="/videos/right-video.mp4"
                 className={styles.diorHeroVideo}
                 muted
                 loop
-                autoPlay
                 playsInline
-                style={{ objectFit: "cover", width: "100%", height: "100%" }}
+                preload="metadata"
+                poster="/images/video-poster-right.jpg"
+                onLoadedMetadata={() => handleVideoLoad("right")}
+                onError={() => handleVideoError("right")}
+                style={{
+                  objectFit: "cover",
+                  width: "100%",
+                  height: "100%",
+                  opacity: videosLoaded.right ? 1 : 0,
+                  transition: "opacity 0.3s ease",
+                }}
               />
               {/* Removed darkness effect on hover */}
               <div

@@ -3,7 +3,6 @@ import { Container, Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import { userLogoutAction } from "../actions/UserActions";
-import AlertModal from "./AertModal";
 
 function Haeder({ transparent }) {
   const dispatch = useDispatch();
@@ -22,20 +21,21 @@ function Haeder({ transparent }) {
           : "linear-gradient(135deg, var(--syra-green) 70%, var(--syra-burgundy) 100%)",
         color: "var(--syra-gold)",
         fontFamily: "Inter, sans-serif",
-        width: '100%',
+        width: "100%",
         zIndex: 9999,
         boxShadow: transparent ? "none" : "0 2px 8px rgba(0,0,0,0.07)",
-        transition: "background 0.5s cubic-bezier(0.4,0,0.2,1), box-shadow 0.5s cubic-bezier(0.4,0,0.2,1)",
-        position: 'fixed',
+        transition:
+          "background 0.5s cubic-bezier(0.4,0,0.2,1), box-shadow 0.5s cubic-bezier(0.4,0,0.2,1)",
+        position: "fixed",
         top: 0,
         left: 0,
       }}
     >
       <Navbar
-        expand="lg"
-        className="p-2"
+        expand="xl"
+        className="py-3"
         style={{
-          background: 'rgba(0,0,0,0)',
+          background: "rgba(0,0,0,0)",
           color: "var(--syra-gold)",
           fontFamily: "Inter, sans-serif",
           transition: "background 0.4s cubic-bezier(0.4,0,0.2,1)",
@@ -50,7 +50,7 @@ function Haeder({ transparent }) {
               <img
                 src="/textlogo.png"
                 alt="Maison SYRA Logo"
-                height="100"
+                height="70"
                 className="me-2"
                 style={{ borderRadius: "4px" }}
               />
@@ -58,10 +58,7 @@ function Haeder({ transparent }) {
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav
-              className="me-auto my-2 my-lg-0"
-              style={{ maxHeight: "100px" }}
-            >
+            <Nav className="me-auto my-1 my-lg-0" style={{ maxHeight: "60px" }}>
               <LinkContainer to={userInfo && userInfo.isAdmin ? "/admin" : "/"}>
                 <Nav.Link
                   href={userInfo && userInfo.isAdmin ? "/admin" : "/"}
@@ -82,7 +79,7 @@ function Haeder({ transparent }) {
               )}
             </Nav>
 
-            <div className="d-flex justify-content-center align-items-center mt-3 mt-md-0 text-white">
+            <div className="d-flex justify-content-center align-items-center mt-2 mt-md-0 text-white">
               {userInfo ? (
                 <NavDropdown
                   className="fw-semibold"

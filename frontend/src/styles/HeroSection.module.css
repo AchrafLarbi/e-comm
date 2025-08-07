@@ -663,3 +663,24 @@
   width: auto;
   object-fit: contain;
 }
+
+/* Video loading animations and optimizations */
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+/* Video hover effects */
+.diorHeroSide:hover .diorHeroVideo {
+  transform: scale(1.02);
+  transition: transform 0.6s ease;
+}
+
+.diorHeroVideo {
+  transition: transform 0.6s ease, opacity 0.3s ease;
+  will-change: transform, opacity;
+}
