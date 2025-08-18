@@ -33,7 +33,7 @@ function Haeder({ transparent }) {
     >
       <Navbar
         expand="xl"
-        className="py-3"
+        className="py-1"
         style={{
           background: "rgba(0,0,0,0)",
           color: "var(--syra-gold)",
