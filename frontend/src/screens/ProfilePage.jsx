@@ -1,24 +1,24 @@
 import React from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Table,
-  Card,
-  Badge,
-  ListGroup,
-} from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { Form, Button, InputGroup } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   getUserDetailAction,
   userUpadateProfileAction,
 } from "../actions/UserActions";
 import { USER_UPDATE_PROFILE_RESET } from "../constants/UserConstants";
+import {
+  FiUser,
+  FiUserCheck,
+  FiAtSign,
+  FiMail,
+  FiLock,
+  FiSave,
+} from "react-icons/fi";
 
 function ProfilePage() {
   const [userData, setUserData] = useState({
@@ -75,7 +75,7 @@ function ProfilePage() {
   };
 
   const validatePassword = () => {
-    if (password == confirmPassword) {
+    if (password === confirmPassword) {
       setMatchPassword(true);
       return true;
     } else {
@@ -91,7 +91,8 @@ function ProfilePage() {
       <Card className="shadow-sm border-0">
         <Card.Header className="bg-primary text-white">
           <h4 className="mb-0">
-            <i className="fas fa-user-circle me-2"></i>Informations du Profil
+            <FiUserCheck className="me-2" />
+            Informations du Profil
           </h4>
         </Card.Header>
         <Card.Body>
@@ -105,7 +106,7 @@ function ProfilePage() {
                 <Form.Label>Nom Complet</Form.Label>
                 <InputGroup>
                   <InputGroup.Text>
-                    <i className="fas fa-user"></i>
+                    <FiUser />
                   </InputGroup.Text>
                   <Form.Control
                     type="name"
@@ -121,7 +122,7 @@ function ProfilePage() {
                 <Form.Label>Nom d'utilisateur</Form.Label>
                 <InputGroup>
                   <InputGroup.Text>
-                    <i className="fas fa-at"></i>
+                    <FiAtSign />
                   </InputGroup.Text>
                   <Form.Control
                     type="username"
@@ -137,7 +138,7 @@ function ProfilePage() {
                 <Form.Label>Adresse Email</Form.Label>
                 <InputGroup>
                   <InputGroup.Text>
-                    <i className="fas fa-envelope"></i>
+                    <FiMail />
                   </InputGroup.Text>
                   <Form.Control
                     type="email"
@@ -156,7 +157,7 @@ function ProfilePage() {
                 <Form.Label>Nouveau Mot de Passe</Form.Label>
                 <InputGroup>
                   <InputGroup.Text>
-                    <i className="fas fa-lock"></i>
+                    <FiLock />
                   </InputGroup.Text>
                   <Form.Control
                     type="password"
@@ -175,7 +176,7 @@ function ProfilePage() {
                 <Form.Label>Confirmer le Mot de Passe</Form.Label>
                 <InputGroup>
                   <InputGroup.Text>
-                    <i className="fas fa-lock"></i>
+                    <FiLock />
                   </InputGroup.Text>
                   <Form.Control
                     type="password"
@@ -193,7 +194,8 @@ function ProfilePage() {
 
               <div className="d-grid">
                 <Button type="submit" variant="primary" size="md">
-                  <i className="fas fa-save me-2"></i>Mettre à Jour le Profil
+                  <FiSave className="me-2" />
+                  Mettre à Jour le Profil
                 </Button>
               </div>
             </Form>
