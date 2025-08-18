@@ -18,6 +18,7 @@ import {
   Pagination,
 } from "react-bootstrap";
 import AlertModal from "../components/AertModal";
+import { FiEdit3, FiTrash2, FiCheck } from "react-icons/fi";
 
 function UserListScreen() {
   const navigate = useNavigate();
@@ -162,7 +163,7 @@ function UserListScreen() {
                         <td className="text-center">
                           {user.isAdmin ? (
                             <Badge bg="success">
-                              Admin <i className="fas fa-check ms-1"></i>
+                              Admin <FiCheck className="ms-1" />
                             </Badge>
                           ) : (
                             <Badge bg="secondary">Utilisateur Régulier</Badge>
@@ -175,7 +176,7 @@ function UserListScreen() {
                                 className="btn-sm"
                                 variant="outline-primary"
                               >
-                                <i className="fas fa-edit"></i> Edit
+                                <FiEdit3 className="me-1" /> Edit
                               </Button>
                             </Link>
 
@@ -186,7 +187,7 @@ function UserListScreen() {
                                   className="btn-sm ms-2"
                                   variant="outline-danger"
                                 >
-                                  <i className="fas fa-trash"></i> Delete
+                                  <FiTrash2 className="me-1" /> Delete
                                 </Button>
                               }
                               title="Delete User"

@@ -17,6 +17,7 @@ import {
   Pagination,
 } from "react-bootstrap";
 import { allOrdersAction } from "../actions/OrderActions";
+import { FiEye } from "react-icons/fi";
 
 function OrdersListScreen() {
   const navigate = useNavigate();
@@ -190,7 +191,7 @@ function OrdersListScreen() {
                                 className="btn-sm me-2"
                                 variant="outline-primary"
                               >
-                                <i className="bi bi-eye me-1"></i> Voir
+                                <FiEye className="me-1" /> Voir
                               </Button>
                             </Link>
                           </td>

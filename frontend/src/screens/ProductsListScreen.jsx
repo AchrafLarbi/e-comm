@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { deleteUserAction, userListAction } from "../actions/UserActions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import {
   Alert,
   Button,
-  ButtonGroup,
   Card,
   Col,
   Row,
@@ -23,6 +21,7 @@ import {
 } from "../actions/productActions";
 import Paginator from "../components/Paginator";
 import SearchBox from "../components/SearchBox";
+import { FiEdit3, FiTrash2, FiEye } from "react-icons/fi";
 
 function ProductsListScreen() {
   const searchQuery = window.location.search ? window.location.search : "";
@@ -201,7 +200,7 @@ function ProductsListScreen() {
                             size="md"
                             className="border-0 rounded-pill px-3"
                           >
-                            <i className="fas fa-edit me-1"></i> Edit
+                            <FiEdit3 className="me-1" /> Edit
                           </Button>
 
                           <AlertModal
@@ -212,7 +211,7 @@ function ProductsListScreen() {
                                 size="md"
                                 className="border-0 rounded-pill px-3"
                               >
-                                <i className="fas fa-trash-alt me-1"></i> Delete
+                                <FiTrash2 className="me-1" /> Delete
                               </Button>
                             }
                             title="Supprimer le Produit"
@@ -226,7 +225,7 @@ function ProductsListScreen() {
                             target="_blank"
                             className="border-0 rounded-pill px-3"
                           >
-                            <i className="fas fa-eye me-1"></i> View
+                            <FiEye className="me-1" /> Voir
                           </Button>
                         </div>
                       </td>

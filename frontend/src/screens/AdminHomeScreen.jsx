@@ -14,6 +14,16 @@ import { Link } from "react-router-dom";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { formatCurrency } from "../utils/currency";
+import {
+  FiShoppingCart,
+  FiCheck,
+  FiTruck,
+  FiDollarSign,
+  FiPackage,
+  FiUsers,
+  FiEye,
+  FiActivity,
+} from "react-icons/fi";
 
 function AdminHomeScreen() {
   const dispatch = useDispatch();
@@ -68,6 +78,7 @@ function AdminHomeScreen() {
         <Col md={3}>
           <Card className="text-center bg-primary text-white">
             <Card.Body>
+              <FiShoppingCart size={32} className="mb-2" />
               <h3>{stats.totalOrders}</h3>
               <Card.Text>Total des Commandes</Card.Text>
             </Card.Body>
@@ -76,6 +87,7 @@ function AdminHomeScreen() {
         <Col md={3}>
           <Card className="text-center bg-success text-white">
             <Card.Body>
+              <FiCheck size={32} className="mb-2" />
               <h3>{stats.paidOrders}</h3>
               <Card.Text>Commandes Payées</Card.Text>
             </Card.Body>
@@ -84,6 +96,7 @@ function AdminHomeScreen() {
         <Col md={3}>
           <Card className="text-center bg-info text-white">
             <Card.Body>
+              <FiTruck size={32} className="mb-2" />
               <h3>{stats.deliveredOrders}</h3>
               <Card.Text>Commandes Livrées</Card.Text>
             </Card.Body>
@@ -92,6 +105,7 @@ function AdminHomeScreen() {
         <Col md={3}>
           <Card className="text-center bg-warning text-white">
             <Card.Body>
+              <FiDollarSign size={32} className="mb-2" />
               <h3>{formatCurrency(stats.totalRevenue)}</h3>
               <Card.Text>Chiffre d'Affaires Total</Card.Text>
             </Card.Body>
@@ -104,12 +118,14 @@ function AdminHomeScreen() {
         <Col md={4}>
           <Card className="h-100">
             <Card.Body className="text-center">
+              <FiActivity size={48} className="text-primary mb-3" />
               <Card.Title>Gestion des Commandes</Card.Title>
               <Card.Text>
                 Voir, gérer et traiter les commandes clients
               </Card.Text>
               <Link to="/admin/orders">
                 <Button variant="primary" size="lg">
+                  <FiShoppingCart className="me-2" />
                   Gérer les Commandes
                 </Button>
               </Link>
@@ -119,12 +135,14 @@ function AdminHomeScreen() {
         <Col md={4}>
           <Card className="h-100">
             <Card.Body className="text-center">
+              <FiPackage size={48} className="text-success mb-3" />
               <Card.Title>Gestion des Produits</Card.Title>
               <Card.Text>
                 Ajouter, modifier et gérer votre catalogue de produits
               </Card.Text>
               <Link to="/admin/products">
                 <Button variant="success" size="lg">
+                  <FiPackage className="me-2" />
                   Gérer les Produits
                 </Button>
               </Link>
@@ -134,10 +152,12 @@ function AdminHomeScreen() {
         <Col md={4}>
           <Card className="h-100">
             <Card.Body className="text-center">
+              <FiUsers size={48} className="text-info mb-3" />
               <Card.Title>Gestion des Utilisateurs</Card.Title>
               <Card.Text>Voir et gérer les comptes clients</Card.Text>
               <Link to="/admin/users">
                 <Button variant="info" size="lg">
+                  <FiUsers className="me-2" />
                   Gérer les Utilisateurs
                 </Button>
               </Link>
@@ -154,6 +174,7 @@ function AdminHomeScreen() {
               <h4>Commandes Récentes</h4>
               <Link to="/admin/orders">
                 <Button variant="outline-primary" size="sm">
+                  <FiEye className="me-1" />
                   Voir Toutes les Commandes
                 </Button>
               </Link>

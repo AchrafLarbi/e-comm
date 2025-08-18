@@ -8,6 +8,18 @@ import Message from "../components/Message";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getUserDetailAction, updateUserAction } from "../actions/UserActions";
 import { USER_UPDATE_RESET } from "../constants/UserConstants";
+import {
+  FiArrowLeft,
+  FiUserCheck,
+  FiAlertCircle,
+  FiUser,
+  FiAtSign,
+  FiMail,
+  FiCheck,
+  FiX,
+  FiSave,
+  FiCheckCircle,
+} from "react-icons/fi";
 
 function UserEditScreen() {
   const { id } = useParams();
@@ -72,14 +84,14 @@ function UserEditScreen() {
   return (
     <Container className="py-4">
       <Link to="/admin/users" className="btn btn-outline-secondary mb-4">
-        <i className="fas fa-arrow-left me-2"></i>
+        <FiArrowLeft className="me-2" />
         Back to Users List
       </Link>
 
       <Card className="shadow-sm border-0 mb-4">
         <Card.Header className="bg-primary text-white py-3">
           <h4 className="mb-0">
-            <i className="fas fa-user-edit me-2"></i>
+            <FiUserCheck className="me-2" />
             User Details
           </h4>
         </Card.Header>
@@ -90,7 +102,7 @@ function UserEditScreen() {
             </div>
           ) : error ? (
             <Message variant="danger">
-              <i className="fas fa-exclamation-circle me-2"></i>
+              <FiAlertCircle className="me-2" />
               {error}
             </Message>
           ) : (
@@ -99,7 +111,7 @@ function UserEditScreen() {
                 <Col md={6}>
                   <Form.Group controlId="name" className="mb-4">
                     <Form.Label>
-                      <i className="fas fa-user me-2"></i>
+                      <FiUser className="me-2" />
                       Full Name
                     </Form.Label>
                     <InputGroup>
@@ -115,7 +127,7 @@ function UserEditScreen() {
                 <Col md={6}>
                   <Form.Group controlId="username" className="mb-4">
                     <Form.Label>
-                      <i className="fas fa-at me-2"></i>
+                      <FiAtSign className="me-2" />
                       Nom d'utilisateur
                     </Form.Label>
                     <InputGroup>
@@ -132,7 +144,7 @@ function UserEditScreen() {
 
               <Form.Group controlId="email" className="mb-4">
                 <Form.Label>
-                  <i className="fas fa-envelope me-2"></i>
+                  <FiMail className="me-2" />
                   Adresse Email
                 </Form.Label>
                 <InputGroup>
@@ -153,11 +165,11 @@ function UserEditScreen() {
                         bg={isAdmin ? "success" : "secondary"}
                         className="me-2 p-2"
                       >
-                        <i
-                          className={`fas ${
-                            isAdmin ? "fa-check" : "fa-times"
-                          } me-1`}
-                        ></i>
+                        {isAdmin ? (
+                          <FiCheck className="me-1" />
+                        ) : (
+                          <FiX className="me-1" />
+                        )}
                         {isAdmin ? "Admin" : "Pas Admin"}
                       </Badge>
                       <h5 className="mb-0">Privilèges Admin</h5>
@@ -179,14 +191,14 @@ function UserEditScreen() {
 
               {updateError && (
                 <Message variant="danger" className="mb-4">
-                  <i className="fas fa-exclamation-circle me-2"></i>
+                  <FiAlertCircle className="me-2" />
                   {updateError}
                 </Message>
               )}
 
               {success && (
                 <Message variant="success" className="mb-4">
-                  <i className="fas fa-check-circle me-2"></i>
+                  <FiCheckCircle className="me-2" />
                   Informations utilisateur mises à jour avec succès
                 </Message>
               )}
@@ -210,7 +222,7 @@ function UserEditScreen() {
                       </>
                     ) : (
                       <>
-                        <i className="fas fa-save me-2"></i>
+                        <FiSave className="me-2" />
                         Enregistrer les Modifications
                       </>
                     )}
