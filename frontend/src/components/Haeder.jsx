@@ -4,10 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import { userLogoutAction } from "../actions/UserActions";
 
-function Haeder({ transparent }) {
+function Haeder({ isVideoSection, currentPath }) {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, error, userInfo } = userLogin;
+
+  // Check if we're on login or register pages
+  const isAuthPage = currentPath === "/login" || currentPath === "/register";
+
   useEffect(() => {}, [userInfo]);
 
   const logoutHandler = () => {
@@ -15,15 +19,16 @@ function Haeder({ transparent }) {
   };
   return (
     <header
+      className={isVideoSection ? "video-section" : ""}
       style={{
-        background: transparent
-          ? "rgba(0,0,0,0)"
-          : "linear-gradient(135deg, var(--syra-green) 70%, var(--syra-burgundy) 100%)",
+        background: isVideoSection
+          ? "rgba(0, 0, 0, 0.7)"
+          : "rgba(0, 0, 0, 0.9)",
         color: "var(--syra-gold)",
         fontFamily: "Inter, sans-serif",
         width: "100%",
         zIndex: 9999,
-        boxShadow: transparent ? "none" : "0 2px 8px rgba(0,0,0,0.07)",
+        boxShadow: "0 2px 8px rgba(0,0,0,0.07)",
         transition:
           "background 0.5s cubic-bezier(0.4,0,0.2,1), box-shadow 0.5s cubic-bezier(0.4,0,0.2,1)",
         position: "fixed",
@@ -48,7 +53,7 @@ function Haeder({ transparent }) {
           <LinkContainer to="/">
             <Navbar.Brand className="d-flex align-items-center">
               <img
-                src="/textlogo.png"
+                src="/images/syra-logo.png"
                 alt="Maison SYRA Logo"
                 height="70"
                 className="me-2"
@@ -65,7 +70,9 @@ function Haeder({ transparent }) {
                   className="me-2 nav-link-hover"
                 >
                   <i className="bi bi-house-door me-1"></i>
-                  {userInfo && userInfo.isAdmin ? "Tableau de Bord" : "Accueil"}
+                  {userInfo && userInfo.isAdmin
+                    ? "Tableau de Bords"
+                    : "Accueil"}
                 </Nav.Link>
               </LinkContainer>
               {/* Hide cart for admins */}
@@ -133,11 +140,15 @@ function Haeder({ transparent }) {
                   </NavDropdown.Item>
                 </NavDropdown>
               ) : (
-                <LinkContainer to="/login">
-                  <Button variant="outline-light" className="ms-2 btn-hover">
-                    <i className="bi bi-box-arrow-in-right me-1"></i> Connexion
-                  </Button>
-                </LinkContainer>
+                // Only show login button if not on auth pages
+                !isAuthPage && (
+                  <LinkContainer to="/login">
+                    <Button variant="outline-light" className="ms-2 btn-hover">
+                      <i className="bi bi-box-arrow-in-right me-1"></i>{" "}
+                      Connexion
+                    </Button>
+                  </LinkContainer>
+                )
               )}
             </div>
           </Navbar.Collapse>
@@ -175,6 +186,29 @@ function Haeder({ transparent }) {
         header a:hover {
           color: #ffffff !important;
           transition: color 0.3s ease;
+        }
+        /* Dropdown menu styling */
+        .dropdown-menu {
+          background-color: rgba(0, 0, 0, 0.95) !important;
+          border: 1px solid rgba(255, 255, 255, 0.1) !important;
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
+        }
+        .dropdown-item {
+          color: #ffffff !important;
+          transition: all 0.3s ease !important;
+        }
+        .dropdown-item:hover {
+          background-color: rgba(255, 255, 255, 0.1) !important;
+          color: var(--syra-gold) !important;
+          transform: translateX(5px) !important;
+        }
+        .dropdown-item:focus {
+          background-color: rgba(255, 255, 255, 0.1) !important;
+          color: var(--syra-gold) !important;
+        }
+        /* Navbar background transition when not in video section */
+        header:not(.video-section) {
+          background: rgba(0, 0, 0, 0.9) !important;
         }
       `}</style>
     </header>

@@ -8,13 +8,13 @@ import { productsListAction } from "../actions/productActions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import Paginator from "../components/Paginator";
-import ProductsCarousel from "../components/ProductsCarousel/ProductsCarousel";
 import styles from "../styles/HeroSection.module.css";
 import landingStyles from "../styles/LandingSections.module.css";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import videoUtils from "../utils/videoUtils";
 
-function HomeScreen({ setHeaderTransparent }) {
+function HomeScreen({ setHeaderTransparent, setIsVideoSection }) {
   // get search keyword from the url
   const searchQuery = window.location ? window.location.search : "";
   // Initialize AOS for scroll animations (only once)
@@ -40,31 +40,45 @@ function HomeScreen({ setHeaderTransparent }) {
   const products_List = useSelector((state) => state.productsList);
   const { loading, products, error, pages, page } = products_List;
 
+  // Get user login status
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   // State for hero product carousel
   const [currentProductIndex, setCurrentProductIndex] = useState(0);
   const [focusedSide, setFocusedSide] = useState(null); // 'left', 'right', or null
 
-  // Remove showHeader state and scroll logic
-  // const [showHeader, setShowHeader] = useState(false);
-  // const [headerTransparent, setHeaderTransparent] = useState(true); // This state is now passed as a prop
+  const [headerTransparent] = useState(true); // This state is now passed as a prop
 
   useEffect(() => {
-    // Set initial transparency based on scroll position
-    if (window.scrollY < window.innerHeight - 10) {
-      setHeaderTransparent(true);
-    } else {
-      setHeaderTransparent(false);
-    }
-    const handleScroll = () => {
-      if (window.scrollY < window.innerHeight - 10) {
+    // Function to check if user is in video section
+    const isInVideoSection = () => {
+      const videoSection = document.getElementById("video-hero-section");
+      if (!videoSection) return false;
+    };
+
+    // Set initial transparency based on video section visibility
+    const updateHeaderTransparency = () => {
+      const inVideoSection = isInVideoSection();
+      if (inVideoSection) {
         setHeaderTransparent(true);
+        setIsVideoSection && setIsVideoSection(true);
       } else {
         setHeaderTransparent(false);
+        setIsVideoSection && setIsVideoSection(false);
       }
     };
+
+    // Initial call
+    updateHeaderTransparency();
+
+    const handleScroll = () => {
+      updateHeaderTransparency();
+    };
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [setHeaderTransparent]);
+  }, [setHeaderTransparent, setIsVideoSection]);
 
   useEffect(() => {
     dispatch(productsListAction(searchQuery));
@@ -135,7 +149,7 @@ function HomeScreen({ setHeaderTransparent }) {
     },
   ];
 
-  // Dior hero section logic
+  // Enhanced video handling with caching and WebM support
   const leftVideoRef = useRef(null);
   const rightVideoRef = useRef(null);
   const heroSectionRef = useRef(null);
@@ -148,9 +162,21 @@ function HomeScreen({ setHeaderTransparent }) {
   const [isRightVideoPlaying, setIsRightVideoPlaying] = useState(false);
   const [shouldLoadVideos, setShouldLoadVideos] = useState(false);
 
-  // Video optimization and hover handling
+  // Video caching and optimization
+  const videoCache = useRef(new Map());
+
+  // Enhanced video load handler with caching
   const handleVideoLoad = (side) => {
     setVideosLoaded((prev) => ({ ...prev, [side]: true }));
+
+    // Cache the video for future use
+    const videoRef = side === "left" ? leftVideoRef : rightVideoRef;
+    if (videoRef.current) {
+      videoCache.current.set(side, videoRef.current);
+
+      // Optimize video playback
+      videoUtils.optimizeVideoPlayback(videoRef.current);
+    }
   };
 
   const handleVideoError = (side) => {
@@ -158,7 +184,8 @@ function HomeScreen({ setHeaderTransparent }) {
     console.warn(`Failed to load ${side} video`);
   };
 
-  const handleVideoHover = (side, isHovering) => {
+  // Enhanced hover handler with better performance using videoUtils
+  const handleVideoHover = async (side, isHovering) => {
     const videoRef = side === "left" ? leftVideoRef : rightVideoRef;
     const setVideoPlaying =
       side === "left" ? setIsLeftVideoPlaying : setIsRightVideoPlaying;
@@ -166,19 +193,20 @@ function HomeScreen({ setHeaderTransparent }) {
     if (videoRef.current && videosLoaded[side] && !videoErrors[side]) {
       try {
         if (isHovering) {
-          videoRef.current.play();
-          setVideoPlaying(true);
+          const success = await videoUtils.playVideo(videoRef.current);
+          setVideoPlaying(success);
         } else {
-          videoRef.current.pause();
+          videoUtils.pauseVideo(videoRef.current);
           setVideoPlaying(false);
         }
       } catch (error) {
         console.warn(`Video ${isHovering ? "play" : "pause"} failed:`, error);
+        setVideoPlaying(false);
       }
     }
   };
 
-  // Intersection observer for lazy loading videos
+  // Intersection observer for lazy loading videos with better performance
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -189,7 +217,10 @@ function HomeScreen({ setHeaderTransparent }) {
           }
         });
       },
-      { threshold: 0.1 }
+      {
+        threshold: 0.1,
+        rootMargin: "50px", // Start loading 50px before video comes into view
+      }
     );
 
     if (heroSectionRef.current) {
@@ -199,23 +230,57 @@ function HomeScreen({ setHeaderTransparent }) {
     return () => observer.disconnect();
   }, []);
 
-  // Preload videos only when they should be loaded
+  // Optimized video preloading with WebM support and caching
   useEffect(() => {
     if (!shouldLoadVideos) return;
 
-    const preloadVideo = (src, side) => {
-      const video = document.createElement("video");
-      video.src = src;
-      video.muted = true;
-      video.preload = "metadata";
-      video.onloadedmetadata = () => handleVideoLoad(side);
-      video.onerror = () => handleVideoError(side);
+    const preloadVideo = async (side) => {
+      // Check if video is already cached
+      if (videoCache.current.has(side)) {
+        handleVideoLoad(side);
+        return;
+      }
+
+      try {
+        // Get the best video format for the browser
+        const videoName = side === "left" ? "left-video" : "right-video";
+        const videoSrc = videoUtils.getBestVideoFormat(videoName);
+
+        // Use videoUtils to preload
+        videoUtils.preloadVideo(
+          videoSrc,
+          () => handleVideoLoad(side),
+          () => handleVideoError(side)
+        );
+      } catch (error) {
+        console.warn(`Failed to preload ${side} video:`, error);
+        handleVideoError(side);
+      }
     };
 
     // Preload both videos
-    preloadVideo("/videos/left-video.mp4", "left");
-    preloadVideo("/videos/right-video.mp4", "right");
+    preloadVideo("left");
+    preloadVideo("right");
   }, [shouldLoadVideos]);
+
+  // Ensure videos are paused and at first frame when component mounts
+  useEffect(() => {
+    if (leftVideoRef.current && videosLoaded.left) {
+      leftVideoRef.current.currentTime = 0;
+      leftVideoRef.current.pause();
+    }
+    if (rightVideoRef.current && videosLoaded.right) {
+      rightVideoRef.current.currentTime = 0;
+      rightVideoRef.current.pause();
+    }
+  }, [videosLoaded.left, videosLoaded.right]);
+
+  // Cleanup video cache on unmount
+  useEffect(() => {
+    return () => {
+      videoCache.current.clear();
+    };
+  }, []);
 
   const navigate = useNavigate();
 
@@ -328,7 +393,11 @@ function HomeScreen({ setHeaderTransparent }) {
       />
       {/* Dior-style Hero Section - Responsive Split */}
       {!searchQuery && (
-        <section ref={heroSectionRef} className={styles.diorHeroSection}>
+        <section
+          id="video-hero-section"
+          ref={heroSectionRef}
+          className={styles.diorHeroSection}
+        >
           <div className={styles.diorHeroVideosWrapper}>
             {/* Top/Left Video Side */}
             <div
@@ -368,7 +437,7 @@ function HomeScreen({ setHeaderTransparent }) {
                 </div>
               )}
 
-              {/* Error fallback */}
+              {/* Error fallback - show a nice background */}
               {videoErrors.left && (
                 <div
                   style={{
@@ -397,13 +466,12 @@ function HomeScreen({ setHeaderTransparent }) {
 
               <video
                 ref={leftVideoRef}
-                src="/videos/left-video.mp4"
                 className={styles.diorHeroVideo}
                 muted
                 loop
                 playsInline
                 preload="metadata"
-                poster="/images/video-poster-left.jpg"
+                poster="/images/posters/left-video-poster.jpg"
                 onLoadedMetadata={() => handleVideoLoad("left")}
                 onError={() => handleVideoError("left")}
                 style={{
@@ -413,7 +481,17 @@ function HomeScreen({ setHeaderTransparent }) {
                   opacity: videosLoaded.left ? 1 : 0,
                   transition: "opacity 0.3s ease",
                 }}
-              />
+              >
+                {/* Multiple video formats for better compression and compatibility */}
+                <source
+                  src="/videos/left-video.webm"
+                  type="video/webm; codecs=vp9"
+                />
+                <source src="/videos/left-video.webm" type="video/webm" />
+                <source src="/videos/left-video.mp4" type="video/mp4" />
+                {/* Fallback for older browsers */}
+                <source src="/videos/left-video.mp4" type="video/mp4" />
+              </video>
               {/* Removed darkness effect on hover */}
               <div
                 style={{
@@ -480,11 +558,44 @@ function HomeScreen({ setHeaderTransparent }) {
             </div>
             {/* Centered Logo/Text (desktop only, hidden on mobile) */}
             <div className={styles.diorHeroLogoWrapper}>
-              <img
-                src="/images/syra-logo.png"
-                alt="Syra Logo"
-                style={{ height: "300px", width: "auto", objectFit: "contain" }}
-              />
+              <div
+                style={{
+                  textAlign: "center",
+                  userSelect: "none",
+                  maxWidth: "100%",
+                  filter: "drop-shadow(0 0 20px rgba(255,255,255,0.3))",
+                }}
+              >
+                {/* Maison - thin outlined style */}
+                <div
+                  style={{
+                    fontSize: "2.8rem",
+                    fontWeight: 100,
+                    marginBottom: "-0.2rem",
+                    color: "white",
+                    lineHeight: 1,
+                    fontFamily: "'Victorian Orchid', 'Times New Roman', serif",
+                  }}
+                >
+                  Maison
+                </div>
+
+                {/* SYRA - main logo with outlined effect */}
+                <div
+                  style={{
+                    fontSize: "6rem",
+                    fontWeight: 100,
+                    letterSpacing: "0.1em",
+                    marginBottom: "-0.1rem",
+                    lineHeight: 0.9,
+                    color: "white",
+                    textTransform: "uppercase",
+                    fontFamily: "'Victorian Orchid', 'Times New Roman', serif",
+                  }}
+                >
+                  SYRA
+                </div>
+              </div>
             </div>
             {/* Bottom/Right Video Side */}
             <div
@@ -553,13 +664,12 @@ function HomeScreen({ setHeaderTransparent }) {
 
               <video
                 ref={rightVideoRef}
-                src="/videos/right-video.mp4"
                 className={styles.diorHeroVideo}
                 muted
                 loop
                 playsInline
                 preload="metadata"
-                poster="/images/video-poster-right.jpg"
+                poster="/images/posters/right-video-poster.jpg"
                 onLoadedMetadata={() => handleVideoLoad("right")}
                 onError={() => handleVideoError("right")}
                 style={{
@@ -569,7 +679,17 @@ function HomeScreen({ setHeaderTransparent }) {
                   opacity: videosLoaded.right ? 1 : 0,
                   transition: "opacity 0.3s ease",
                 }}
-              />
+              >
+                {/* Multiple video formats for better compression and compatibility */}
+                <source
+                  src="/videos/right-video.webm"
+                  type="video/webm; codecs=vp9"
+                />
+                <source src="/videos/right-video.webm" type="video/webm" />
+                <source src="/videos/right-video.mp4" type="video/mp4" />
+                {/* Fallback for older browsers */}
+                <source src="/videos/right-video.mp4" type="video/mp4" />
+              </video>
               {/* Removed darkness effect on hover */}
               <div
                 style={{
@@ -606,69 +726,109 @@ function HomeScreen({ setHeaderTransparent }) {
                     justifyContent: "center",
                   }}
                 >
-                  <button
-                    type="button"
-                    style={{
-                      padding: "14px 28px",
-                      background: "rgba(255,255,255,0.9)",
-                      color: "#1a1a1a",
-                      fontWeight: 500,
-                      border: "none",
-                      cursor: "pointer",
-                      fontSize: "0.95rem",
-                      letterSpacing: 1,
-                      textTransform: "uppercase",
-                      transition: "all 0.3s ease",
-                      boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-                      width: "fit-content",
-                    }}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      animateButton(e);
-                      setTimeout(() => {
-                        navigate("/login");
-                      }, 200);
-                    }}
-                    onMouseEnter={(e) =>
-                      (e.target.style.background = "rgba(255,255,255,1)")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.target.style.background = "rgba(255,255,255,0.9)")
-                    }
-                    className={styles.heroButton}
-                  >
-                    Sign In
-                  </button>
-                  <button
-                    style={{
-                      padding: "14px 28px",
-                      background: "transparent",
-                      color: "white",
-                      fontWeight: 500,
-                      border: "2px solid rgba(255,255,255,0.8)",
-                      cursor: "pointer",
-                      fontSize: "0.95rem",
-                      letterSpacing: 1,
-                      textTransform: "uppercase",
-                      transition: "all 0.3s ease",
-                      width: "fit-content",
-                    }}
-                    onClick={(e) => {
-                      animateButton(e);
-                      navigate("/register");
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.background = "rgba(255,255,255,0.1)";
-                      e.target.style.borderColor = "rgba(255,255,255,1)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.background = "transparent";
-                      e.target.style.borderColor = "rgba(255,255,255,0.8)";
-                    }}
-                    className={styles.heroButton}
-                  >
-                    Sign Up
-                  </button>
+                  {userInfo ? (
+                    // Show Profile button when user is logged in
+                    <button
+                      type="button"
+                      style={{
+                        padding: "14px 28px",
+                        background: "rgba(255,255,255,0.9)",
+                        color: "#1a1a1a",
+                        fontWeight: 500,
+                        border: "none",
+                        cursor: "pointer",
+                        fontSize: "0.95rem",
+                        letterSpacing: 1,
+                        textTransform: "uppercase",
+                        transition: "all 0.3s ease",
+                        boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                        width: "fit-content",
+                      }}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        animateButton(e);
+                        setTimeout(() => {
+                          navigate("/profile");
+                        }, 200);
+                      }}
+                      onMouseEnter={(e) =>
+                        (e.target.style.background = "rgba(255,255,255,1)")
+                      }
+                      onMouseLeave={(e) =>
+                        (e.target.style.background = "rgba(255,255,255,0.9)")
+                      }
+                      className={styles.heroButton}
+                    >
+                      Profile
+                    </button>
+                  ) : (
+                    // Show Sign In and Sign Up buttons when user is not logged in
+                    <>
+                      <button
+                        type="button"
+                        style={{
+                          padding: "14px 28px",
+                          background: "rgba(255,255,255,0.9)",
+                          color: "#1a1a1a",
+                          fontWeight: 500,
+                          border: "none",
+                          cursor: "pointer",
+                          fontSize: "0.95rem",
+                          letterSpacing: 1,
+                          textTransform: "uppercase",
+                          transition: "all 0.3s ease",
+                          boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                          width: "fit-content",
+                        }}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          animateButton(e);
+                          setTimeout(() => {
+                            navigate("/login");
+                          }, 200);
+                        }}
+                        onMouseEnter={(e) =>
+                          (e.target.style.background = "rgba(255,255,255,1)")
+                        }
+                        onMouseLeave={(e) =>
+                          (e.target.style.background = "rgba(255,255,255,0.9)")
+                        }
+                        className={styles.heroButton}
+                      >
+                        Sign In
+                      </button>
+                      <button
+                        style={{
+                          padding: "14px 28px",
+                          background: "transparent",
+                          color: "white",
+                          fontWeight: 500,
+                          border: "2px solid rgba(255,255,255,0.8)",
+                          cursor: "pointer",
+                          fontSize: "0.95rem",
+                          letterSpacing: 1,
+                          textTransform: "uppercase",
+                          transition: "all 0.3s ease",
+                          width: "fit-content",
+                        }}
+                        onClick={(e) => {
+                          animateButton(e);
+                          navigate("/register");
+                        }}
+                        onMouseEnter={(e) => {
+                          e.target.style.background = "rgba(255,255,255,0.1)";
+                          e.target.style.borderColor = "rgba(255,255,255,1)";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.background = "transparent";
+                          e.target.style.borderColor = "rgba(255,255,255,0.8)";
+                        }}
+                        className={styles.heroButton}
+                      >
+                        Sign Up
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -729,31 +889,6 @@ function HomeScreen({ setHeaderTransparent }) {
           </section>
         )}
 
-        {/* Newsletter Section */}
-        {!searchQuery && (
-          <section className={landingStyles.newsletterSection}>
-            <h2 className={landingStyles.newsletterTitle}>Restez informé(e)</h2>
-            <div className={landingStyles.newsletterText}>
-              Recevez nos nouveautés, offres et inspirations directement dans
-              votre boîte mail.
-            </div>
-            <form
-              className={landingStyles.newsletterForm}
-              onSubmit={(e) => e.preventDefault()}
-            >
-              <input
-                type="email"
-                className={landingStyles.newsletterInput}
-                placeholder="Votre email"
-                required
-              />
-              <button className={landingStyles.newsletterButton} type="submit">
-                S'inscrire
-              </button>
-            </form>
-          </section>
-        )}
-
         {/* Product Catalog Section */}
         <section className={landingStyles.productsSection}>
           {loading ? (
@@ -810,6 +945,7 @@ function HomeScreen({ setHeaderTransparent }) {
 
 HomeScreen.propTypes = {
   setHeaderTransparent: PropTypes.func,
+  setIsVideoSection: PropTypes.func,
 };
 
 export default HomeScreen;
